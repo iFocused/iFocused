@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.effect.Bloom?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="1040.0" styleClass="root" stylesheets="@../assets/theme.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text fill="#575757" layoutX="58.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome, ">
+         <font>
+            <Font name="CoolveticaRg-Regular" size="22.0" />
+         </font>
+      </Text>
+      <Text layoutX="154.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DemoMario">
+         <font>
+            <Font name="CoolveticaRg-Regular" size="22.0" />
+         </font>
+         <effect>
+            <Bloom />
+         </effect>
+      </Text>
+      <Pane layoutX="846.0" layoutY="37.0" prefHeight="71.0" prefWidth="98.0" styleClass="pane-box-small">
+         <children>
+            <ImageView fitHeight="40.0" fitWidth="39.0" layoutX="28.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/pics/star.png" />
+               </image>
+            </ImageView>
+            <Text fill="WHITE" layoutX="44.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="45.46875" />
+         </children>
+      </Pane>
+      <Pane layoutX="952.0" layoutY="37.0" prefHeight="71.0" prefWidth="64.0" styleClass="pane-box-small">
+         <children>
+            <ImageView fitHeight="59.0" fitWidth="52.0" layoutX="6.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/pics/profile.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane layoutX="710.0" layoutY="122.0" prefHeight="314.0" prefWidth="308.0" styleClass="todo-pane">
+         <children>
+            <Text fill="WHITE" layoutX="104.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TODO List">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Text>
+            <Separator layoutX="1.0" layoutY="46.0" prefHeight="3.0" prefWidth="305.0" />
+            <CheckBox layoutX="14.0" layoutY="62.0" mnemonicParsing="false" text="Complete CSC209 Assignment 1" textFill="WHITE" />
+            <CheckBox layoutX="14.0" layoutY="95.0" mnemonicParsing="false" text="Complete BIO247 Lab 3" textFill="WHITE" />
+            <CheckBox layoutX="14.0" layoutY="132.0" mnemonicParsing="false" text="Complete 2nd Essay in LIN204 " textFill="WHITE" />
+         </children>
+      </Pane>
+      <Button layoutX="711.0" layoutY="530.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="309.0" style="-fx-background-color: #4A3CAB; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20; -fx-graphic-text-gap: 10;" text="Remove Task" textFill="WHITE">
+         <graphic>
+            <ImageView fitHeight="22.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/pics/bin.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Pane layoutX="52.0" layoutY="85.0" prefHeight="143.0" prefWidth="305.0" style="-fx-background-color: #C0EFFF; -fx-background-radius: 20px;">
+         <children>
+            <ImageView fitHeight="82.0" fitWidth="107.0" layoutX="14.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/pics/completed.png" />
+               </image>
+            </ImageView>
+            <Text fill="#363636" layoutX="127.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pomodoro">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Text>
+            <Text fill="#363636" layoutX="127.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sessions">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Text>
+            <Text fill="#373b6d" layoutX="127.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="41">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+      <Pane layoutX="363.0" layoutY="85.0" prefHeight="143.0" prefWidth="305.0" style="-fx-background-color: #FCE1ED; -fx-background-radius: 20px;">
+         <children>
+            <ImageView fitHeight="82.0" fitWidth="107.0" layoutX="14.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/pics/tasks.png" />
+               </image>
+            </ImageView>
+            <Text fill="#363636" layoutX="127.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tasks">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Text>
+            <Text fill="#363636" layoutX="127.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Completed">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Text>
+            <Text fill="#373b6d" layoutX="127.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="6">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+      <Text layoutX="58.0" layoutY="275.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time spent (Today)">
+         <font>
+            <Font name="CoolveticaRg-Regular" size="18.0" />
+         </font>
+      </Text>
+      <BarChart layoutX="51.0" layoutY="281.0" prefHeight="305.0" prefWidth="624.0">
+         <xAxis>
+            <CategoryAxis side="BOTTOM" />
+         </xAxis>
+         <yAxis>
+            <NumberAxis side="LEFT" />
+         </yAxis>
+      </BarChart>
+      <Button layoutX="711.0" layoutY="487.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="309.0" style="-fx-background-color: #4A3CAB; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20; -fx-graphic-text-gap: 10;" text="Complete Task" textFill="WHITE">
+         <graphic>
+            <ImageView fitHeight="22.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/pics/complete.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button layoutX="709.0" layoutY="446.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="309.0" style="-fx-background-color: #4A3CAB; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20; -fx-graphic-text-gap: 10;" text="Add Task" textFill="WHITE">
+         <graphic>
+            <ImageView fitHeight="22.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/pics/add.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </children>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+</AnchorPane>

@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXToggleButton?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Bloom?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="671.0" prefWidth="1330.0" styleClass="pane" stylesheets="@../assets/theme.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.MainController">
+   <children>
+      <VBox layoutX="8.0" layoutY="121.0" prefHeight="493.0" prefWidth="256.0" style="-fx-spacing: 20;">
+         <children>
+            <Separator prefWidth="200.0" />
+            <Button mnemonicParsing="false" onAction="#onDashboardSelection" prefHeight="52.0" prefWidth="224.0" style="-fx-graphic-text-gap: 25;" styleClass="btn_menu" text="Dashboard">
+               <graphic>
+                  <ImageView fitHeight="27.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true" style="-fx-spacing: 10;">
+                     <image>
+                        <Image url="@../assets/pics/home.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#onBlockListSelection" prefHeight="52.0" prefWidth="224.0" style="-fx-graphic-text-gap: 27;" styleClass="btn_menu" text="Block Lists">
+               <graphic>
+                  <ImageView fitHeight="27.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true" style="-fx-spacing: 10;">
+                     <image>
+                        <Image url="@../assets/pics/cross.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="52.0" prefWidth="224.0" style="-fx-graphic-text-gap: 37;" styleClass="btn_menu" text="Schedule">
+               <graphic>
+                  <ImageView fitHeight="27.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true" style="-fx-spacing: 10;">
+                     <image>
+                        <Image url="@../assets/pics/schedule.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="52.0" prefWidth="224.0" style="-fx-graphic-text-gap: 55;" styleClass="btn_menu" text="Timer">
+               <graphic>
+                  <ImageView fitHeight="27.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true" style="-fx-spacing: 10;">
+                     <image>
+                        <Image url="@../assets/pics/timer.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="52.0" prefWidth="224.0" style="-fx-graphic-text-gap: 30;" styleClass="btn_menu" text="Statistics">
+               <graphic>
+                  <ImageView fitHeight="27.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true" style="-fx-spacing: 10;">
+                     <image>
+                        <Image url="@../assets/pics/stats.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="52.0" prefWidth="224.0" style="-fx-graphic-text-gap: 35;" styleClass="btn_menu" text="Settings">
+               <graphic>
+                  <ImageView fitHeight="27.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true" style="-fx-spacing: 10;">
+                     <image>
+                        <Image url="@../assets/pics/settings.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Separator prefWidth="200.0" />
+         </children>
+      </VBox>
+      <TabPane fx:id="mainTab" layoutX="264.0" layoutY="17.0" prefHeight="643.0" prefWidth="1040.0" stylesheets="@../assets/theme.css" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Dashboard">
+               <content>
+                  <AnchorPane prefHeight="614.0" prefWidth="960.0" styleClass="root" stylesheets="@../assets/theme.css">
+                     <children>
+                        <Text fill="#575757" layoutX="16.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome, ">
+                           <font>
+                              <Font name="CoolveticaRg-Regular" size="22.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="112.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DemoMario">
+                           <font>
+                              <Font name="CoolveticaRg-Regular" size="22.0" />
+                           </font>
+                           <effect>
+                              <Bloom />
+                           </effect>
+                        </Text>
+                        <Pane layoutX="774.0" layoutY="8.0" prefHeight="71.0" prefWidth="98.0" styleClass="pane-box-small">
+                           <children>
+                              <ImageView fitHeight="40.0" fitWidth="39.0" layoutX="28.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/pics/star.png" />
+                                 </image>
+                              </ImageView>
+                              <Text fill="WHITE" layoutX="44.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="45.46875" />
+                           </children>
+                        </Pane>
+                        <Pane layoutX="882.0" layoutY="8.0" prefHeight="71.0" prefWidth="64.0" styleClass="pane-box-small">
+                           <children>
+                              <ImageView fitHeight="59.0" fitWidth="52.0" layoutX="6.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/pics/profile.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </Pane>
+                        <Pane layoutX="638.0" layoutY="90.0" prefHeight="322.0" prefWidth="308.0" styleClass="todo-pane">
+                           <children>
+                              <Text fill="WHITE" layoutX="104.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TODO List">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font>
+                              </Text>
+                              <Separator layoutX="1.0" layoutY="46.0" prefHeight="3.0" prefWidth="305.0" />
+                              <CheckBox layoutX="14.0" layoutY="62.0" mnemonicParsing="false" text="Complete CSC209 Assignment 1" textFill="WHITE" />
+                              <CheckBox layoutX="14.0" layoutY="95.0" mnemonicParsing="false" text="Complete BIO247 Lab 3" textFill="WHITE" />
+                              <CheckBox layoutX="14.0" layoutY="132.0" mnemonicParsing="false" text="Complete 2nd Essay in LIN204 " textFill="WHITE" />
+                           </children>
+                        </Pane>
+                        <Button layoutX="640.0" layoutY="508.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="309.0" style="-fx-background-color: #4A3CAB; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20; -fx-graphic-text-gap: 10;" text="Remove Task" textFill="WHITE">
+                           <graphic>
+                              <ImageView fitHeight="22.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/pics/bin.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></Button>
+                        <Pane layoutX="16.0" layoutY="51.0" prefHeight="130.0" prefWidth="300.0" style="-fx-background-color: #C0EFFF; -fx-background-radius: 20px;">
+                           <children>
+                              <ImageView fitHeight="82.0" fitWidth="107.0" layoutX="14.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/pics/completed.png" />
+                                 </image>
+                              </ImageView>
+                              <Text fill="#363636" layoutX="127.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pomodoro">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font>
+                              </Text>
+                              <Text fill="#363636" layoutX="127.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sessions">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font>
+                              </Text>
+                              <Text fill="#373b6d" layoutX="127.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="41">
+                                 <font>
+                                    <Font name="System Bold" size="30.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </Pane>
+                        <Pane layoutX="322.0" layoutY="51.0" prefHeight="130.0" prefWidth="300.0" style="-fx-background-color: #FCE1ED; -fx-background-radius: 20px;">
+                           <children>
+                              <ImageView fitHeight="82.0" fitWidth="107.0" layoutX="14.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/pics/tasks.png" />
+                                 </image>
+                              </ImageView>
+                              <Text fill="#363636" layoutX="127.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tasks">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font>
+                              </Text>
+                              <Text fill="#363636" layoutX="127.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Completed">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font>
+                              </Text>
+                              <Text fill="#373b6d" layoutX="127.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="6">
+                                 <font>
+                                    <Font name="System Bold" size="30.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </Pane>
+                        <Text layoutX="35.0" layoutY="227.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time spent (Today)">
+                           <font>
+                              <Font name="CoolveticaRg-Regular" size="18.0" />
+                           </font>
+                        </Text>
+                        <BarChart layoutX="23.0" layoutY="235.0" prefHeight="324.0" prefWidth="605.0">
+                           <xAxis>
+                              <CategoryAxis side="BOTTOM" />
+                           </xAxis>
+                           <yAxis>
+                              <NumberAxis side="LEFT" />
+                           </yAxis>
+                        </BarChart>
+                        <Button layoutX="640.0" layoutY="465.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="309.0" style="-fx-background-color: #4A3CAB; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20; -fx-graphic-text-gap: 10;" text="Complete Task" textFill="WHITE">
+                           <graphic>
+                              <ImageView fitHeight="22.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/pics/complete.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button layoutX="638.0" layoutY="424.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="309.0" style="-fx-background-color: #4A3CAB; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20; -fx-graphic-text-gap: 10;" text="Add Task" textFill="WHITE">
+                           <graphic>
+                              <ImageView fitHeight="22.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/pics/add.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+               </content>
+          </Tab>
+          <Tab text="Block List">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane layoutX="14.0" layoutY="10.0" prefHeight="537.0" prefWidth="468.0" style="-fx-background-color: #69B578; -fx-background-radius: 20px;">
+                           <children>
+                              <Separator layoutX="136.0" layoutY="44.0" prefWidth="200.0" />
+                              <Text fill="WHITE" layoutX="159.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create Block List">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Text>
+                              <TextField layoutX="88.0" layoutY="56.0" prefHeight="25.0" prefWidth="249.0" promptText="Enter list name" style="-fx-border-color: grey;" />
+                              <Text fill="WHITE" layoutX="37.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Text>
+                              <Text fill="WHITE" layoutX="37.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Text>
+                              <CheckBox layoutX="88.0" layoutY="94.0" mnemonicParsing="false" text="Enabled" textFill="WHITE" />
+                              <Button layoutX="47.0" layoutY="491.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="398.0" style="-fx-background-color: #4A3CAB; -fx-background-radius: 20; -fx-border-radius: 20; -fx-graphic-text-gap: 10;" text="Create Block List" textFill="WHITE" />
+                              <Text fill="WHITE" layoutX="258.0" layoutY="378.0" strokeType="OUTSIDE" strokeWidth="0.0">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Text>
+                              <TabPane layoutX="35.0" layoutY="125.0" prefHeight="354.0" prefWidth="420.0" styleClass="tab-pane-main" tabClosingPolicy="UNAVAILABLE">
+                                <tabs>
+                                  <Tab styleClass="tab-two" text="Websites">
+                                    <content>
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="tab-pane-main">
+                                             <children>
+                                                <TextField alignment="CENTER" layoutX="10.0" layoutY="14.0" prefHeight="27.0" prefWidth="361.0" promptText="Add URL" style="-fx-border-color: grey; -fx-background-radius: 20; -fx-border-radius: 20;" />
+                                                <ListView layoutX="10.0" layoutY="51.0" prefHeight="191.0" prefWidth="361.0" style="-fx-background-radius: 20px;" />
+                                                <Button layoutX="89.0" layoutY="255.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="198.0" style="-fx-background-color: #DDDDDD; -fx-background-radius: 20; -fx-border-radius: 20; -fx-graphic-text-gap: 10;" text="Add" />
+                                             </children>
+                                          </AnchorPane>
+                                    </content>
+                                  </Tab>
+                                  <Tab styleClass="tab-two" text="Applications">
+                                    <content>
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                    </content>
+                                  </Tab>
+                                    <Tab styleClass="tab-two" text="Exceptions">
+                                      <content>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                      </content>
+                                    </Tab>
+                                </tabs>
+                              </TabPane>
+                           </children>
+                        </Pane>
+                        <Pane layoutX="482.0" layoutY="10.0" prefHeight="537.0" prefWidth="468.0" style="-fx-background-color: #3F8EFC; -fx-background-radius: 20px;">
+                           <children>
+                              <Separator layoutX="136.0" layoutY="44.0" prefWidth="200.0" />
+                              <Text fill="WHITE" layoutX="180.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Block Lists">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Text>
+                              <TableView layoutX="14.0" layoutY="54.0" prefHeight="380.0" prefWidth="435.0">
+                                 <columns>
+                                    <TableColumn prefWidth="150.0" text="Name" />
+                                    <TableColumn minWidth="0.0" prefWidth="140.0" text="Status" />
+                                    <TableColumn prefWidth="144.0" text="Description" />
+                                 </columns>
+                              </TableView>
+                              <Button layoutX="11.0" layoutY="448.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="215.0" style="-fx-background-color: #4A3CAB; -fx-background-radius: 20; -fx-border-radius: 20; -fx-graphic-text-gap: 10;" text="Delete Selected" textFill="WHITE" />
+                              <Button layoutX="234.0" layoutY="448.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="215.0" style="-fx-background-color: #4A3CAB; -fx-background-radius: 20; -fx-border-radius: 20; -fx-graphic-text-gap: 10;" text="Modify Contents" textFill="WHITE" />
+                              <Text fill="WHITE" layoutX="258.0" layoutY="378.0" strokeType="OUTSIDE" strokeWidth="0.0">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Text>
+                              <Pane layoutX="11.0" layoutY="490.0" prefHeight="35.0" prefWidth="446.0" style="-fx-background-radius: 20;" styleClass="pane">
+                                 <children>
+                                    <JFXToggleButton layoutX="167.0" layoutY="-11.0" text="Enabled" textFill="WHITE" />
+                                 </children>
+                              </Pane>
+                           </children>
+                        </Pane>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+      <Text fill="WHITE" layoutX="82.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="iFocused">
+         <font>
+            <Font name="System Bold" size="26.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="45.0" fitWidth="49.0" layoutX="21.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/pics/student_male_filled.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
