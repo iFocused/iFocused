@@ -13,7 +13,7 @@ import javafx.scene.layout.BorderPane;
 
 public class MainController implements Initializable {
 
-	final int NUM_TABS = 5;
+	final int NUM_TABS = 6;
 
 	@FXML
 	private TabPane tabsPane;
@@ -55,15 +55,15 @@ public class MainController implements Initializable {
 				break;
 
 			case 3:
-				/* TODO */
+				timerPane.setCenter(currPane);
 				break;
 
 			case 4:
-				/* TODO */
+				statsPane.setCenter(currPane);
 				break;
 
 			case 5:
-				/* TODO */
+				settingsPane.setCenter(currPane);
 				break;
 			}
 		}
@@ -72,11 +72,6 @@ public class MainController implements Initializable {
 	private void populateTabs() {
 		for (int i = 0; i < NUM_TABS; i++) {
 			setTab(i);
-			
-			/* TODO */
-			if(i == 2) {
-				return;
-			}
 		}
 	}
 
@@ -100,8 +95,22 @@ public class MainController implements Initializable {
 	}
 
 	@FXML
-	void onScheduelSelection(ActionEvent event) {
+	void onScheduleSelection(ActionEvent event) {
 		changeView(2);
 	}
 
+	@FXML
+	void onTimerSelection(ActionEvent event) {
+		changeView(3);
+	}
+
+	@FXML
+	void onStatsSelection(ActionEvent event) {
+		changeView(4);
+	}
+
+	@FXML
+	void onSettingsSelection(ActionEvent event) {
+		changeView(5);
+	}
 }

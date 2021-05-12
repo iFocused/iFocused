@@ -187,3 +187,8 @@
 .placeholder .label{
     -fx-text-fill: white;
 }
+
+/* ComboBox Style */
+.combo-box .cell{
+    -fx-text-fill: white;
+}

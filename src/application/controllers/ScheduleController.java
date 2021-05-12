@@ -17,7 +17,6 @@ public class ScheduleController implements Initializable {
     
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		System.out.println("here");
 		CalendarView calendar = new CalendarView();
 		mainPane.setCenter(calendar);
 	}

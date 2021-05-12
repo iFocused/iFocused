@@ -30,14 +30,17 @@
             <Bloom />
          </effect>
       </Text>
-      <Pane layoutX="788.0" layoutY="37.0" prefHeight="71.0" prefWidth="98.0" styleClass="pane-box-small">
+      <Pane layoutX="766.0" layoutY="37.0" prefHeight="71.0" prefWidth="124.0" styleClass="pane-box-small">
          <children>
-            <ImageView fitHeight="40.0" fitWidth="39.0" layoutX="28.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="40.0" fitWidth="39.0" layoutX="14.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../assets/pics/star.png" />
                </image>
             </ImageView>
-            <Text fill="WHITE" layoutX="44.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="45.46875" />
+            <Text fill="WHITE" layoutX="62.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="52.3251953125">
+               <font>
+                  <Font size="20.0" />
+               </font></Text>
          </children>
       </Pane>
       <Pane layoutX="899.0" layoutY="37.0" prefHeight="71.0" prefWidth="64.0" styleClass="pane-box-small">
