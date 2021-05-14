@@ -23,22 +23,22 @@ public class FxmlLoader {
 		try {
 			switch (this.tabId) {
 			case 0:
-				return FXMLLoader.load(getClass().getResource("views/Dashboard.fxml"));
+				return FXMLLoader.load(getClass().getResource("views/dashboard.fxml"));
 
 			case 1:
-				return FXMLLoader.load(getClass().getResource("views/Blocklists.fxml"));
+				return FXMLLoader.load(getClass().getResource("views/blocklists.fxml"));
 
 			case 2:
-				return FXMLLoader.load(getClass().getResource("views/Schedule.fxml"));
+				return FXMLLoader.load(getClass().getResource("views/schedule.fxml"));
 
 			case 3:
-				return FXMLLoader.load(getClass().getResource("views/Timer.fxml"));
+				return FXMLLoader.load(getClass().getResource("views/timer.fxml"));
 
 			case 4:
-				return FXMLLoader.load(getClass().getResource("views/Stats.fxml"));
+				return FXMLLoader.load(getClass().getResource("views/stats.fxml"));
 
 			case 5:
-				return FXMLLoader.load(getClass().getResource("views/Settings.fxml"));
+				return FXMLLoader.load(getClass().getResource("views/settings.fxml"));
 
 			}
 			

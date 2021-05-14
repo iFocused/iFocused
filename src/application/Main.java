@@ -17,6 +17,7 @@ public class Main extends Application {
 	        
 	        stage.setTitle("iFocused");
 	        stage.setScene(scene);
+	        stage.setResizable(false);
 	        stage.show();
 		} catch(Exception e) {
 			e.printStackTrace();

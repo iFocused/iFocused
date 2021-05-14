@@ -50,8 +50,9 @@
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="tab-pane-main">
                            <children>
                               <TextField alignment="CENTER" layoutX="10.0" layoutY="14.0" prefHeight="27.0" prefWidth="361.0" promptText="Add URL" style="-fx-border-color: grey; -fx-background-radius: 20; -fx-border-radius: 20;" />
-                              <ListView layoutX="10.0" layoutY="51.0" prefHeight="191.0" prefWidth="361.0" style="-fx-background-radius: 20px;" />
+                              <ListView layoutX="10.0" layoutY="85.0" prefHeight="158.0" prefWidth="361.0" style="-fx-background-radius: 20px;" />
                               <Button layoutX="89.0" layoutY="255.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="198.0" style="-fx-background-color: #DDDDDD; -fx-background-radius: 20; -fx-border-radius: 20; -fx-graphic-text-gap: 10;" text="Add" />
+                              <TextField alignment="CENTER" layoutX="10.0" layoutY="50.0" prefHeight="27.0" prefWidth="361.0" promptText="Add Description" style="-fx-border-color: grey; -fx-background-radius: 20; -fx-border-radius: 20;" />
                            </children>
                         </AnchorPane>
                      </content>
