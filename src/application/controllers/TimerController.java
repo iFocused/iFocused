@@ -5,8 +5,10 @@ import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXSlider;
 
+import application.entities.CountDownTimer;
 import application.ui.CircleIndicator.RingProgressIndicator;
 import javafx.animation.Animation;
+import javafx.animation.Animation.Status;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
@@ -25,10 +27,9 @@ import java.lang.String;
 
 public class TimerController implements Initializable {
 
-	final static int SESSION = 25, BREAK = 5, ROUNDS = 4;
+	final static int SESSION = 15, BREAK = 5, ROUNDS = 4;
 	private RingProgressIndicator ringProgressIndicator;
-	private int timeMins, timeSecs;
-	private Timeline timeline;
+	private CountDownTimer countDownTimer;
 
 	@FXML
 	private Text roundsLbl;
@@ -38,6 +39,9 @@ public class TimerController implements Initializable {
 
 	@FXML
 	private Text sessionLbl;
+
+	@FXML
+	private Button startBtn;
 
 	@FXML
 	private JFXSlider sessionSlider;
@@ -55,7 +59,10 @@ public class TimerController implements Initializable {
 	private Pane settingsPane;
 
 	@FXML
-	private Button startBtn;
+	private Text descriptionLbl;
+
+	@FXML
+	private Text roundLbl;
 
 	private void applySliderListeners() {
 		sessionSlider.valueProperty().addListener(new ChangeListener<Number>() {
@@ -63,12 +70,12 @@ public class TimerController implements Initializable {
 			@Override
 			public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
 				sessionLbl.setText(String.valueOf(newValue.intValue()) + ":00");
+				countDownTimer.setTimeMins(newValue.intValue());
 				ringProgressIndicator.setProgress(0, sessionLbl.getText());
 			}
 		});
 
 		roundsSlider.valueProperty().addListener(new ChangeListener<Number>() {
-
 			@Override
 			public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
 				roundsLbl.setText(String.valueOf(newValue.intValue()));
@@ -84,37 +91,40 @@ public class TimerController implements Initializable {
 		});
 	}
 
-	private String formatTimeString() {
-		if (this.timeSecs < 10)
-			return String.valueOf(this.timeMins) + ":0" + String.valueOf(this.timeSecs);
-		if (this.timeSecs == 60)
-			return String.valueOf(this.timeMins) + ":00";
-		return String.valueOf(this.timeMins) + ":" + String.valueOf(this.timeSecs);
+	private void resetTimer() {
+		if (countDownTimer.getTimeline() != null) {
+			countDownTimer.getTimeline().stop();
+			descriptionLbl.setVisible(false);
+			roundLbl.setVisible(false);
+			startBtn.setDisable(false);
+			settingsPane.setDisable(false);
+			ringProgressIndicator.setProgress(0, sessionLbl.getText());
+			this.countDownTimer.setTimeMins((int) sessionSlider.getValue());
+			this.countDownTimer.setTimeSecs(0);
+		}
 	}
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		applySliderListeners();
+		descriptionLbl.setVisible(false);
+		roundLbl.setVisible(false);
 
 		/* Creating circle component */
-		ringProgressIndicator = new RingProgressIndicator();
+		countDownTimer = new CountDownTimer((int) sessionSlider.getValue());
+		ringProgressIndicator = countDownTimer.getProgressIndicator();
 		ringProgressIndicator.setProgress(0, sessionLbl.getText());
 		timerPane.setCenter(ringProgressIndicator);
 	}
 
 	@FXML
 	void onHandleCreate(ActionEvent event) {
-		ringProgressIndicator.setProgress(ringProgressIndicator.getProgress() + 1, "23:00");
+
 	}
 
 	@FXML
 	void onHandleReset(ActionEvent event) {
-		timeline.stop();
-		startBtn.setDisable(false);
-		settingsPane.setDisable(false);
-		ringProgressIndicator.setProgress(0, sessionLbl.getText());
-		this.timeMins = (int) sessionSlider.getValue();
-		this.timeSecs = 0;
+		resetTimer();
 
 	}
 
@@ -127,36 +137,19 @@ public class TimerController implements Initializable {
 
 	@FXML
 	void onHandleStart(ActionEvent event) {
+		descriptionLbl.setVisible(true);
+		roundLbl.setVisible(true);
 		settingsPane.setDisable(true);
 		startBtn.setDisable(true);
-		timeMins = (int) sessionSlider.getValue();
+		// run <rounds> many times
+		for (int i = 0; i < (int) roundsSlider.getValue(); i++) {
+			if (countDownTimer.getTimeline() == null)
+				countDownTimer.startCountDown();
+			else if (countDownTimer.getStatus() != Status.RUNNING)
+				countDownTimer.startCountDown();
 
-		// counting down from the specified Pomodoro session and updating the
-		// UI label respectively
-		timeline = new Timeline();
-		timeline.setCycleCount(Timeline.INDEFINITE);
-		timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
-			// handling event that will occur every second
-			public void handle(ActionEvent event) {
-				if (timeSecs == 0) {
-					timeSecs = 60;
-					timeMins--;
-					timeSecs--;
-					ringProgressIndicator.setProgress(
-							ringProgressIndicator.getProgress() + (100 / sessionSlider.getValue()), formatTimeString());
-				} else {
-					timeSecs--;
-					ringProgressIndicator.setProgress(ringProgressIndicator.getProgress(), formatTimeString());
-				}
+		}
 
-				// updating ring time
-				if (timeMins <= 0) {
-					timeline.stop();
-				}
-			}
-		}));
-
-		timeline.playFromStart();
 	}
 
 }

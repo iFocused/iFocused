@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="671.0" prefWidth="1330.0" styleClass="pane" stylesheets="@../assets/theme.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="671.0" prefWidth="1330.0" styleClass="pane" stylesheets="@../resources/theme.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.MainController">
    <children>
       <BorderPane layoutX="31.0" layoutY="-10.0" prefHeight="682.0" prefWidth="1298.0">
          <left>
@@ -21,7 +21,7 @@
                <children>
                   <ImageView fitHeight="45.0" fitWidth="49.0" layoutX="-8.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../assets/pics/student_male_filled.png" />
+                        <Image url="@../resources/pics/student_male_filled.png" />
                      </image>
                   </ImageView>
                   <Text fill="WHITE" layoutX="47.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="iFocused">
@@ -36,7 +36,7 @@
                            <graphic>
                               <ImageView fitHeight="27.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true" style="-fx-spacing: 10;">
                                  <image>
-                                    <Image url="@../assets/pics/home.png" />
+                                    <Image url="@../resources/pics/home.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -45,7 +45,7 @@
                            <graphic>
                               <ImageView fitHeight="27.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true" style="-fx-spacing: 10;">
                                  <image>
-                                    <Image url="@../assets/pics/cross.png" />
+                                    <Image url="@../resources/pics/cross.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -54,7 +54,7 @@
                            <graphic>
                               <ImageView fitHeight="27.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true" style="-fx-spacing: 10;">
                                  <image>
-                                    <Image url="@../assets/pics/schedule.png" />
+                                    <Image url="@../resources/pics/schedule.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -63,7 +63,7 @@
                            <graphic>
                               <ImageView fitHeight="27.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true" style="-fx-spacing: 10;">
                                  <image>
-                                    <Image url="@../assets/pics/timer.png" />
+                                    <Image url="@../resources/pics/timer.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -72,7 +72,7 @@
                            <graphic>
                               <ImageView fitHeight="27.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true" style="-fx-spacing: 10;">
                                  <image>
-                                    <Image url="@../assets/pics/stats.png" />
+                                    <Image url="@../resources/pics/stats.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -81,7 +81,7 @@
                            <graphic>
                               <ImageView fitHeight="27.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true" style="-fx-spacing: 10;">
                                  <image>
-                                    <Image url="@../assets/pics/settings.png" />
+                                    <Image url="@../resources/pics/settings.png" />
                                  </image>
                               </ImageView>
                            </graphic>

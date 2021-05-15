@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="557.0" prefWidth="1004.0" styleClass="root" stylesheets="@../assets/theme.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="557.0" prefWidth="1004.0" styleClass="root" stylesheets="@../resources/theme.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Text fill="#575757" layoutX="58.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome, ">
          <font>
@@ -34,7 +34,7 @@
          <children>
             <ImageView fitHeight="40.0" fitWidth="39.0" layoutX="14.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../assets/pics/star.png" />
+                  <Image url="@../resources/pics/star.png" />
                </image>
             </ImageView>
             <Text fill="WHITE" layoutX="62.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="52.3251953125">
@@ -47,7 +47,7 @@
          <children>
             <ImageView fitHeight="59.0" fitWidth="52.0" layoutX="6.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../assets/pics/profile.png" />
+                  <Image url="@../resources/pics/profile.png" />
                </image>
             </ImageView>
          </children>
@@ -69,7 +69,7 @@
          <graphic>
             <ImageView fitHeight="22.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../assets/pics/bin.png" />
+                  <Image url="@../resources/pics/bin.png" />
                </image>
             </ImageView>
          </graphic>
@@ -78,7 +78,7 @@
          <children>
             <ImageView fitHeight="82.0" fitWidth="107.0" layoutX="14.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../assets/pics/completed.png" />
+                  <Image url="@../resources/pics/completed.png" />
                </image>
             </ImageView>
             <Text fill="#363636" layoutX="127.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pomodoro">
@@ -102,7 +102,7 @@
          <children>
             <ImageView fitHeight="82.0" fitWidth="107.0" layoutX="14.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../assets/pics/tasks.png" />
+                  <Image url="@../resources/pics/tasks.png" />
                </image>
             </ImageView>
             <Text fill="#363636" layoutX="127.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tasks">
@@ -139,7 +139,7 @@
          <graphic>
             <ImageView fitHeight="22.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../assets/pics/complete.png" />
+                  <Image url="@../resources/pics/complete.png" />
                </image>
             </ImageView>
          </graphic>
@@ -148,7 +148,7 @@
          <graphic>
             <ImageView fitHeight="22.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../assets/pics/add.png" />
+                  <Image url="@../resources/pics/add.png" />
                </image>
             </ImageView>
          </graphic>
