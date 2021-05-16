@@ -1,0 +1,22 @@
+##
+# Host Database
+#
+# localhost is used to configure the loopback interface
+# when the system is booting.  Do not change this entry.
+##
+127.0.0.1	localhost
+255.255.255.255	broadcasthost
+::1             localhost
+127.0.0.1 agar.io
+127.0.0.1 paper.io
+127.0.0.1 Hole.io
+127.0.0.1 Mope.io
+127.0.0.1 https://blankmediagames.com/
+127.0.0.1 surviv.io
+127.0.0.1 diep.io
+127.0.0.1 http://slither.io/
+127.0.0.1 https://www.blankmediagames.com/
+127.0.0.1 https://www.blankmediagames.com/TownOfSalem/
+66.147.239.128 https://www.reddit.com
+
+
