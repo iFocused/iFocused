@@ -18,3 +18,4 @@
 127.0.0.1 https://www.blankmediagames.com/
 127.0.0.1 https://www.blankmediagames.com/TownOfSalem/
 66.147.239.128 https://www.reddit.com
+youtube.com
