@@ -4,18 +4,16 @@ DEPENDENCIES = reader.h
 
 all: reader 
 
-.PHONY: reader  
-reader: ${OBJ}
-	gcc ${FLAGS} -o $@ $^
-	rm *.o 
 
-run:
+reader : ${OBJ}
+	gcc ${FLAGS} -o $@ $^ 
+
+run :
 	sudo ./reader
 	
-%.o: %.c ${DEPENDENCIES}
+%.o : %.c ${DEPENDENCIES}
 	gcc ${FLAGS} -c $< 
 
 
-clean:
-	rm reader 
-	rm *.o
+clean :
+	rm -f *.o reader 

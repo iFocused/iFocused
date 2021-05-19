@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <string.h>
+#include "reader.h"
+
 
 char *filename = "test.txt";
 // char *filename = "/etc/hosts";
@@ -45,6 +47,7 @@ int reader() {
 /* Check if the file contains a url
 * Return 1 if the file contains the url
 * Return 0 if the file doesn't contain the url
+* Return -1 an error occurs
 */
 int checkUrl(char *filename, char *url) {
     FILE *fp;
@@ -73,8 +76,23 @@ int checkUrl(char *filename, char *url) {
 * Return 0 on success 
 * Return 1 on failure
 */ 
-int remove(int lineNumber) {
+int removeLine(char *filename, int lineNumber) {
+    FILE *fp;
+    char temp[BUFF_SIZE];
+    int inbuf = 0;
+    int line_num = 1;
+
+    if ((fp = fopen(filename, "r")) == NULL) {
+        return -1;
+    }
+
+    // TODO: Read all lines except one
     
+    printf("%s %d", temp, inbuf);
+	
+	line_num++;
+
+    return 0;
 }
 
 /* Write a url to a file
@@ -83,7 +101,9 @@ int remove(int lineNumber) {
 */
 int write(char *url) {
     FILE *fp = fopen(filename, "a");
-    fputs(url, fp);
+    char s[200] = "\n127.0.0.1 ";
+    strcat(s, url);
+    fputs(s, fp);
     fclose(fp);
     return 0;
 }

@@ -1,5 +1,6 @@
+#define BUFF_SIZE 65536 
 
-int remove(int lineNumber);
+int removeLine(char *filename, int lineNumber);
 int write(char *url);
 int reader();
 /* Find the number of bytes inside a file*/
