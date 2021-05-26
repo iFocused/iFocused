@@ -2,6 +2,7 @@ package application.entities;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 public class BlockList {
@@ -16,10 +17,20 @@ public class BlockList {
 	}
 
 	public BlockList(int blockListId, boolean isEnabled) {
+		this(blockListId, isEnabled, new ArrayList<>(Arrays.asList()), new ArrayList<>(Arrays.asList()));
+	}
+
+	public BlockList(int blockListId, ArrayList<Website> blockedWebsites,
+			ArrayList<Process> blockedProcesses) {
+		this(blockListId, false, blockedWebsites, blockedProcesses);
+	}
+
+	public BlockList(int blockListId, boolean isEnabled, ArrayList<Website> blockedWebsites, 
+			ArrayList<Process> blockedProcesses) {
 		this.isEnabled = isEnabled;
 		this.blockListId = blockListId;
-		this.blockedProcesses = new ArrayList<>();
-		this.blockedWebsites = new ArrayList<>();
+		this.blockedWebsites = blockedWebsites;
+		this.blockedProcesses = blockedProcesses;
 
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 		this.updatedDate = formatter.format(new Date());

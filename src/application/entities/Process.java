@@ -4,7 +4,7 @@ public class Process {
 
 	private String processName;
 	private int processId;
-	private  int timesBlocked;
+	private int timesBlocked;
 
 	public Process(String processName, int processId) {
 		this.processName = processName;

@@ -4,7 +4,7 @@ public class Website {
 
 	private String websiteName;
 	private int websiteId;
-	private  int timesBlocked;
+	private int timesBlocked;
 
 	public Website(String websiteName, int websiteId) {
 		this.websiteName = websiteName;
@@ -12,11 +12,11 @@ public class Website {
 		this.timesBlocked = 0;
 	}
 
-	public String getwebsiteName() {
+	public String getWebsiteName() {
 		return websiteName;
 	}
-
-	public int getwebsiteId() {
+	
+	public int getWebsiteId() {
 		return websiteId;
 	}
 
@@ -24,11 +24,11 @@ public class Website {
 		return timesBlocked;
 	}
 
-	public void setwebsiteName(String newwebsiteName) {
+	public void setWebsiteName(String newwebsiteName) {
 		this.websiteName = newwebsiteName;
 	}
 
-	public void setwebsiteId(int newwebsiteId) {
+	public void setWebsiteId(int newwebsiteId) {
 		this.websiteId = newwebsiteId;
 	}
 
