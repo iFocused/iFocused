@@ -5,8 +5,8 @@ import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXSlider;
 
-import application.entities.CountDownTimer;
 import application.ui.CircleIndicator.RingProgressIndicator;
+import application.usecases.UseCasePool;
 import javafx.animation.Animation;
 import javafx.animation.Animation.Status;
 import javafx.animation.KeyFrame;
@@ -30,6 +30,7 @@ public class TimerController implements Initializable {
 	final static int SESSION = 15, BREAK = 5, ROUNDS = 4;
 	private RingProgressIndicator ringProgressIndicator;
 	private CountDownTimer countDownTimer;
+	private UseCasePool useCasePool;
 
 	@FXML
 	private Text roundsLbl;
@@ -150,6 +151,10 @@ public class TimerController implements Initializable {
 
 		}
 
+	}
+
+	public TimerController(UseCasePool useCasePool) {
+		this.useCasePool = useCasePool;
 	}
 
 }

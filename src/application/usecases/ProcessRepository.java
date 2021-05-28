@@ -1,20 +1,21 @@
 package application.usecases;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import application.entities.Process;
 
-public class ProcessRepository {
+public class ProcessRepository implements Serializable {
 	private Map<Integer, Process> processes;
-	private int end;
+	private int currId;
 
 	/**
 	 * Constructor for the Process repository
 	 */
 	public ProcessRepository() {
-		this.end = 0;
+		this.currId = 0;
 		this.processes = new HashMap<>();
 	}
 
@@ -24,9 +25,9 @@ public class ProcessRepository {
 	 * @param Process The Process to be added
 	 */
 	public int createProcess(String processName) {
-		this.processes.put(this.end, new Process(processName, this.end));
-		int tmpId = this.end;
-		this.end++;
+		this.processes.put(this.currId, new Process(processName, this.currId));
+		int tmpId = this.currId;
+		this.currId++;
 		return tmpId;
 	}
 
@@ -56,7 +57,7 @@ public class ProcessRepository {
 			}
 
 		}
-		this.end = prevKey;
+		this.currId = prevKey;
 	}
 
 	/**
@@ -76,7 +77,7 @@ public class ProcessRepository {
 	 * Return a Process corresponding to the given <id>.
 	 * 
 	 * @param id The identifier for the sought after Process
-	 * @return a list of Process up to a certain time in ascending order
+	 * @return a list of Process up to a certain time in asccurrIding order
 	 */
 	public Process getNProcessById(int id) {
 		return this.processes.get(id);
@@ -88,6 +89,6 @@ public class ProcessRepository {
 	 * @return the highest identifier number in the list of Processes
 	 */
 	public int getHighestId() {
-		return this.end;
+		return this.currId;
 	}
 }

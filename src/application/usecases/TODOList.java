@@ -1,11 +1,12 @@
 package application.usecases;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import application.entities.Task;
 import application.entities.TaskStatus;
 
-public class TODOList {
+public class TODOList implements Serializable {
 	private ArrayList<Task> currentTasks;
 	private ArrayList<Task> completedTasks;
 

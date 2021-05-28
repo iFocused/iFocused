@@ -1,8 +1,7 @@
 package application.usecases;
 
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Map;
 
 import org.apache.commons.collections4.map.HashedMap;
@@ -17,14 +16,14 @@ import application.entities.Website;
  */
 public class BlockListRepository {
 	private final Map<Integer, BlockList> blockLists;
-	private String timeSinceLastModification; 
-	private int start;
+	private LocalDateTime timeSinceLastModification; 
+	private int currId;
 
 	/**
 	 * Constructor for the Block List repository
 	 */
 	public BlockListRepository() {
-		this.start = 0;
+		this.currId = 0;
 		this.blockLists = new HashedMap<>();
 		this.updateTime();
 	}
@@ -33,15 +32,14 @@ public class BlockListRepository {
 	 * Updates the time since the last modification
 	 */
 	private void updateTime() {
-		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-		this.timeSinceLastModification = formatter.format(new Date());
+		this.timeSinceLastModification = LocalDateTime.now();
 	}
 
 	public int saveBlockList(int id, boolean isEnabled, ArrayList<Website> blockedWebsites, 
 			ArrayList<Process> blockedProcesse) {
-		this.updateBlockListById(start, isEnabled, blockedWebsites, blockedProcesse);
-		int tmpId = start;
-		this.start++;
+		this.updateBlockListById(currId, isEnabled, blockedWebsites, blockedProcesse);
+		int tmpId = currId;
+		this.currId++;
 		return tmpId;
 	}
 
@@ -120,7 +118,7 @@ public class BlockListRepository {
 	 * 
 	 * @return the exact time since the last modification done to a block list
 	 */
-	public String getTimeSinceLastModification() {
+	public LocalDateTime getTimeSinceLastModification() {
 		return this.timeSinceLastModification;
 	}
 

@@ -1,9 +1,14 @@
 package application.controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import application.FxmlLoader;
+import application.entities.ViewMode;
+import application.gateways.DataSerializerGateway;
+import application.gateways.serialization.localDataSerializerGateway;
+import application.usecases.UseCasePool;
+import application.views.FxmlViewBuilder;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,7 +18,9 @@ import javafx.scene.layout.BorderPane;
 
 public class MainController implements Initializable {
 
-	final int NUM_TABS = 6;
+	private final int NUM_TABS = 6;
+	private UseCasePool useCasePool;
+	private FxmlViewBuilder fxmlViewBuilder;
 
 	@FXML
 	private TabPane tabsPane;
@@ -35,54 +42,6 @@ public class MainController implements Initializable {
 
 	@FXML
 	private BorderPane settingsPane;
-
-	private void setTab(int tabId) {
-		FxmlLoader fxmlLoader = new FxmlLoader(tabId);
-		AnchorPane currPane = (AnchorPane) fxmlLoader.getTab();
-
-		if (currPane != null) {
-			switch (tabId) {
-			case 0:
-				dashboardPane.setCenter(currPane);
-				break;
-
-			case 1:
-				blocklistPane.setCenter(currPane);
-				break;
-
-			case 2:
-				schedulePane.setCenter(currPane);
-				break;
-
-			case 3:
-				timerPane.setCenter(currPane);
-				break;
-
-			case 4:
-				statsPane.setCenter(currPane);
-				break;
-
-			case 5:
-				settingsPane.setCenter(currPane);
-				break;
-			}
-		}
-	}
-
-	private void populateTabs() {
-		for (int i = 0; i < NUM_TABS; i++) {
-			setTab(i);
-		}
-	}
-
-	private void changeView(int tabId) {
-		tabsPane.getSelectionModel().select(tabId);
-	}
-
-	@Override
-	public void initialize(URL url, ResourceBundle rb) {
-		populateTabs();
-	}
 
 	@FXML
 	void onDashboardSelection(ActionEvent event) {
@@ -113,4 +72,79 @@ public class MainController implements Initializable {
 	void onSettingsSelection(ActionEvent event) {
 		changeView(5);
 	}
+
+	@Override
+	public void initialize(URL url, ResourceBundle rb) {
+		populateTabs();
+		DataSerializerGateway dsg = new localDataSerializerGateway();
+		System.out.println(dsg.isNewUser());
+		handleLogin();
+	}
+
+	public MainController(UseCasePool useCasePool, FxmlViewBuilder fxmlBuilder) {
+		this.useCasePool = useCasePool;
+		this.fxmlViewBuilder = fxmlBuilder;
+	}
+
+	private void setTab(ViewMode whichView) {
+//		FxmlLoader fxmlLoader = new FxmlLoader(tabId);
+		AnchorPane currPane;
+		try {
+			currPane = (AnchorPane) this.fxmlViewBuilder.getView(whichView);
+			if (currPane != null) {
+				switch (whichView) {
+				case DASHBOARD:
+					dashboardPane.setCenter(currPane);
+					break;
+
+				case BLOCKLISTS:
+					blocklistPane.setCenter(currPane);
+					break;
+
+				case SCHEDULE:
+					schedulePane.setCenter(currPane);
+					break;
+
+				case POMODORO:
+					timerPane.setCenter(currPane);
+					break;
+
+				case STATS:
+					statsPane.setCenter(currPane);
+					break;
+
+				case SETTINGS:
+					settingsPane.setCenter(currPane);
+					break;
+
+				default: // unexisting tab
+					return;
+				}
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	private void populateTabs() {
+//		for (int i = 0; i < NUM_TABS; i++) {
+		setTab(ViewMode.DASHBOARD);
+		setTab(ViewMode.BLOCKLISTS);
+		setTab(ViewMode.SCHEDULE);
+		setTab(ViewMode.POMODORO);
+		setTab(ViewMode.STATS);
+		setTab(ViewMode.SETTINGS);
+//		}
+	}
+
+	private void changeView(int tabId) {
+		tabsPane.getSelectionModel().select(tabId);
+	}
+
+	private void handleLogin() {
+
+	}
+
 }

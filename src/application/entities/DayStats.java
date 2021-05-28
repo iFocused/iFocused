@@ -1,42 +1,40 @@
 package application.entities;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class DayStats {
 	private int timeComputer;
 	private int timeStudying;
 	private int pomodoroSessions;
 	private int pointsEarned;
-	private String todaysDate;
+	private LocalDateTime todaysDate;
 
 	public DayStats(int timeComputer, int timeStudying, int pomodoroSessions, int pointsEarned) {
 		this.timeComputer = timeComputer;
 		this.timeStudying = timeStudying;
 		this.pomodoroSessions = pomodoroSessions;
 		this.pointsEarned = pointsEarned;
-		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-		this.todaysDate = formatter.format(new Date());
+		this.todaysDate = LocalDateTime.now();
 	}
 
 	public int getTimeComputer() {
-		return timeComputer;
+		return this.timeComputer;
 	}
 
 	public int getTimeStudying() {
-		return timeStudying;
+		return this.timeStudying;
 	}
 
 	public int getPomodoroSessions() {
-		return pomodoroSessions;
+		return this.pomodoroSessions;
 	}
 
 	public int getPointsEarned() {
-		return pointsEarned;
+		return this.pointsEarned;
 	}
 
-	public String getTodaysDate() {
-		return todaysDate;
+	public LocalDateTime getTodaysDate() {
+		return this.todaysDate;
 	}
 
 	public void setTimeComputer(int newTimeComputer) {

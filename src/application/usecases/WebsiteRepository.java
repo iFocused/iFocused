@@ -1,20 +1,21 @@
 package application.usecases;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import application.entities.Website;
 
-public class WebsiteRepository {
+public class WebsiteRepository implements Serializable {
 	private Map<Integer, Website> websites;
-	private int end;
+	private int currId;
 
 	/**
 	 * Constructor for the Website repository
 	 */
 	public WebsiteRepository() {
-		this.end = 0;
+		this.currId = 0;
 		this.websites = new HashMap<>();
 	}
 
@@ -24,9 +25,9 @@ public class WebsiteRepository {
 	 * @param Website The Website to be added
 	 */
 	public int createWebsite(String websiteName) {
-		this.websites.put(this.end, new Website(websiteName, this.end));
-		int tmpId = this.end;
-		this.end++;
+		this.websites.put(this.currId, new Website(websiteName, this.currId));
+		int tmpId = this.currId;
+		this.currId++;
 		return tmpId;
 	}
 
@@ -57,7 +58,7 @@ public class WebsiteRepository {
 
 		}
 
-		this.end = prevKey;
+		this.currId = prevKey;
 	}
 
 	/**
@@ -77,7 +78,7 @@ public class WebsiteRepository {
 	 * Return a Website corresponding to the given <id>.
 	 * 
 	 * @param id The identifier for the sought after website
-	 * @return a list of Websites up to a certain time in ascending order
+	 * @return a list of Websites up to a certain time in asccurrIding order
 	 */
 	public Website getNWebsiteById(int id) {
 		return this.websites.get(id);
@@ -89,7 +90,7 @@ public class WebsiteRepository {
 	 * @return the highest identifier number in the list of websites
 	 */
 	public int getHighestId() {
-		return this.end;
+		return this.currId;
 	}
 
 }

@@ -1,4 +1,4 @@
-package application.entities;
+package application.controllers;
 
 import javafx.animation.Animation.Status;
 import application.ui.CircleIndicator.RingProgressIndicator;
@@ -8,7 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.util.Duration;
 
-public class CountDownTimer {
+class CountDownTimer {
 	private int timeMinutes, timeSeconds;
 	private int countDownTime;
 	RingProgressIndicator ringProgressIndicator;
@@ -28,7 +28,7 @@ public class CountDownTimer {
 		return String.valueOf(this.timeMinutes) + ":" + String.valueOf(this.timeSeconds);
 	}
 
-	public void startCountDown() {
+	void startCountDown() {
 		// counting down from the specified Pomodoro session and updating the
 		// UI label respectively
 		timeline = new Timeline();
@@ -57,24 +57,24 @@ public class CountDownTimer {
 
 		timeline.playFromStart();
 	}
-	
-	public Status getStatus() {
+
+	Status getStatus() {
 		return this.timeline.getStatus();
 	}
 
-	public Timeline getTimeline() {
+	Timeline getTimeline() {
 		return this.timeline;
 	}
-	
-	public RingProgressIndicator getProgressIndicator() {
+
+	RingProgressIndicator getProgressIndicator() {
 		return ringProgressIndicator;
 	}
 
-	public void setTimeMins(int newTimeMins) {
+	void setTimeMins(int newTimeMins) {
 		this.timeMinutes = newTimeMins;
 	}
 
-	public void setTimeSecs(int newTimeSecs) {
+	void setTimeSecs(int newTimeSecs) {
 		this.timeSeconds = newTimeSecs;
 	}
 

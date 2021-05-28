@@ -1,15 +1,14 @@
 package application.usecases;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 
 import application.entities.PomodoroSession;
 import application.entities.Session;
 
-public class PomodoroRepository {
+public class PomodoroRepository implements Serializable {
 	private ArrayList<PomodoroSession> pomodoroSessions;
 
 	/**
@@ -53,22 +52,14 @@ public class PomodoroRepository {
 	 * @param time The time to be counted up to
 	 * @return a list of Pomodoro Sessions up to a certain time in ascending order
 	 */
-	public ArrayList<PomodoroSession> getNPomodoroSessionsAsc(String time) {
+	public ArrayList<PomodoroSession> getNPomodoroSessionsAsc(LocalDateTime givenTime) {
 		ArrayList<PomodoroSession> filteredpomodoroSessions = new ArrayList<>();
-		Date dateTime;
 
-		try {
-
-			dateTime = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(time);
-			for (PomodoroSession pomodoroSession : this.pomodoroSessions) {
-				Date tmpDateTime = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(pomodoroSession.getStartTime());
-				if (tmpDateTime.before(dateTime)) {
-					filteredpomodoroSessions.add(pomodoroSession);
-				}
+		for (PomodoroSession pomodoroSession : this.pomodoroSessions) {
+			LocalDateTime tmpDateTime = pomodoroSession.getStartTime();
+			if (tmpDateTime.isBefore(givenTime)) {
+				filteredpomodoroSessions.add(pomodoroSession);
 			}
-
-		} catch (ParseException e) {
-			e.printStackTrace();
 		}
 
 		return filteredpomodoroSessions;
@@ -81,7 +72,7 @@ public class PomodoroRepository {
 	 * @param time The time to be counted up to
 	 * @return a list of pomodoroSessions up to a certain time in descending order
 	 */
-	public ArrayList<PomodoroSession> getNPomodoroSessionsDesc(String time) {
+	public ArrayList<PomodoroSession> getNPomodoroSessionsDesc(LocalDateTime time) {
 		ArrayList<PomodoroSession> pomodoros = this.getNPomodoroSessionsAsc(time);
 		Collections.reverse(pomodoros);
 		return pomodoros;

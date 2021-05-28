@@ -1,30 +1,23 @@
 package application.usecases;
 
-import java.math.BigInteger;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
-
-import org.apache.commons.lang3.time.DateUtils;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 import application.entities.PomodoroSession;
 import application.entities.SessionStatus;
 
 public class PointEligibility {
-	private Date timeSinceLastPt;
-	private Date timeAppRunning;
+	private LocalDateTime timeSinceLastPt;
+	private LocalDateTime timeAppRunning;
 	private TODOList todoList;
 	private PomodoroRepository pomodoroRepo;
 	private SessionRepository sessionRepo;
 
-	public PointEligibility(TODOList todoList, SessionRepository sessionRepo, PomodoroRepository pomodoroRepo)
-			throws ParseException {
+	public PointEligibility(TODOList todoList, SessionRepository sessionRepo, PomodoroRepository pomodoroRepo) {
 		this.todoList = todoList;
 		this.sessionRepo = sessionRepo;
 		this.pomodoroRepo = pomodoroRepo;
-		this.timeAppRunning = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
-				.parse(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()));
+		this.timeAppRunning = LocalDateTime.now();
 	}
 
 	private boolean checkTaskForCompletion() {
@@ -41,21 +34,16 @@ public class PointEligibility {
 
 		// check if the pomodoro session was completed after the last time a point was
 		// given
-		Date pomodoroTime, currTime, newCurrTime = null;
+		LocalDateTime pomodoroTime, currTime, newCurrTime = null;
 
-		try {
-			pomodoroTime = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(recentPomodoroSession.getEndTime());
-			currTime = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
-					.parse(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()));
+		pomodoroTime = recentPomodoroSession.getEndTime();
+		currTime = LocalDateTime.now();
 
-			long differenceInMins = TimeUnit.MILLISECONDS.toMinutes(currTime.getTime() - pomodoroTime.getTime()) % 60;
+		long differenceInMins = currTime.until(pomodoroTime, ChronoUnit.MINUTES);
 
-			newCurrTime = DateUtils.addMinutes(newCurrTime, (int) -differenceInMins); // subtract mins
-			if (pomodoroTime.after(newCurrTime)) {
-				return true;
-			}
-		} catch (ParseException e) {
-			e.printStackTrace();
+		newCurrTime = newCurrTime.minusMinutes((int) differenceInMins); // subtract mins
+		if (pomodoroTime.isAfter(newCurrTime)) {
+			return true;
 		}
 
 		return false;
@@ -71,7 +59,7 @@ public class PointEligibility {
 	private boolean wasScheduleSlotCompleted() {
 		return false;
 	}
-	
+
 	/* TODO */
 	private long getAppRunningTime() {
 		return 0;
@@ -97,14 +85,8 @@ public class PointEligibility {
 		}
 
 		if (getAppRunningTime() >= 10 && criteriaSatisfied >= 2) {
-			try {
-				this.timeSinceLastPt = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
-						.parse(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()));
-				return true;
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			this.timeSinceLastPt = LocalDateTime.now();
+			return true;
 		}
 		return false;
 	}

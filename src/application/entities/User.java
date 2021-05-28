@@ -1,14 +1,18 @@
 package application.entities;
 
-import java.util.SimpleTimeZone;
+import java.util.TimeZone;
 
 public class User {
 	private int points;
 	private String username;
 	private BlockMode blockMode;
-	private SimpleTimeZone timeZone;
+	private TimeZone timeZone;
 
-	public User(String username, SimpleTimeZone timeZone) {
+	public User() {
+		this("", null);
+	}
+	
+	public User(String username, TimeZone timeZone) {
 		this.points = 0;
 		this.blockMode = BlockMode.SIMPLE;
 		this.username = username;
@@ -31,7 +35,7 @@ public class User {
 		return this.blockMode;
 	}
 
-	public SimpleTimeZone getTimeZone() {
+	public TimeZone getTimeZone() {
 		return this.timeZone;
 	}
 
@@ -47,7 +51,7 @@ public class User {
 		this.blockMode = newBlockMode;
 	}
 
-	public void setTimeZone(SimpleTimeZone newTimeZone) {
+	public void setTimeZone(TimeZone newTimeZone) {
 		this.timeZone = newTimeZone;
 	}
 

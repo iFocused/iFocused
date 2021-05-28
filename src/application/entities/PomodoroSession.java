@@ -1,14 +1,13 @@
 package application.entities;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class PomodoroSession {
 	private Session session;
 	private int breakDuration;
-	private String startTime;
+	private LocalDateTime startTime;
 	private int timeUntilStateChange;
-	private String endTime;
+	private LocalDateTime endTime;
 
 	public PomodoroSession(Session session, int breakDuration) {
 		this.session = session;
@@ -16,18 +15,18 @@ public class PomodoroSession {
 		this.timeUntilStateChange = 0;
 
 		// start counting time
-		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-		this.startTime = formatter.format(new Date());
-		this.endTime = "";
+		this.startTime = LocalDateTime.now();
+		this.endTime = null;
 	}
 
 	public void changeStatus(SessionStatus newSessionStatus) {
-		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-		this.endTime = formatter.format(new Date());
+//		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+//		this.endTime = formatter.format(new Date());
+		this.endTime = LocalDateTime.now();
 		// this.timeUntilStateChange = this.endTime - this.startTime (in minutes)
 
 		// resetting for next round
-		this.startTime = formatter.format(new Date());
+		this.startTime = LocalDateTime.now();
 
 		// applying actual session status change
 		this.session.setSessionStatus(newSessionStatus);
@@ -49,11 +48,11 @@ public class PomodoroSession {
 		this.breakDuration = breakDuration;
 	}
 
-	public String getStartTime() {
+	public LocalDateTime getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(String startTime) {
+	public void setStartTime(LocalDateTime startTime) {
 		this.startTime = startTime;
 	}
 
@@ -65,11 +64,11 @@ public class PomodoroSession {
 		this.timeUntilStateChange = timeUntilStateChange;
 	}
 
-	public String getEndTime() {
+	public LocalDateTime getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(String endTime) {
+	public void setEndTime(LocalDateTime endTime) {
 		this.endTime = endTime;
 	}
 

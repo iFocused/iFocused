@@ -1,13 +1,12 @@
 package application.entities;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Session {
 	private int sessionId;
 	private int blockListId;
-	private String startTime;
-	private String endTime;
+	private LocalDateTime startTime;
+	private LocalDateTime endTime;
 	private SessionStatus sessionStatus;
 
 	public Session(int sessionId, int blockListId) {
@@ -17,9 +16,8 @@ public class Session {
 
 		// getting today's date and time (keep in mind the possibility where
 		// the user will manually change their time on the machine)
-		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-		this.startTime = formatter.format(new Date());
-		this.endTime = "";
+		this.startTime = LocalDateTime.now();
+		this.endTime = null;
 	}
 
 	public SessionStatus getSessionStatus() {
@@ -38,11 +36,11 @@ public class Session {
 		return blockListId;
 	}
 
-	public String getStartTime() {
+	public LocalDateTime getStartTime() {
 		return startTime;
 	}
 
-	public String getEndTime() {
+	public LocalDateTime getEndTime() {
 		return endTime;
 	}
 
