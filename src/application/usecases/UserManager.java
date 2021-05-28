@@ -5,6 +5,7 @@ import java.util.TimeZone;
 
 import application.entities.User;
 import application.gateways.DataSerializerGateway;
+import application.gateways.UserManagerGateway;
 
 /**
  * The User manager allows editing all of the user's fields 
@@ -12,9 +13,10 @@ import application.gateways.DataSerializerGateway;
 public class UserManager implements Serializable {
 	private User user;
 	private DataSerializerGateway userGateway;
+	private final UserManagerGateway userManagerGateway;
 	
-	public UserManager(User user) {
-		this.user = user;
+	public UserManager(UserManagerGateway userManagerGateway) {
+		this.userManagerGateway = userManagerGateway;
 	}
 	
 	/**

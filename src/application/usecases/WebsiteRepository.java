@@ -6,17 +6,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 import application.entities.Website;
+import application.gateways.WebsiteRepositoryGateway;
 
 public class WebsiteRepository implements Serializable {
 	private Map<Integer, Website> websites;
+	private final WebsiteRepositoryGateway websiteRepositoryGateway;
 	private int currId;
 
 	/**
 	 * Constructor for the Website repository
 	 */
-	public WebsiteRepository() {
+	public WebsiteRepository(WebsiteRepositoryGateway websiteRepositoryGateway) {
 		this.currId = 0;
 		this.websites = new HashMap<>();
+		this.websiteRepositoryGateway = websiteRepositoryGateway;
 	}
 
 	/**

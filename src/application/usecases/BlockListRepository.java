@@ -9,6 +9,7 @@ import org.apache.commons.collections4.map.HashedMap;
 import application.entities.BlockList;
 import application.entities.Process;
 import application.entities.Website;
+import application.gateways.BlockListGateway;
 
 
 /**
@@ -16,16 +17,18 @@ import application.entities.Website;
  */
 public class BlockListRepository {
 	private final Map<Integer, BlockList> blockLists;
+	private final BlockListGateway blockListGateway;
 	private LocalDateTime timeSinceLastModification; 
 	private int currId;
 
 	/**
 	 * Constructor for the Block List repository
 	 */
-	public BlockListRepository() {
+	public BlockListRepository(BlockListGateway blockListGateway) {
 		this.currId = 0;
 		this.blockLists = new HashedMap<>();
 		this.updateTime();
+		this.blockListGateway = blockListGateway;
 	}
 	
 	/**

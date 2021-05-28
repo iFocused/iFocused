@@ -5,17 +5,20 @@ import java.util.ArrayList;
 
 import application.entities.Task;
 import application.entities.TaskStatus;
+import application.gateways.TODOListGateway;
 
 public class TODOList implements Serializable {
 	private ArrayList<Task> currentTasks;
 	private ArrayList<Task> completedTasks;
+	private final TODOListGateway todoListGateway;
 
 	/**
 	 * Constructor for the TODO List repository
 	 */
-	public TODOList() {
+	public TODOList(TODOListGateway todoListGateway) {
 		this.currentTasks = new ArrayList<>();
 		this.completedTasks = new ArrayList<>();
+		this.todoListGateway = todoListGateway;
 	}
 
 	/**

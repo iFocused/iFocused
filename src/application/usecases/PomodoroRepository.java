@@ -7,15 +7,18 @@ import java.util.Collections;
 
 import application.entities.PomodoroSession;
 import application.entities.Session;
+import application.gateways.PomodoroRepositoryGateway;
 
 public class PomodoroRepository implements Serializable {
 	private ArrayList<PomodoroSession> pomodoroSessions;
+	private final PomodoroRepositoryGateway pomodoroRepositoryGateway;
 
 	/**
 	 * Constructor for the Pomodoro Session repository
 	 */
-	public PomodoroRepository() {
+	public PomodoroRepository(PomodoroRepositoryGateway pomodoroRepositoryGateway) {
 		this.pomodoroSessions = new ArrayList<>();
+		this.pomodoroRepositoryGateway = pomodoroRepositoryGateway;
 	}
 
 	/**

@@ -1,5 +1,7 @@
 package application.controllers;
 
+import application.gateways.GatewayPool;
+import application.gateways.GatewayPoolFactory;
 import application.usecases.UseCasePool;
 import application.views.FxmlViewBuilder;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +16,8 @@ public class ControllerPool {
 	private FxmlViewBuilder fxmlViewBuilder;
 
 	public ControllerPool(FxmlViewBuilder fxmlViewBuilder) {
-		UseCasePool useCasePool = new UseCasePool();
+		GatewayPool gatewayPool = new GatewayPoolFactory().getGatewayPool("ser");
+		UseCasePool useCasePool = new UseCasePool(gatewayPool);
 		mainController = new MainController(useCasePool, fxmlViewBuilder);
 		statsController = new StatsController(useCasePool);
 		nameRegistrationController = new NameRegistrationController(useCasePool);

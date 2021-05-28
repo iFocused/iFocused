@@ -279,5 +279,5 @@
 
 /* ComboBox Style */
 .combo-box .cell{
-    -fx-text-fill: white;
+    -fx-text-fill: black;
 }

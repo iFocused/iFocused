@@ -6,17 +6,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 import application.entities.Process;
+import application.gateways.ProcessRepositoryGateway;
 
 public class ProcessRepository implements Serializable {
 	private Map<Integer, Process> processes;
+	private final ProcessRepositoryGateway processRepositoryGateway;
 	private int currId;
 
 	/**
 	 * Constructor for the Process repository
 	 */
-	public ProcessRepository() {
+	public ProcessRepository(ProcessRepositoryGateway processRepositoryGateway) {
 		this.currId = 0;
 		this.processes = new HashMap<>();
+		this.processRepositoryGateway = processRepositoryGateway;
 	}
 
 	/**

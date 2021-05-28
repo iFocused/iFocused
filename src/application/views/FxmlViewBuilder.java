@@ -25,6 +25,9 @@ public class FxmlViewBuilder {
 	 */
 	public Parent getView(ViewMode whichView) throws IOException {
 		switch (whichView) {
+		case REGISTRATION:
+			return this.controllerPool.getController(new FXMLLoader(getClass().getResource("../views/nameRegistration.fxml"))).load();
+			
 		case DASHBOARD:
 			return this.controllerPool.getController(new FXMLLoader(getClass().getResource("../views/dashboard.fxml"))).load();
 

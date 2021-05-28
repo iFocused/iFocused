@@ -15,14 +15,14 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="557.0" prefWidth="1004.0" styleClass="root" stylesheets="@../resources/theme.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="557.0" prefWidth="1004.0" styleClass="root" stylesheets="@../resources/theme.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.DashboardController">
    <children>
       <Text fill="#575757" layoutX="58.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome, ">
          <font>
             <Font name="CoolveticaRg-Regular" size="22.0" />
          </font>
       </Text>
-      <Text layoutX="154.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DemoMario">
+      <Text fx:id="usernameLbl" layoutX="154.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DemoMario">
          <font>
             <Font name="CoolveticaRg-Regular" size="22.0" />
          </font>
