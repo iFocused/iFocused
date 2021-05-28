@@ -87,7 +87,6 @@ public class MainController implements Initializable {
 	}
 
 	private void setTab(ViewMode whichView) {
-//		FxmlLoader fxmlLoader = new FxmlLoader(tabId);
 		AnchorPane currPane;
 		try {
 			currPane = (AnchorPane) this.fxmlViewBuilder.getView(whichView);
@@ -122,21 +121,18 @@ public class MainController implements Initializable {
 				}
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
 
 	private void populateTabs() {
-//		for (int i = 0; i < NUM_TABS; i++) {
 		setTab(ViewMode.DASHBOARD);
 		setTab(ViewMode.BLOCKLISTS);
 		setTab(ViewMode.SCHEDULE);
 		setTab(ViewMode.POMODORO);
 		setTab(ViewMode.STATS);
 		setTab(ViewMode.SETTINGS);
-//		}
 	}
 
 	private void changeView(int tabId) {

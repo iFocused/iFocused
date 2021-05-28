@@ -14,14 +14,6 @@ public class FxmlViewBuilder {
 		this.controllerPool = new ControllerPool(this);
 	}
 
-//	FXMLLoader loader = new FXMLLoader(getClass().getResource("views/main.fxml"));
-//	ControllerPool controllerPool = new ControllerPool();
-//	
-////	loader.setControllerFactory(MainController -> new MainController("hello there mister "));
-//	
-////	Parent root = loader.load();
-//	Parent root = controllerPool.getController(loader).load();
-//	
 	
 	/**
 	 * Returns the pane corresponding to <tabId>. If an invalid id was given,
@@ -61,9 +53,4 @@ public class FxmlViewBuilder {
 
 		return null;
 	}
-
-//	public void setTabId(int newTabId) {
-//		this.tabId = newTabId;
-//	}
-
 }
