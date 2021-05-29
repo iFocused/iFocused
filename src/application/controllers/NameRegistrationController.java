@@ -6,6 +6,7 @@ import java.util.TimeZone;
 
 import application.usecases.UseCasePool;
 import application.usecases.UserManager;
+import application.views.FxmlViewBuilder;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -24,10 +25,8 @@ public class NameRegistrationController implements Initializable {
 	private final UseCasePool useCasePool;
 
 	private final UserManager userManager;
-
-	private String username;
-
-	private TimeZone timeZone;
+	
+	private FxmlViewBuilder fxmlViewBuilder;
 
 	/*
 	 * FXML components
@@ -78,7 +77,7 @@ public class NameRegistrationController implements Initializable {
 	 */
 	@FXML
 	void onHandleProfileCreation(ActionEvent event) {
-		this.userManager.createUser(this.username, this.timeZone);
+		this.userManager.createUser(usernameLabel.getText(), TimeZone.getTimeZone(combTimeZone.getSelectionModel().getSelectedItem()));
 		Stage stage = (Stage) selectionBtn.getScene().getWindow();
 		stage.close();
 	}
@@ -89,9 +88,10 @@ public class NameRegistrationController implements Initializable {
 	 * @param useCasePool The use case pool containing references to all the
 	 *                    repositories and managers
 	 */
-	public NameRegistrationController(UseCasePool useCasePool) {
+	public NameRegistrationController(UseCasePool useCasePool, FxmlViewBuilder fxmlViewBuilder) {
 		this.useCasePool = useCasePool;
 		this.userManager = useCasePool.getUserManager();
+		this.fxmlViewBuilder = fxmlViewBuilder;
 	}
 
 	/**
@@ -114,29 +114,7 @@ public class NameRegistrationController implements Initializable {
 			selectionBtn.setDisable(false);
 		});
 	}
-
-	/**
-	 * Sets the username of the user
-	 * 
-	 * @param username The username the user would like to be identified as
-	 */
-	public void setUsername(String username) {
-		this.username = username;
-		switchRight();
-	}
-
-	/**
-	 * Sets the selected time zone of the user
-	 * 
-	 * @param timeZone The time zone the user is in
-	 */
-	public void setTimeZone(TimeZone timeZone) {
-		this.timeZone = timeZone;
-		selectionBtn.setDisable(false);
-		switchLeft();
-
-	}
-
+	
 	/**
 	 * Switch to time zone selection window
 	 */

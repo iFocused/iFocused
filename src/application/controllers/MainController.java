@@ -10,14 +10,9 @@ import application.views.FxmlViewBuilder;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.TabPane;
-import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 public class MainController implements Initializable {
 
@@ -79,13 +74,11 @@ public class MainController implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		populateTabs();
-		handleFirstLogin();
 	}
 
 	public MainController(UseCasePool useCasePool, FxmlViewBuilder fxmlBuilder) {
 		this.useCasePool = useCasePool;
 		this.fxmlViewBuilder = fxmlBuilder;
-		useCasePool.populateAll();
 	}
 
 	private void setTab(ViewMode whichView) {
@@ -139,30 +132,6 @@ public class MainController implements Initializable {
 
 	private void changeView(int tabId) {
 		tabsPane.getSelectionModel().select(tabId);
-	}
-
-	private void handleFirstLogin() {
-		try {
-			Stage nameRegStage = new Stage();
-			Parent root = fxmlViewBuilder.getView(ViewMode.REGISTRATION);
-
-			Scene scene = new Scene(root);
-			nameRegStage.setTitle("iFocused - Name Registration");
-			nameRegStage.setScene(scene);
-			nameRegStage.setResizable(false);
-			nameRegStage.initModality(Modality.APPLICATION_MODAL);
-			nameRegStage.getIcons().add(new Image("/application/resources/pics/app-logo.png"));
-			nameRegStage.initModality(Modality.WINDOW_MODAL);
-			nameRegStage.showAndWait();
-			
-			if(this.useCasePool.getUserManager().getUser() == null) {
-				System.out.println("user object DNE!");
-			} else {
-				
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 }

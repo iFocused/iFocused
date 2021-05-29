@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import application.usecases.UseCasePool;
+import application.views.FxmlViewBuilder;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,6 +13,7 @@ import javafx.scene.control.TabPane;
 public class StatsController implements Initializable {
 
 	private UseCasePool useCasePool;
+	private FxmlViewBuilder fxmlViewBuilder;
 	
 	@FXML
 	private TabPane statsTabPane;
@@ -36,8 +38,9 @@ public class StatsController implements Initializable {
 		// TODO Auto-generated method stub
 	}
 	
-	public StatsController(UseCasePool useCasePool) {
+	public StatsController(UseCasePool useCasePool, FxmlViewBuilder fxmlViewBuilder) {
 		this.useCasePool = useCasePool;
+		this.fxmlViewBuilder = fxmlViewBuilder;
 	}
 
 }
