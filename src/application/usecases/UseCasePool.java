@@ -1,7 +1,6 @@
 package application.usecases;
 
 import java.io.File;
-import java.io.Serializable;
 
 import application.gateways.GatewayPool;
 
@@ -9,7 +8,7 @@ import application.gateways.GatewayPool;
  * Used to initialize the use cases and provide a pool of references to access
  * each
  */
-public class UseCasePool implements Serializable {
+public class UseCasePool {
 	private BlockListRepository blockListRepository;
 	private SessionRepository sessionRepository;
 	private PomodoroRepository pomodoroRepository;
@@ -68,7 +67,7 @@ public class UseCasePool implements Serializable {
 	 * @return True iff the user is a new user, otherwise false.
 	 */
 	private boolean isNewUser() {
-		File dataFile = new File("/user_data.ser");
+		File dataFile = new File("./data/user_data.xml");
 		// check if file exists
 		return !dataFile.exists();
 	}

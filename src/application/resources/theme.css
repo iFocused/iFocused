@@ -281,3 +281,8 @@
 .combo-box .cell{
     -fx-text-fill: black;
 }
+
+/* ComboBox 2 Style */
+.combo-box-settings .cell{
+    -fx-text-fill: white;
+}

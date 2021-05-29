@@ -12,11 +12,14 @@ import application.gateways.UserManagerGateway;
  */
 public class UserManager implements Serializable {
 	private User user;
-	private DataSerializerGateway userGateway;
 	private final UserManagerGateway userManagerGateway;
 	
 	public UserManager(UserManagerGateway userManagerGateway) {
 		this.userManagerGateway = userManagerGateway;
+	}
+	
+	public void saveUserData(User user, boolean isNewUser) {
+		userManagerGateway.saveUserData(user, isNewUser);
 	}
 	
 	/**
@@ -44,5 +47,18 @@ public class UserManager implements Serializable {
 	 */
 	public User getUser() {
 		return this.user;
+	}
+	
+	public UserManagerGateway getUserManagerGateway() {
+		return this.userManagerGateway;
+	}
+	
+	/**
+	 * A setter to set the user's object
+	 * 
+	 * @param user	The user object to be set
+	 */
+	public void setUser(User user) {
+		this.user = user;
 	}
 }

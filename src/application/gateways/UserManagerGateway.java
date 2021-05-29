@@ -28,5 +28,5 @@ public interface UserManagerGateway {
 	 * 
 	 * @return True iff the the sync was successful, otherwise false is returned
 	 */
-	boolean saveUserData(User user, DataSerializerGateway userGateway);
+	boolean saveUserData(User user, boolean isNewUser);
 }
