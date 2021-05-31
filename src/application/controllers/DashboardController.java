@@ -7,6 +7,8 @@ import application.entities.ViewMode;
 import application.usecases.UseCasePool;
 import application.usecases.UserManager;
 import application.views.FxmlViewBuilder;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -21,7 +23,7 @@ public class DashboardController implements Initializable {
 	private final UseCasePool useCasePool;
 	private final UserManager userManager;
 	private FxmlViewBuilder fxmlViewBuilder;
-	
+
 	@FXML
 	private Text usernameLbl;
 
@@ -33,6 +35,8 @@ public class DashboardController implements Initializable {
 			usernameLbl.setText(userManager.getUser().getUsername());
 		}
 		
+		viewListeners();
+
 	}
 
 	public DashboardController(UseCasePool useCasePool, FxmlViewBuilder fxmlViewBuilder) {
@@ -40,14 +44,26 @@ public class DashboardController implements Initializable {
 		this.userManager = useCasePool.getUserManager();
 		this.fxmlViewBuilder = fxmlViewBuilder;
 	}
-	
+
+	private void viewListeners() {
+		userManager.getUserManagerProperty().addListener(new ChangeListener<UserManager>() {
+			@Override
+			public void changed(ObservableValue<? extends UserManager> observable, UserManager oldValue,
+					UserManager newValue) {
+				System.out.println("username changed");
+				usernameLbl.setText(newValue.getUser().getUsername());
+			}
+
+		});
+	}
+
 	private void handleFirstLogin() {
 		try {
 			Stage nameRegStage = new Stage();
 			Parent root = fxmlViewBuilder.getView(ViewMode.REGISTRATION);
 
 			Scene scene = new Scene(root);
-			nameRegStage.setTitle("iFocused - Name Registration");
+			nameRegStage.setTitle("iFocused - Registration");
 			nameRegStage.setScene(scene);
 			nameRegStage.setResizable(false);
 			nameRegStage.initModality(Modality.APPLICATION_MODAL);

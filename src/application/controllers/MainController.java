@@ -18,7 +18,7 @@ public class MainController implements Initializable {
 
 	private final int NUM_TABS = 6;
 	private UseCasePool useCasePool;
-	private FxmlViewBuilder fxmlViewBuilder;
+	private FxmlViewBuilder fxmlViewBuilder;	
 
 	@FXML
 	private TabPane tabsPane;

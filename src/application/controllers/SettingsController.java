@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import application.usecases.UseCasePool;
+import application.usecases.UserManager;
 import application.views.FxmlViewBuilder;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +14,7 @@ import javafx.scene.control.TextField;
 
 public class SettingsController implements Initializable {
 	private UseCasePool useCasePool;
+	private UserManager userManager;
 	private FxmlViewBuilder fxmlViewBuilder;
 
 	@FXML
@@ -40,13 +42,16 @@ public class SettingsController implements Initializable {
 
 	@FXML
 	void onHandleUsernameChange(ActionEvent event) {
-		this.useCasePool.getUserManager().getUser().setUsername(usernameLbl.getText());
-		this.useCasePool.getUserManager().getUserManagerGateway().saveUserData(useCasePool.getUserManager().getUser(), false);
+		System.out.println("clicked");
+		this.userManager.getUser().setUsername(usernameLbl.getText());
+		if(this.userManager.getUserManagerGateway().saveUserData(useCasePool.getUserManager().getUser(), false)) usernameLbl.setText("");
+		this.userManager.updateUserManager(this.userManager);
 	}
 
 	public SettingsController(UseCasePool useCasePool, FxmlViewBuilder fxmlViewBuilder) {
 		this.useCasePool = useCasePool;
 		this.fxmlViewBuilder = fxmlViewBuilder;
+		this.userManager = useCasePool.getUserManager();
 	}
 
 }
