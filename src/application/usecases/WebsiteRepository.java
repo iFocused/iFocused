@@ -1,6 +1,5 @@
 package application.usecases;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,7 +7,7 @@ import java.util.Map;
 import application.entities.Website;
 import application.gateways.WebsiteRepositoryGateway;
 
-public class WebsiteRepository implements Serializable {
+public class WebsiteRepository {
 	private Map<Integer, Website> websites;
 	private final WebsiteRepositoryGateway websiteRepositoryGateway;
 	private int currId;

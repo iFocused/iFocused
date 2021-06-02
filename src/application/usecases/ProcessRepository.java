@@ -1,6 +1,5 @@
 package application.usecases;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,7 +7,7 @@ import java.util.Map;
 import application.entities.Process;
 import application.gateways.ProcessRepositoryGateway;
 
-public class ProcessRepository implements Serializable {
+public class ProcessRepository {
 	private Map<Integer, Process> processes;
 	private final ProcessRepositoryGateway processRepositoryGateway;
 	private int currId;

@@ -11,6 +11,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -37,10 +38,15 @@
                   <Image url="@../resources/pics/star.png" />
                </image>
             </ImageView>
-            <Text fill="WHITE" layoutX="62.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="52.3251953125">
-               <font>
-                  <Font size="20.0" />
-               </font></Text>
+            <BorderPane layoutX="65.0" layoutY="-1.0" prefHeight="71.0" prefWidth="64.0">
+               <left>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="52.3251953125" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+               </left>
+            </BorderPane>
          </children>
       </Pane>
       <Pane layoutX="899.0" layoutY="37.0" prefHeight="71.0" prefWidth="64.0" styleClass="pane-box-small">
@@ -91,11 +97,15 @@
                   <Font size="22.0" />
                </font>
             </Text>
-            <Text fill="#373b6d" layoutX="127.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="41">
-               <font>
-                  <Font name="System Bold" size="30.0" />
-               </font>
-            </Text>
+            <BorderPane layoutX="128.0" layoutY="11.0" prefHeight="61.0" prefWidth="160.0">
+               <left>
+                  <Text fill="#373b6d" strokeType="OUTSIDE" strokeWidth="0.0" text="0" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="30.0" />
+                     </font>
+                  </Text>
+               </left>
+            </BorderPane>
          </children>
       </Pane>
       <Pane layoutX="348.0" layoutY="85.0" prefHeight="143.0" prefWidth="290.0" style="-fx-background-color: #FCE1ED; -fx-background-radius: 20px;">
@@ -115,11 +125,15 @@
                   <Font size="22.0" />
                </font>
             </Text>
-            <Text fill="#373b6d" layoutX="127.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="6">
-               <font>
-                  <Font name="System Bold" size="30.0" />
-               </font>
-            </Text>
+            <BorderPane layoutX="128.0" layoutY="11.0" prefHeight="61.0" prefWidth="160.0">
+               <left>
+                  <Text fill="#373b6d" strokeType="OUTSIDE" strokeWidth="0.0" text="0" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="30.0" />
+                     </font>
+                  </Text>
+               </left>
+            </BorderPane>
          </children>
       </Pane>
       <Text layoutX="58.0" layoutY="275.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time spent (Today)">

@@ -15,8 +15,7 @@ class CountDownTimer {
 	Timeline timeline;
 
 	public CountDownTimer(int countDownTime) {
-		this.countDownTime = countDownTime;
-		this.timeMinutes = countDownTime;
+		this.timeMinutes = this.countDownTime = countDownTime;
 		ringProgressIndicator = new RingProgressIndicator();
 	}
 
@@ -33,24 +32,25 @@ class CountDownTimer {
 		// UI label respectively
 		timeline = new Timeline();
 		timeline.setCycleCount(Timeline.INDEFINITE);
-
 		timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
 			// handling event that will occur every second
 			public void handle(ActionEvent event) {
-				if (timeSeconds == 0) {
-					timeSeconds = 60;
-					timeMinutes--;
-					timeSeconds--;
-					ringProgressIndicator.setProgress(ringProgressIndicator.getProgress() + (100 / countDownTime),
-							formatTimeString());
-				} else {
-					timeSeconds--;
-					ringProgressIndicator.setProgress(ringProgressIndicator.getProgress(), formatTimeString());
-				}
-
-				// updating ring time
-				if (timeMinutes <= 0) {
+				// updating ring time (accounting for the first execution of the timer where we
+				// subtract right away)
+				if (timeMinutes <= 0 && timeSeconds <= 0) {
+					ringProgressIndicator.setProgress(100, formatTimeString());
+					System.out.println("stopping timer....");
 					timeline.stop();
+				} else {
+
+					if (timeSeconds == 0 && timeMinutes > 0) {
+						timeSeconds = 60;
+						timeMinutes--;
+					}
+
+					timeSeconds--;
+					ringProgressIndicator.setProgress(
+							ringProgressIndicator.getProgress() + ((100.0 / countDownTime) / 60.0), formatTimeString());
 				}
 			}
 		}));
@@ -71,7 +71,7 @@ class CountDownTimer {
 	}
 
 	void setTimeMins(int newTimeMins) {
-		this.timeMinutes = newTimeMins;
+		this.timeMinutes = this.countDownTime = newTimeMins;
 	}
 
 	void setTimeSecs(int newTimeSecs) {

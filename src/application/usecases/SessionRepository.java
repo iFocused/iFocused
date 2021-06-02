@@ -1,6 +1,5 @@
 package application.usecases;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,7 +7,7 @@ import java.util.Collections;
 import application.entities.Session;
 import application.gateways.SessionRepositoryGateway;
 
-public class SessionRepository implements Serializable {
+public class SessionRepository {
 
 	private ArrayList<Session> sessions;
 	private final SessionRepositoryGateway sessionRepositoryGateway;

@@ -1,6 +1,5 @@
 package application.usecases;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,7 +8,7 @@ import application.entities.PomodoroSession;
 import application.entities.Session;
 import application.gateways.PomodoroRepositoryGateway;
 
-public class PomodoroRepository implements Serializable {
+public class PomodoroRepository {
 	private ArrayList<PomodoroSession> pomodoroSessions;
 	private final PomodoroRepositoryGateway pomodoroRepositoryGateway;
 

@@ -21,7 +21,7 @@ import javafx.scene.text.Text;
 
 public class TimerController implements Initializable {
 
-	final static int SESSION = 15, BREAK = 5, ROUNDS = 4;
+	final static int INIT_SESSION = 15, INIT_BREAK = 5, INIT_ROUNDS = 4;
 	private RingProgressIndicator ringProgressIndicator;
 	private CountDownTimer countDownTimer;
 	private UseCasePool useCasePool;
@@ -86,9 +86,9 @@ public class TimerController implements Initializable {
 
 	@FXML
 	void onHandleResetDefaults(ActionEvent event) {
-		sessionSlider.setValue(SESSION);
-		roundsSlider.setValue(ROUNDS);
-		breakSlider.setValue(BREAK);
+		sessionSlider.setValue(INIT_SESSION);
+		roundsSlider.setValue(INIT_ROUNDS);
+		breakSlider.setValue(INIT_BREAK);
 	}
 
 	@FXML

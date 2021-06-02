@@ -4,8 +4,8 @@ import java.util.TimeZone;
 
 import application.entities.User;
 import application.gateways.UserManagerGateway;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 
 /**
  * The User manager allows editing all of the user's fields
@@ -13,11 +13,11 @@ import javafx.beans.property.SimpleObjectProperty;
 public class UserManager {
 	private User user;
 	private final UserManagerGateway userManagerGateway;
-	private final ObjectProperty<UserManager> userManagerObserved;
+	private final BooleanProperty isDataChanged;
 
 	public UserManager(UserManagerGateway userManagerGateway) {
 		this.userManagerGateway = userManagerGateway;
-		this.userManagerObserved = new SimpleObjectProperty<>();
+		this.isDataChanged = new SimpleBooleanProperty(false);
 	}
 
 	public void saveUserData(User user, boolean isNewUser) {
@@ -50,21 +50,16 @@ public class UserManager {
 		return this.user;
 	}
 
-	public void updateUserManager(UserManager updatedUserManager) {
-		// ensuring that updatedUserManager will have a different hash code to trigger
-		// listeners
-		UserManager tmp = new UserManager(updatedUserManager.getUserManagerGateway());
-		tmp.setUser(updatedUserManager.getUser());
-		this.userManagerObserved.set(tmp);
-
-	}
-
-	public ObjectProperty<UserManager> getUserManagerProperty() {
-		return this.userManagerObserved;
-	}
-
 	public UserManagerGateway getUserManagerGateway() {
 		return this.userManagerGateway;
+	}
+
+	public BooleanProperty getIsDataChangedProperty() {
+		return this.isDataChanged;
+	}
+	
+	public void SetIsUserManagerChangedProperty(boolean state) {
+		this.isDataChanged.set(state);
 	}
 
 	/**

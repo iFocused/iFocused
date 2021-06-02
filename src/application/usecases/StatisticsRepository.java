@@ -1,13 +1,12 @@
 package application.usecases;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import application.entities.DayStats;
 import application.entities.Process;
 
-public class StatisticsRepository implements Serializable {
+public class StatisticsRepository  {
 	private DayStats dayStats;
 	private int statsId;
 

@@ -34,7 +34,7 @@ public class DashboardController implements Initializable {
 		} else {
 			usernameLbl.setText(userManager.getUser().getUsername());
 		}
-		
+
 		viewListeners();
 
 	}
@@ -46,14 +46,12 @@ public class DashboardController implements Initializable {
 	}
 
 	private void viewListeners() {
-		userManager.getUserManagerProperty().addListener(new ChangeListener<UserManager>() {
-			@Override
-			public void changed(ObservableValue<? extends UserManager> observable, UserManager oldValue,
-					UserManager newValue) {
-				System.out.println("username changed");
-				usernameLbl.setText(newValue.getUser().getUsername());
-			}
 
+		userManager.getIsDataChangedProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue) {
+				usernameLbl.setText(this.userManager.getUser().getUsername());
+				userManager.SetIsUserManagerChangedProperty(false);
+			}
 		});
 	}
 
