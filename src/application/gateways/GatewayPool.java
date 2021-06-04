@@ -16,4 +16,6 @@ public interface GatewayPool {
 	
 	UserManagerGateway getUserManagerGateway();
 	
+	StatisticsRepositoryGateway getStatisticsRepositoryGateway();
+	
 }

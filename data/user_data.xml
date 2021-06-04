@@ -4,7 +4,7 @@
   <void property="timeZone">
    <object class="sun.util.calendar.ZoneInfo">
     <void property="ID">
-     <string>Africa/Kigali</string>
+     <string>Africa/Asmara</string>
     </void>
    </object>
   </void>

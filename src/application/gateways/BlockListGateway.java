@@ -1,9 +1,5 @@
 package application.gateways;
 
-import java.time.LocalDateTime;
-import java.util.Map;
-
-import application.entities.BlockList;
 import application.usecases.BlockListRepository;
 
 public interface BlockListGateway {
@@ -32,6 +28,5 @@ public interface BlockListGateway {
 	 * 
 	 * @return True iff the the sync was successful, otherwise false is returned
 	 */
-	boolean saveUserData(Map<Integer, BlockList> blockLists, LocalDateTime timeSinceLastModification,
-			int currId);
+	boolean saveUserData(BlockListRepository blockListRepository);
 }

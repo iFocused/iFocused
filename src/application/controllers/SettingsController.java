@@ -45,7 +45,7 @@ public class SettingsController implements Initializable {
 		System.out.println("clicked");
 		this.userManager.getUser().setUsername(usernameLbl.getText());
 		this.userManager.SetIsUserManagerChangedProperty(true);
-		if(this.userManager.getUserManagerGateway().saveUserData(useCasePool.getUserManager().getUser(), false)) usernameLbl.setText("");
+		if(this.userManager.getUserManagerGateway().saveUserData(useCasePool.getUserManager().getUser())) usernameLbl.setText("");
 	}
 
 	public SettingsController(UseCasePool useCasePool, FxmlViewBuilder fxmlViewBuilder) {

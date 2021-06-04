@@ -35,25 +35,25 @@ public class UseCasePool {
 		// make every use case take a gateway that will de-serialized the data like here
 		// https://github.com/nigow/TradingSystem/blob/e1241568adf33499be90258abe8cbef208d55a3a/src/main/java/org/twelve/usecases/UseCasePool.java#L15
 		// make every gateway take reference to controller pool
-		blockListRepository = new BlockListRepository(gatewayPool.getBlockListGateway()); /* (-) */
+		blockListRepository = new BlockListRepository(gatewayPool.getBlockListGateway()); 
 
-		sessionRepository = new SessionRepository(gatewayPool.getSessionRepositoryGateway()); /* (-) */
+		sessionRepository = new SessionRepository(gatewayPool.getSessionRepositoryGateway());
 
-		pomodoroRepository = new PomodoroRepository(gatewayPool.getPomodoroRepositoryGateway()); /* (-) */
+		pomodoroRepository = new PomodoroRepository(gatewayPool.getPomodoroRepositoryGateway()); 
 
-		websiteRepository = new WebsiteRepository(gatewayPool.getWebsiteRepositoryGateway()); /* (-) */
+		websiteRepository = new WebsiteRepository(gatewayPool.getWebsiteRepositoryGateway()); 
 
-		processRepository = new ProcessRepository(gatewayPool.getProcessRepositoryGateway()); /* (-) */
+		processRepository = new ProcessRepository(gatewayPool.getProcessRepositoryGateway()); 
 
-		todoList = new TODOList(gatewayPool.getTODOListGateway()); /* (-) */
+		todoList = new TODOList(gatewayPool.getTODOListGateway()); 
 
 		pointEligbility = new PointEligibility(todoList, sessionRepository, pomodoroRepository);
 		blocksManager = new BlocksManager(null, blockListRepository, sessionRepository,
 				pomodoroRepository); /* TODO: FIX */
 
-		statisticsRepository = new StatisticsRepository(null); /* TODO: FIX (-) */
+		statisticsRepository = new StatisticsRepository(gatewayPool.getStatisticsRepositoryGateway()); /* TODO: FIX (-) */
 
-		userManager = new UserManager(gatewayPool.getUserManagerGateway()); /* TODO: FIX (-) */
+		userManager = new UserManager(gatewayPool.getUserManagerGateway());
 
 		/**
 		 * NEED TO FIGURE OUT WHERE TO GET THE USERNAME AND TIMEZONE TO initialize a
@@ -73,12 +73,15 @@ public class UseCasePool {
 	}
 
 	/**
-	 * Returns true iff the user data is being populated, otherwise, if the user is new, false is returned
+	 * Returns true iff there is user data that can be populated and is being populated, 
+	 * otherwise, if the user is new and there is nothing to populate, false is returned
 	 * 
-	 * @return whether an attempt to populate the user data was sent successfully
+	 * @return whether an attempt to populate the user data was placed
 	 */
 	public boolean populateAll() {
 		if (isNewUser()) {
+			// need to create directory
+			new File("./data").mkdirs();
 			return false;
 		} else {
 			gatewayPool.getUserManagerGateway().populateUserData(userManager);
@@ -87,10 +90,9 @@ public class UseCasePool {
 			gatewayPool.getWebsiteRepositoryGateway().populateUserData(websiteRepository);
 			gatewayPool.getProcessRepositoryGateway().populateUserData(processRepository);
 			gatewayPool.getTODOListGateway().populateUserData(todoList);
+			gatewayPool.getStatisticsRepositoryGateway().populateUserData(statisticsRepository);
 			return true;
 		}
-		
-		// if else can be simplified to "return !isNewUser();"
 	}
 
 	public BlockListRepository getBlockListRepository() {
@@ -172,5 +174,4 @@ public class UseCasePool {
 	public void setTodoList(TODOList todoList) {
 		this.todoList = todoList;
 	}
-
 }

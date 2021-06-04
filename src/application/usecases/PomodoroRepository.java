@@ -18,6 +18,7 @@ public class PomodoroRepository {
 	public PomodoroRepository(PomodoroRepositoryGateway pomodoroRepositoryGateway) {
 		this.pomodoroSessions = new ArrayList<>();
 		this.pomodoroRepositoryGateway = pomodoroRepositoryGateway;
+		this.pomodoroRepositoryGateway.populateUserData(this);
 	}
 
 	/**

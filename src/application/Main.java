@@ -13,7 +13,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage) {
 		try {
-			FxmlViewBuilder fxmlViewBuilder = new FxmlViewBuilder();
+			FxmlViewBuilder fxmlViewBuilder = new FxmlViewBuilder(stage);
 			Parent root = fxmlViewBuilder.getView(ViewMode.MAIN);
 
 	        Scene scene = new Scene(root);

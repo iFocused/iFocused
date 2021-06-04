@@ -5,13 +5,19 @@ import java.util.HashMap;
 
 import application.entities.DayStats;
 import application.entities.Process;
+import application.gateways.ProcessRepositoryGateway;
+import application.gateways.StatisticsRepositoryGateway;
 
 public class StatisticsRepository  {
 	private DayStats dayStats;
 	private int statsId;
+	private final StatisticsRepositoryGateway statisticsRepositoryGateway;
 
-	public StatisticsRepository(DayStats dayStats) {
-		this.dayStats = dayStats;
+	public StatisticsRepository(StatisticsRepositoryGateway statisticsRepositoryGateway) {
+		
+		this.statisticsRepositoryGateway = statisticsRepositoryGateway;
+//		this.dayStats = dayStats;
+		this.statisticsRepositoryGateway.populateUserData(this);
 	}
 
 	public int createDayStats(int timeComputer, int timeStudying, int pomodoroSessions, int pointsEarned) {

@@ -11,14 +11,13 @@ import application.entities.Process;
 import application.entities.Website;
 import application.gateways.BlockListGateway;
 
-
 /**
  * Repository containing reference to all the block lists the user has created
  */
 public class BlockListRepository {
-	private final Map<Integer, BlockList> blockLists;
+	private Map<Integer, BlockList> blockLists;
 	private final BlockListGateway blockListGateway;
-	private LocalDateTime timeSinceLastModification; 
+	private LocalDateTime timeSinceLastModification;
 	private int currId;
 
 	/**
@@ -29,8 +28,9 @@ public class BlockListRepository {
 		this.blockLists = new HashedMap<>();
 		this.updateTime();
 		this.blockListGateway = blockListGateway;
+		this.blockListGateway.populateUserData(this);
 	}
-	
+
 	/**
 	 * Updates the time since the last modification
 	 */
@@ -38,7 +38,7 @@ public class BlockListRepository {
 		this.timeSinceLastModification = LocalDateTime.now();
 	}
 
-	public int saveBlockList(int id, boolean isEnabled, ArrayList<Website> blockedWebsites, 
+	public int saveBlockList(int id, boolean isEnabled, ArrayList<Website> blockedWebsites,
 			ArrayList<Process> blockedProcesse) {
 		this.updateBlockListById(currId, isEnabled, blockedWebsites, blockedProcesse);
 		int tmpId = currId;
@@ -62,7 +62,7 @@ public class BlockListRepository {
 	 * @param id        Identifier of the block list to be added
 	 * @param blockList The block list to be added
 	 */
-	public void updateBlockListById(int id, boolean isEnabled, ArrayList<Website> blockedWebsites, 
+	public void updateBlockListById(int id, boolean isEnabled, ArrayList<Website> blockedWebsites,
 			ArrayList<Process> blockedProcesses) {
 		this.blockLists.put(id, new BlockList(id, isEnabled, blockedWebsites, blockedProcesses));
 		this.updateTime();
@@ -78,14 +78,32 @@ public class BlockListRepository {
 		this.blockLists.remove(id, blockList);
 		this.updateTime();
 	}
+
+	/**
+	 * Returns a list containing all the block lists
+	 * 
+	 * @return a list containing all the block lists
+	 */
+	public ArrayList<BlockList> getBlockListsAsList() {
+		return (ArrayList<BlockList>) this.blockLists.values();
+	}
 	
 	/**
 	 * Returns a list containing all the block lists
-	 *  
+	 * 
 	 * @return a list containing all the block lists
 	 */
-	public ArrayList<BlockList> getBlockLists() {
-		return (ArrayList<BlockList>) this.blockLists.values();
+	public Map<Integer, BlockList> getBlockLists() {
+		return this.blockLists;
+	}
+
+	/**
+	 * Sets the new dictionary of block lists
+	 * 
+	 * @param blockLists	The dictionary containing the ids and their corresponding block lists
+	 */
+	public void setBlockLists(Map<Integer, BlockList> blockLists) {
+		this.blockLists = blockLists;
 	}
 
 	/**
@@ -115,7 +133,7 @@ public class BlockListRepository {
 		}
 		return blockLists;
 	}
-	
+
 	/**
 	 * Returns the time since the last modification of a block list
 	 * 
@@ -123,6 +141,40 @@ public class BlockListRepository {
 	 */
 	public LocalDateTime getTimeSinceLastModification() {
 		return this.timeSinceLastModification;
+	}
+
+	/**
+	 * @param timeSinceLastModification the timeSinceLastModification to set
+	 */
+	public void setTimeSinceLastModification(LocalDateTime timeSinceLastModification) {
+		this.timeSinceLastModification = timeSinceLastModification;
+	}
+
+	/**
+	 * Getter for the currId
+	 * 
+	 * @return the currId
+	 */
+	public int getCurrId() {
+		return currId;
+	}
+
+	/**
+	 * Setter for the currId
+	 * 
+	 * @param currId the currId to set
+	 */
+	public void setCurrId(int currId) {
+		this.currId = currId;
+	}
+
+	/**
+	 * Getter for BlockListGateway
+	 * 
+	 * @return the blockListGateway
+	 */
+	public BlockListGateway getBlockListGateway() {
+		return blockListGateway;
 	}
 
 }

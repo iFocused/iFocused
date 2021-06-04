@@ -5,6 +5,7 @@ import application.gateways.GatewayPool;
 import application.gateways.PomodoroRepositoryGateway;
 import application.gateways.ProcessRepositoryGateway;
 import application.gateways.SessionRepositoryGateway;
+import application.gateways.StatisticsRepositoryGateway;
 import application.gateways.TODOListGateway;
 import application.gateways.UserManagerGateway;
 import application.gateways.WebsiteRepositoryGateway;
@@ -17,6 +18,7 @@ public class LocalDataSerializerGateway implements GatewayPool {
 	private final SessionRepositoryGateway sessionRepositoryGateway;
 	private final TODOListGateway todoListGateway;
 	private final UserManagerGateway userManagerGateway;
+	private final StatisticsRepositoryGateway statisticsRepositoryGateway;
 
 	public LocalDataSerializerGateway() {
 		blockListGateway = new SerBlockListGateway();
@@ -26,6 +28,7 @@ public class LocalDataSerializerGateway implements GatewayPool {
 		sessionRepositoryGateway = new SerSessionRepositoryGateway();
 		todoListGateway = new SerTODOListGateway();
 		userManagerGateway = new SerUserManagerGateway();
+		statisticsRepositoryGateway = new SerStatisticsRepositoryGateway();
 
 	}
 
@@ -69,6 +72,12 @@ public class LocalDataSerializerGateway implements GatewayPool {
 	public UserManagerGateway getUserManagerGateway() {
 		// TODO Auto-generated method stub
 		return userManagerGateway;
+	}
+
+	@Override
+	public StatisticsRepositoryGateway getStatisticsRepositoryGateway() {
+		// TODO Auto-generated method stub
+		return this.statisticsRepositoryGateway;
 	}
 
 }

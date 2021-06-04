@@ -6,12 +6,15 @@ import application.controllers.ControllerPool;
 import application.entities.ViewMode;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.stage.Stage;
 
 public class FxmlViewBuilder {
 	private ControllerPool controllerPool;
+	private Stage mainStage;
 
-	public FxmlViewBuilder() {
+	public FxmlViewBuilder(Stage mainStage) {
 		this.controllerPool = new ControllerPool(this);
+		this.mainStage = mainStage;
 	}
 
 	
@@ -55,5 +58,9 @@ public class FxmlViewBuilder {
 		}
 
 		return null;
+	}
+	
+	public Stage getMainStage() {
+		return this.mainStage;
 	}
 }

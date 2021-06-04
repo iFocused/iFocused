@@ -19,6 +19,7 @@ public class TODOList implements Serializable {
 		this.currentTasks = new ArrayList<>();
 		this.completedTasks = new ArrayList<>();
 		this.todoListGateway = todoListGateway;
+		this.todoListGateway.populateUserData(this);
 	}
 
 	/**

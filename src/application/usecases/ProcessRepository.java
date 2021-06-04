@@ -1,5 +1,6 @@
 package application.usecases;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +20,7 @@ public class ProcessRepository {
 		this.currId = 0;
 		this.processes = new HashMap<>();
 		this.processRepositoryGateway = processRepositoryGateway;
+		this.processRepositoryGateway.populateUserData(this);
 	}
 
 	/**
@@ -26,8 +28,8 @@ public class ProcessRepository {
 	 * 
 	 * @param Process The Process to be added
 	 */
-	public int createProcess(String processName) {
-		this.processes.put(this.currId, new Process(processName, this.currId));
+	public int createProcess(File process, String description) {
+		this.processes.put(this.currId, new Process(process, description, this.currId));
 		int tmpId = this.currId;
 		this.currId++;
 		return tmpId;
@@ -73,6 +75,11 @@ public class ProcessRepository {
 			processes.add(Process);
 		}
 		return processes;
+	}
+
+	public Process getMostRecentProcess() {
+		ArrayList<Process> processes = getProcess();
+		return processes.get(processes.size() - 1);
 	}
 
 	/**

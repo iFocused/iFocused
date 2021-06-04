@@ -34,7 +34,7 @@ public class BlocksManager {
 	 */
 	public ArrayList<BlockList> getActiveBlockLists() {
 		ArrayList<BlockList> activeBlockLists = new ArrayList<>(Arrays.asList());
-		for(BlockList blockList: blockListRepository.getBlockLists()) {
+		for(BlockList blockList: blockListRepository.getBlockListsAsList()) {
 			if(blockList.getIsEnabled()) {
 				activeBlockLists.addAll(activeBlockLists);
 			}

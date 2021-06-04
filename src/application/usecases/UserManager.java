@@ -18,10 +18,11 @@ public class UserManager {
 	public UserManager(UserManagerGateway userManagerGateway) {
 		this.userManagerGateway = userManagerGateway;
 		this.isDataChanged = new SimpleBooleanProperty(false);
+		this.userManagerGateway.populateUserData(this);
 	}
 
-	public void saveUserData(User user, boolean isNewUser) {
-		userManagerGateway.saveUserData(user, isNewUser);
+	public void saveUserData(User user) {
+		userManagerGateway.saveUserData(user);
 	}
 
 	/**

@@ -75,7 +75,7 @@ public class DashboardController implements Initializable {
 			} else {
 				usernameLbl.setText(this.useCasePool.getUserManager().getUser().getUsername());
 				//
-				this.userManager.saveUserData(this.useCasePool.getUserManager().getUser(), true);
+				this.userManager.saveUserData(this.useCasePool.getUserManager().getUser());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

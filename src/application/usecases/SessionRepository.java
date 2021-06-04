@@ -18,6 +18,7 @@ public class SessionRepository {
 	public SessionRepository(SessionRepositoryGateway sessionRepositoryGateway) {
 		this.sessions = new ArrayList<>();
 		this.sessionRepositoryGateway = sessionRepositoryGateway;
+		this.sessionRepositoryGateway.populateUserData(this);
 	}
 
 	/**

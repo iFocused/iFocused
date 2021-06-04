@@ -14,6 +14,7 @@ public class ControllerPool {
 	private final StatsController statsController;
 	private final TimerController timerController;
 	private final DashboardController dashboardController;
+	private final BlocklistsController blocklistsController;
 	private FxmlViewBuilder fxmlViewBuilder;
 
 	public ControllerPool(FxmlViewBuilder fxmlViewBuilder) {
@@ -28,6 +29,7 @@ public class ControllerPool {
 		scheduleController = new ScheduleController(useCasePool, fxmlViewBuilder);
 		settingsController = new SettingsController(useCasePool, fxmlViewBuilder); 
 		timerController = new TimerController(useCasePool, fxmlViewBuilder);
+		blocklistsController = new BlocklistsController(useCasePool, fxmlViewBuilder);
 		this.fxmlViewBuilder = fxmlViewBuilder;
 	}
 	
@@ -68,6 +70,10 @@ public class ControllerPool {
 		    
 		    if (controllerType == DashboardController.class) {
 		        return this.dashboardController;
+		    }
+		    
+		    if (controllerType == BlocklistsController.class) {
+		        return this.blocklistsController;
 		    }
 
 		    return null ; // can also throw an unchecked exception
