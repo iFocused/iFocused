@@ -1,15 +1,9 @@
 package application.gateways;
 
-import application.usecases.*;
+import application.usecases.BlockListRepository;
 
-public interface DataSerializerGateway {
+public interface BlockListGateway {
 	
-	/**
-	 * Return whether the user is a new user
-	 * 
-	 * @return True iff the user is a new user, otherwise false.
-	 */
-	boolean isNewUser();
 	
 	/**
 	 * Loads data from external storage into the account manager
@@ -19,7 +13,7 @@ public interface DataSerializerGateway {
 	 * 
 	 * @return True iff loading the data was successful, otherwise false is returned
 	 */
-	boolean populateUserData(UseCasePool useCasePool);
+	boolean populateUserData(BlockListRepository blockListRepository);
 
 	/**
 	 * Syncs the user's data with external storage
@@ -34,7 +28,5 @@ public interface DataSerializerGateway {
 	 * 
 	 * @return True iff the the sync was successful, otherwise false is returned
 	 */
-	boolean saveUserData(SessionRepository sessionRepository, PomodoroRepository pomodoroRepository,
-			WebsiteRepository websiteRepository, ProcessRepository processRepository, TODOList todoList,
-			StatisticsRepository statisticsRepository, UserManager userManager);
+	boolean saveUserData(BlockListRepository blockListRepository);
 }

@@ -37,6 +37,25 @@
 }
 
 /* Button layout */
+.btn-default {
+	-fx-background-color: #4A3CAB;
+	-fx-background-radius: 20;
+}
+
+.btn-default:hover {
+	-fx-background-color:#F26157;
+	-fx-background-radius:15px;
+	-fx-display:inline-block;
+	-fx-cursor:pointer;
+	-fx-color:#ffffff;
+	-fx-text-decoration:none;
+}
+
+.btn-default:pressed  {
+	-fx-scale-y: 0.9;
+    -fx-scale-x: 0.9;
+}
+
 .btn_menu {
 	-fx-background-color:transparent;
 	-fx-text-fill:white;
@@ -153,6 +172,26 @@
     -fx-scale-x: 0.9;
 }
 
+.btn-blocklists {
+	-fx-background-color: #DDDDDD;
+	-fx-background-radius: 20;
+}
+
+.btn-blocklists:hover {
+	-fx-font-weight : bold;
+	-fx-background-radius:5px;
+	-fx-display:inline-block;
+	-fx-cursor:pointer;
+	-fx-color:#ffffff;
+	-fx-text-decoration:none;
+}
+
+.btn-blocklists:pressed  {
+	-fx-scale-y: 0.9;
+    -fx-scale-x: 0.9;
+}
+
+/* Tab pane styling */
 
 .tab-pane {
 	-fx-tab-max-height: 0 ;
@@ -279,5 +318,10 @@
 
 /* ComboBox Style */
 .combo-box .cell{
+    -fx-text-fill: black;
+}
+
+/* ComboBox 2 Style */
+.combo-box-settings .cell{
     -fx-text-fill: white;
 }

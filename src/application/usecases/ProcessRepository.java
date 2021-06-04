@@ -1,22 +1,26 @@
 package application.usecases;
 
-import java.io.Serializable;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import application.entities.Process;
+import application.gateways.ProcessRepositoryGateway;
 
-public class ProcessRepository implements Serializable {
+public class ProcessRepository {
 	private Map<Integer, Process> processes;
+	private final ProcessRepositoryGateway processRepositoryGateway;
 	private int currId;
 
 	/**
 	 * Constructor for the Process repository
 	 */
-	public ProcessRepository() {
+	public ProcessRepository(ProcessRepositoryGateway processRepositoryGateway) {
 		this.currId = 0;
 		this.processes = new HashMap<>();
+		this.processRepositoryGateway = processRepositoryGateway;
+		this.processRepositoryGateway.populateUserData(this);
 	}
 
 	/**
@@ -24,8 +28,8 @@ public class ProcessRepository implements Serializable {
 	 * 
 	 * @param Process The Process to be added
 	 */
-	public int createProcess(String processName) {
-		this.processes.put(this.currId, new Process(processName, this.currId));
+	public int createProcess(File process, String description) {
+		this.processes.put(this.currId, new Process(process, description, this.currId));
 		int tmpId = this.currId;
 		this.currId++;
 		return tmpId;
@@ -71,6 +75,11 @@ public class ProcessRepository implements Serializable {
 			processes.add(Process);
 		}
 		return processes;
+	}
+
+	public Process getMostRecentProcess() {
+		ArrayList<Process> processes = getProcess();
+		return processes.get(processes.size() - 1);
 	}
 
 	/**

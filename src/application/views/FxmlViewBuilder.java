@@ -6,22 +6,17 @@ import application.controllers.ControllerPool;
 import application.entities.ViewMode;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.stage.Stage;
 
 public class FxmlViewBuilder {
 	private ControllerPool controllerPool;
+	private Stage mainStage;
 
-	public FxmlViewBuilder() {
+	public FxmlViewBuilder(Stage mainStage) {
 		this.controllerPool = new ControllerPool(this);
+		this.mainStage = mainStage;
 	}
 
-//	FXMLLoader loader = new FXMLLoader(getClass().getResource("views/main.fxml"));
-//	ControllerPool controllerPool = new ControllerPool();
-//	
-////	loader.setControllerFactory(MainController -> new MainController("hello there mister "));
-//	
-////	Parent root = loader.load();
-//	Parent root = controllerPool.getController(loader).load();
-//	
 	
 	/**
 	 * Returns the pane corresponding to <tabId>. If an invalid id was given,
@@ -33,6 +28,9 @@ public class FxmlViewBuilder {
 	 */
 	public Parent getView(ViewMode whichView) throws IOException {
 		switch (whichView) {
+		case REGISTRATION:
+			return this.controllerPool.getController(new FXMLLoader(getClass().getResource("../views/nameRegistration.fxml"))).load();
+			
 		case DASHBOARD:
 			return this.controllerPool.getController(new FXMLLoader(getClass().getResource("../views/dashboard.fxml"))).load();
 
@@ -61,9 +59,8 @@ public class FxmlViewBuilder {
 
 		return null;
 	}
-
-//	public void setTabId(int newTabId) {
-//		this.tabId = newTabId;
-//	}
-
+	
+	public Stage getMainStage() {
+		return this.mainStage;
+	}
 }

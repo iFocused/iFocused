@@ -1,19 +1,23 @@
 package application.entities;
 
+import java.io.File;
+
 public class Process {
 
-	private String processName;
+	private File process;
 	private int processId;
 	private int timesBlocked;
+	private String description;
 
-	public Process(String processName, int processId) {
-		this.processName = processName;
+	public Process(File process, String description, int processId) {
+		this.process = process;
 		this.processId = processId;
+		this.description = description;
 		this.timesBlocked = 0;
 	}
 
 	public String getProcessName() {
-		return processName;
+		return process.getName();
 	}
 
 	public int getprocessId() {
@@ -24,8 +28,8 @@ public class Process {
 		return timesBlocked;
 	}
 
-	public void setProcessName(String newProcessName) {
-		this.processName = newProcessName;
+	public void setProcess(File newProcess) {
+		this.process = newProcess;
 	}
 
 	public void setprocessId(int newProcessId) {
@@ -34,6 +38,10 @@ public class Process {
 
 	public void setTimesBlocked(int newTimesBlocked) {
 		this.timesBlocked = newTimesBlocked;
+	}
+	
+	public String getDescription() {
+		return this.description;
 	}
 
 }

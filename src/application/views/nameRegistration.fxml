@@ -33,18 +33,18 @@
                </font>
             </Button>
             <ComboBox fx:id="combTimeZone" layoutX="104.0" layoutY="72.0" prefHeight="25.0" prefWidth="323.0" promptText="Select TimeZone" visible="false" />
-            <Button fx:id="rightArrowBtn" layoutX="468.0" layoutY="63.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="48.0" style="-fx-background-color: #3F8EFC; -fx-border-color: #3F8EFC;" styleClass="btn-stats">
+            <Button fx:id="rightArrowBtn" disable="true" layoutX="468.0" layoutY="63.0" mnemonicParsing="false" onAction="#onClickArrowRight" prefHeight="43.0" prefWidth="48.0" style="-fx-background-color: #3F8EFC; -fx-border-color: #3F8EFC;" styleClass="btn-stats">
                <graphic>
-                  <ImageView fitHeight="20.0" fitWidth="31.0" onDragDetected="#onClickArrowRight" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="20.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../resources/pics/arrow_right.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="leftArrowBtn" disable="true" layoutX="21.0" layoutY="63.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="48.0" style="-fx-background-color: #3F8EFC; -fx-border-color: #3F8EFC;" styleClass="btn-stats">
+            <Button fx:id="leftArrowBtn" disable="true" layoutX="21.0" layoutY="63.0" mnemonicParsing="false" onAction="#onClickArrowLeft" prefHeight="43.0" prefWidth="48.0" style="-fx-background-color: #3F8EFC; -fx-border-color: #3F8EFC;" styleClass="btn-stats">
                <graphic>
-                  <ImageView fitHeight="20.0" fitWidth="31.0" onDragDetected="#onClickArrowLeft" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="20.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../resources/pics/arrow_left.png" />
                      </image>

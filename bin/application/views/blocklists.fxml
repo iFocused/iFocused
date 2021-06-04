@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="557.0" prefWidth="1004.0" styleClass="root" stylesheets="@../resources/theme.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="557.0" prefWidth="1004.0" styleClass="root" stylesheets="@../resources/theme.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.BlocklistsController">
    <children>
       <Pane layoutX="28.0" layoutY="10.0" prefHeight="537.0" prefWidth="481.0" style="-fx-background-color: #69B578; -fx-background-radius: 20px;">
          <children>
@@ -37,7 +37,7 @@
                </font>
             </Text>
             <CheckBox layoutX="88.0" layoutY="94.0" mnemonicParsing="false" text="Enabled" textFill="WHITE" />
-            <Button layoutX="47.0" layoutY="491.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="398.0" style="-fx-background-color: #4A3CAB; -fx-background-radius: 20; -fx-border-radius: 20; -fx-graphic-text-gap: 10;" text="Create Block List" textFill="WHITE" />
+            <Button layoutX="47.0" layoutY="491.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="398.0" styleClass="btn-default" text="Create Block List" textFill="WHITE" />
             <Text fill="WHITE" layoutX="258.0" layoutY="378.0" strokeType="OUTSIDE" strokeWidth="0.0">
                <font>
                   <Font name="System Bold" size="20.0" />
@@ -51,7 +51,7 @@
                            <children>
                               <TextField alignment="CENTER" layoutX="10.0" layoutY="14.0" prefHeight="27.0" prefWidth="361.0" promptText="Add URL" style="-fx-border-color: grey; -fx-background-radius: 20; -fx-border-radius: 20;" />
                               <ListView layoutX="10.0" layoutY="85.0" prefHeight="158.0" prefWidth="361.0" style="-fx-background-radius: 20px;" />
-                              <Button layoutX="89.0" layoutY="255.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="198.0" style="-fx-background-color: #DDDDDD; -fx-background-radius: 20; -fx-border-radius: 20; -fx-graphic-text-gap: 10;" text="Add" />
+                              <Button layoutX="89.0" layoutY="255.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="198.0" styleClass="btn-blocklists" text="Add" />
                               <TextField alignment="CENTER" layoutX="10.0" layoutY="50.0" prefHeight="27.0" prefWidth="361.0" promptText="Add Description" style="-fx-border-color: grey; -fx-background-radius: 20; -fx-border-radius: 20;" />
                            </children>
                         </AnchorPane>
@@ -59,12 +59,37 @@
                   </Tab>
                   <Tab styleClass="tab-two" text="Applications">
                      <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="tab-pane-main">
+                           <children>
+                              <TextField fx:id="processLbl" alignment="CENTER" layoutX="10.0" layoutY="14.0" prefHeight="27.0" prefWidth="276.0" promptText="Process Directory" style="-fx-border-color: grey; -fx-background-radius: 20; -fx-border-radius: 20;" />
+                              <ListView fx:id="appListView" layoutX="10.0" layoutY="85.0" prefHeight="158.0" prefWidth="361.0" style="-fx-background-radius: 20;" />
+                              <Button layoutX="89.0" layoutY="255.0" mnemonicParsing="false" onAction="#onHandleAddApp" prefHeight="24.0" prefWidth="198.0" styleClass="btn-blocklists" text="Add" />
+                              <TextField fx:id="appDescriptionTxt" alignment="CENTER" layoutX="10.0" layoutY="50.0" prefHeight="27.0" prefWidth="361.0" promptText="Add Description" style="-fx-border-color: grey; -fx-background-radius: 20; -fx-border-radius: 20;" />
+                              <Button layoutX="290.0" layoutY="15.0" mnemonicParsing="false" onAction="#onHandleAppBrowse" prefHeight="25.0" prefWidth="76.0" styleClass="btn-blocklists" text="Browse" />
+                           </children>
+                        </AnchorPane>
                      </content>
                   </Tab>
                   <Tab styleClass="tab-two" text="Exceptions">
                      <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="tab-pane-main">
+                           <children>
+                              <TextField alignment="CENTER" layoutX="10.0" layoutY="14.0" prefHeight="27.0" prefWidth="361.0" promptText="Add URL" style="-fx-border-color: grey; -fx-background-radius: 20; -fx-border-radius: 20;" />
+                              <ListView layoutX="10.0" layoutY="85.0" prefHeight="158.0" prefWidth="361.0" style="-fx-background-radius: 20px;" />
+                              <Button layoutX="89.0" layoutY="255.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="198.0" styleClass="btn-blocklists" text="Add" />
+                              <TextField alignment="CENTER" layoutX="10.0" layoutY="50.0" prefHeight="27.0" prefWidth="361.0" promptText="Add Description" style="-fx-border-color: grey; -fx-background-radius: 20; -fx-border-radius: 20;" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="tab-pane-main">
+                           <children>
+                              <TextField alignment="CENTER" layoutX="10.0" layoutY="14.0" prefHeight="27.0" prefWidth="361.0" promptText="Add URL" style="-fx-border-color: grey; -fx-background-radius: 20; -fx-border-radius: 20;" />
+                              <ListView layoutX="10.0" layoutY="85.0" prefHeight="158.0" prefWidth="361.0" style="-fx-background-radius: 20px;" />
+                              <Button layoutX="89.0" layoutY="255.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="198.0" styleClass="btn-blocklists" text="Add" />
+                              <TextField alignment="CENTER" layoutX="10.0" layoutY="50.0" prefHeight="27.0" prefWidth="361.0" promptText="Add Description" style="-fx-border-color: grey; -fx-background-radius: 20; -fx-border-radius: 20;" />
+                           </children>
+                        </AnchorPane>
                      </content>
                   </Tab>
                </tabs>
@@ -86,8 +111,8 @@
                   <TableColumn prefWidth="144.0" text="Description" />
                </columns>
             </TableView>
-            <Button layoutX="11.0" layoutY="448.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="215.0" style="-fx-background-color: #4A3CAB; -fx-background-radius: 20; -fx-border-radius: 20; -fx-graphic-text-gap: 10;" text="Delete Selected" textFill="WHITE" />
-            <Button layoutX="234.0" layoutY="448.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="215.0" style="-fx-background-color: #4A3CAB; -fx-background-radius: 20; -fx-border-radius: 20; -fx-graphic-text-gap: 10;" text="Modify Contents" textFill="WHITE" />
+            <Button layoutX="11.0" layoutY="448.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="215.0" styleClass="btn-default" text="Delete Selected" textFill="WHITE" />
+            <Button layoutX="234.0" layoutY="448.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="215.0" styleClass="btn-default" text="Modify Contents" textFill="WHITE" />
             <Text fill="WHITE" layoutX="258.0" layoutY="378.0" strokeType="OUTSIDE" strokeWidth="0.0">
                <font>
                   <Font name="System Bold" size="20.0" />

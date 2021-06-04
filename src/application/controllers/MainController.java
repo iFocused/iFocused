@@ -5,8 +5,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import application.entities.ViewMode;
-import application.gateways.DataSerializerGateway;
-import application.gateways.serialization.localDataSerializerGateway;
 import application.usecases.UseCasePool;
 import application.views.FxmlViewBuilder;
 import javafx.event.ActionEvent;
@@ -20,7 +18,7 @@ public class MainController implements Initializable {
 
 	private final int NUM_TABS = 6;
 	private UseCasePool useCasePool;
-	private FxmlViewBuilder fxmlViewBuilder;
+	private FxmlViewBuilder fxmlViewBuilder;	
 
 	@FXML
 	private TabPane tabsPane;
@@ -76,9 +74,6 @@ public class MainController implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		populateTabs();
-		DataSerializerGateway dsg = new localDataSerializerGateway();
-		System.out.println(dsg.isNewUser());
-		handleLogin();
 	}
 
 	public MainController(UseCasePool useCasePool, FxmlViewBuilder fxmlBuilder) {
@@ -87,7 +82,6 @@ public class MainController implements Initializable {
 	}
 
 	private void setTab(ViewMode whichView) {
-//		FxmlLoader fxmlLoader = new FxmlLoader(tabId);
 		AnchorPane currPane;
 		try {
 			currPane = (AnchorPane) this.fxmlViewBuilder.getView(whichView);
@@ -122,29 +116,22 @@ public class MainController implements Initializable {
 				}
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
 
 	private void populateTabs() {
-//		for (int i = 0; i < NUM_TABS; i++) {
 		setTab(ViewMode.DASHBOARD);
 		setTab(ViewMode.BLOCKLISTS);
 		setTab(ViewMode.SCHEDULE);
 		setTab(ViewMode.POMODORO);
 		setTab(ViewMode.STATS);
 		setTab(ViewMode.SETTINGS);
-//		}
 	}
 
 	private void changeView(int tabId) {
 		tabsPane.getSelectionModel().select(tabId);
-	}
-
-	private void handleLogin() {
-
 	}
 
 }

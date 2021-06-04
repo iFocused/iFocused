@@ -6,6 +6,7 @@ import java.util.TimeZone;
 
 import application.usecases.UseCasePool;
 import application.usecases.UserManager;
+import application.views.FxmlViewBuilder;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -20,19 +21,17 @@ public class NameRegistrationController implements Initializable {
 	/**
 	 * Java components
 	 */
-	
+
 	private final UseCasePool useCasePool;
 
 	private final UserManager userManager;
-
-	private String username;
-
-	private TimeZone timeZone;
+	
+	private FxmlViewBuilder fxmlViewBuilder;
 
 	/*
-	 * FXML components 
+	 * FXML components
 	 */
-	
+
 	@FXML
 	private Text label;
 
@@ -54,7 +53,7 @@ public class NameRegistrationController implements Initializable {
 	/**
 	 * Switches focus onto the username selection window
 	 * 
-	 * @param event The click event of the button 
+	 * @param event The click event of the button
 	 */
 	@FXML
 	void onClickArrowLeft(ActionEvent event) {
@@ -64,7 +63,7 @@ public class NameRegistrationController implements Initializable {
 	/**
 	 * Switches focus onto the time zone selection window
 	 * 
-	 * @param event The click event of the button 
+	 * @param event The click event of the button
 	 */
 	@FXML
 	void onClickArrowRight(ActionEvent event) {
@@ -74,11 +73,11 @@ public class NameRegistrationController implements Initializable {
 	/**
 	 * Creates a user profile and closes the window
 	 * 
-	 * @param event The click event of the button 
+	 * @param event The click event of the button
 	 */
 	@FXML
 	void onHandleProfileCreation(ActionEvent event) {
-		this.userManager.createUser(this.username, this.timeZone);
+		this.userManager.createUser(usernameLabel.getText(), TimeZone.getTimeZone(combTimeZone.getSelectionModel().getSelectedItem()));
 		Stage stage = (Stage) selectionBtn.getScene().getWindow();
 		stage.close();
 	}
@@ -86,11 +85,13 @@ public class NameRegistrationController implements Initializable {
 	/**
 	 * Constructor for NameRegirationController
 	 * 
-	 * @param useCasePool	The use case pool containing references to all the repositories and managers
+	 * @param useCasePool The use case pool containing references to all the
+	 *                    repositories and managers
 	 */
-	public NameRegistrationController(UseCasePool useCasePool) {
+	public NameRegistrationController(UseCasePool useCasePool, FxmlViewBuilder fxmlViewBuilder) {
 		this.useCasePool = useCasePool;
 		this.userManager = useCasePool.getUserManager();
+		this.fxmlViewBuilder = fxmlViewBuilder;
 	}
 
 	/**
@@ -100,31 +101,21 @@ public class NameRegistrationController implements Initializable {
 	public void initialize(URL url, ResourceBundle rb) {
 		String[] timeZones = TimeZone.getAvailableIDs();
 		combTimeZone.getItems().addAll(timeZones);
-	}
 
+		usernameLabel.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue.isEmpty()) {
+				rightArrowBtn.setDisable(true);
+			} else {
+				rightArrowBtn.setDisable(false);
+			}
+		});
+
+		combTimeZone.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
+			selectionBtn.setDisable(false);
+		});
+	}
+	
 	/**
-	 * Sets the username of the user
-	 * 
-	 * @param username	The username the user would like to be identified as
-	 */
-	public void setUsername(String username) {
-		this.username = username;
-		switchRight();
-	}
-
-	/**
-	 * Sets the selected time zone of the user
-	 * 
-	 * @param timeZone	The time zone the user is in 
-	 */
-	public void setTimeZone(TimeZone timeZone) {
-		this.timeZone = timeZone;
-		selectionBtn.setDisable(false);
-		switchLeft();
-
-	}
-
-	/** 
 	 * Switch to time zone selection window
 	 */
 	private void switchRight() {
@@ -132,6 +123,8 @@ public class NameRegistrationController implements Initializable {
 		leftArrowBtn.setDisable(false);
 		usernameLabel.setVisible(false);
 		combTimeZone.setVisible(true);
+		label.setText("Timezone Selection");
+
 	}
 
 	/**
@@ -142,6 +135,7 @@ public class NameRegistrationController implements Initializable {
 		rightArrowBtn.setDisable(false);
 		combTimeZone.setVisible(false);
 		usernameLabel.setVisible(true);
+		label.setText("Username Selection");
 	}
 
 }

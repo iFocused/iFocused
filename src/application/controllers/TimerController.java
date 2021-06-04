@@ -7,30 +7,25 @@ import com.jfoenix.controls.JFXSlider;
 
 import application.ui.CircleIndicator.RingProgressIndicator;
 import application.usecases.UseCasePool;
-import javafx.animation.Animation;
+import application.views.FxmlViewBuilder;
 import javafx.animation.Animation.Status;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import javafx.util.Duration;
-
-import java.lang.String;
 
 public class TimerController implements Initializable {
 
-	final static int SESSION = 15, BREAK = 5, ROUNDS = 4;
+	final static int INIT_SESSION = 15, INIT_BREAK = 5, INIT_ROUNDS = 4;
 	private RingProgressIndicator ringProgressIndicator;
 	private CountDownTimer countDownTimer;
 	private UseCasePool useCasePool;
+	private FxmlViewBuilder fxmlViewBuilder;
 
 	@FXML
 	private Text roundsLbl;
@@ -65,46 +60,6 @@ public class TimerController implements Initializable {
 	@FXML
 	private Text roundLbl;
 
-	private void applySliderListeners() {
-		sessionSlider.valueProperty().addListener(new ChangeListener<Number>() {
-
-			@Override
-			public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-				sessionLbl.setText(String.valueOf(newValue.intValue()) + ":00");
-				countDownTimer.setTimeMins(newValue.intValue());
-				ringProgressIndicator.setProgress(0, sessionLbl.getText());
-			}
-		});
-
-		roundsSlider.valueProperty().addListener(new ChangeListener<Number>() {
-			@Override
-			public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-				roundsLbl.setText(String.valueOf(newValue.intValue()));
-			}
-		});
-
-		breakSlider.valueProperty().addListener(new ChangeListener<Number>() {
-
-			@Override
-			public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-				breakLbl.setText(String.valueOf(newValue.intValue()) + ":00");
-			}
-		});
-	}
-
-	private void resetTimer() {
-		if (countDownTimer.getTimeline() != null) {
-			countDownTimer.getTimeline().stop();
-			descriptionLbl.setVisible(false);
-			roundLbl.setVisible(false);
-			startBtn.setDisable(false);
-			settingsPane.setDisable(false);
-			ringProgressIndicator.setProgress(0, sessionLbl.getText());
-			this.countDownTimer.setTimeMins((int) sessionSlider.getValue());
-			this.countDownTimer.setTimeSecs(0);
-		}
-	}
-
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		applySliderListeners();
@@ -131,9 +86,9 @@ public class TimerController implements Initializable {
 
 	@FXML
 	void onHandleResetDefaults(ActionEvent event) {
-		sessionSlider.setValue(SESSION);
-		roundsSlider.setValue(ROUNDS);
-		breakSlider.setValue(BREAK);
+		sessionSlider.setValue(INIT_SESSION);
+		roundsSlider.setValue(INIT_ROUNDS);
+		breakSlider.setValue(INIT_BREAK);
 	}
 
 	@FXML
@@ -153,8 +108,49 @@ public class TimerController implements Initializable {
 
 	}
 
-	public TimerController(UseCasePool useCasePool) {
+	public TimerController(UseCasePool useCasePool, FxmlViewBuilder fxmlViewBuilder) {
 		this.useCasePool = useCasePool;
+		this.fxmlViewBuilder = fxmlViewBuilder;
+	}
+
+	private void resetTimer() {
+		if (countDownTimer.getTimeline() != null) {
+			countDownTimer.getTimeline().stop();
+			descriptionLbl.setVisible(false);
+			roundLbl.setVisible(false);
+			startBtn.setDisable(false);
+			settingsPane.setDisable(false);
+			ringProgressIndicator.setProgress(0, sessionLbl.getText());
+			this.countDownTimer.setTimeMins((int) sessionSlider.getValue());
+			this.countDownTimer.setTimeSecs(0);
+		}
+	}
+
+	private void applySliderListeners() {
+		sessionSlider.valueProperty().addListener(new ChangeListener<Number>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+				sessionLbl.setText(String.valueOf(newValue.intValue()) + ":00");
+				countDownTimer.setTimeMins(newValue.intValue());
+				ringProgressIndicator.setProgress(0, sessionLbl.getText());
+			}
+		});
+
+		roundsSlider.valueProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+				roundsLbl.setText(String.valueOf(newValue.intValue()));
+			}
+		});
+
+		breakSlider.valueProperty().addListener(new ChangeListener<Number>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+				breakLbl.setText(String.valueOf(newValue.intValue()) + ":00");
+			}
+		});
 	}
 
 }

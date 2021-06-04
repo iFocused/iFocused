@@ -1,5 +1,7 @@
 package application.controllers;
 
+import application.gateways.GatewayPool;
+import application.gateways.GatewayPoolFactory;
 import application.usecases.UseCasePool;
 import application.views.FxmlViewBuilder;
 import javafx.fxml.FXMLLoader;
@@ -11,16 +13,23 @@ public class ControllerPool {
 	private final SettingsController settingsController;
 	private final StatsController statsController;
 	private final TimerController timerController;
+	private final DashboardController dashboardController;
+	private final BlocklistsController blocklistsController;
 	private FxmlViewBuilder fxmlViewBuilder;
 
 	public ControllerPool(FxmlViewBuilder fxmlViewBuilder) {
-		UseCasePool useCasePool = new UseCasePool();
+		// DISCUSS: Since the controller and view interact with each other, give every
+		// controller a reference to fxmlViewBuilder like mainController
+		GatewayPool gatewayPool = new GatewayPoolFactory().getGatewayPool("ser");
+		UseCasePool useCasePool = new UseCasePool(gatewayPool);
 		mainController = new MainController(useCasePool, fxmlViewBuilder);
-		statsController = new StatsController(useCasePool);
-		nameRegistrationController = new NameRegistrationController(useCasePool);
-		scheduleController = new ScheduleController(useCasePool);
-		settingsController = new SettingsController(useCasePool); 
-		timerController = new TimerController(useCasePool);
+		statsController = new StatsController(useCasePool, fxmlViewBuilder);
+		dashboardController = new DashboardController(useCasePool, fxmlViewBuilder);
+		nameRegistrationController = new NameRegistrationController(useCasePool, fxmlViewBuilder);
+		scheduleController = new ScheduleController(useCasePool, fxmlViewBuilder);
+		settingsController = new SettingsController(useCasePool, fxmlViewBuilder); 
+		timerController = new TimerController(useCasePool, fxmlViewBuilder);
+		blocklistsController = new BlocklistsController(useCasePool, fxmlViewBuilder);
 		this.fxmlViewBuilder = fxmlViewBuilder;
 	}
 	
@@ -57,6 +66,14 @@ public class ControllerPool {
 		    
 		    if (controllerType == TimerController.class) {
 		        return this.timerController;
+		    }
+		    
+		    if (controllerType == DashboardController.class) {
+		        return this.dashboardController;
+		    }
+		    
+		    if (controllerType == BlocklistsController.class) {
+		        return this.blocklistsController;
 		    }
 
 		    return null ; // can also throw an unchecked exception
