@@ -29,28 +29,28 @@ public class FxmlViewBuilder {
 	public Parent getView(ViewMode whichView) throws IOException {
 		switch (whichView) {
 		case REGISTRATION:
-			return this.controllerPool.getController(new FXMLLoader(getClass().getResource("../views/nameRegistration.fxml"))).load();
+			return this.controllerPool.getController(new FXMLLoader(getClass().getResource("nameRegistration.fxml"))).load();
 			
 		case DASHBOARD:
-			return this.controllerPool.getController(new FXMLLoader(getClass().getResource("../views/dashboard.fxml"))).load();
+			return this.controllerPool.getController(new FXMLLoader(getClass().getResource("dashboard.fxml"))).load();
 
 		case BLOCKLISTS:
-			return this.controllerPool.getController(new FXMLLoader(getClass().getResource("../views/blocklists.fxml"))).load();
+			return this.controllerPool.getController(new FXMLLoader(getClass().getResource("blocklists.fxml"))).load();
 
 		case SCHEDULE:
-			return this.controllerPool.getController(new FXMLLoader(getClass().getResource("../views/schedule.fxml"))).load();
+			return this.controllerPool.getController(new FXMLLoader(getClass().getResource("schedule.fxml"))).load();
 
 		case POMODORO:
-			return this.controllerPool.getController(new FXMLLoader(getClass().getResource("../views/timer.fxml"))).load();
+			return this.controllerPool.getController(new FXMLLoader(getClass().getResource("timer.fxml"))).load();
 
 		case STATS:
-			return this.controllerPool.getController(new FXMLLoader(getClass().getResource("../views/stats.fxml"))).load();
+			return this.controllerPool.getController(new FXMLLoader(getClass().getResource("stats.fxml"))).load();
 			
 		case SETTINGS:
-			return this.controllerPool.getController(new FXMLLoader(getClass().getResource("../views/settings.fxml"))).load();
+			return this.controllerPool.getController(new FXMLLoader(getClass().getResource("settings.fxml"))).load();
 
 		case MAIN:
-			return this.controllerPool.getController(new FXMLLoader(getClass().getResource("../views/main.fxml"))).load();
+			return this.controllerPool.getController(new FXMLLoader(getClass().getResource("main.fxml"))).load();
 
 		default:
 			break;
