@@ -1,5 +1,6 @@
 package application.usecases;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,6 +11,7 @@ import application.gateways.SessionRepositoryGateway;
 public class SessionRepository {
 
 	private ArrayList<Session> sessions;
+	private int sessionIdTracker;
 	private final SessionRepositoryGateway sessionRepositoryGateway;
 
 	/**
@@ -19,6 +21,7 @@ public class SessionRepository {
 		this.sessions = new ArrayList<>();
 		this.sessionRepositoryGateway = sessionRepositoryGateway;
 		this.sessionRepositoryGateway.populateUserData(this);
+		this.sessionIdTracker = 0;
 	}
 
 	/**
@@ -26,8 +29,9 @@ public class SessionRepository {
 	 * 
 	 * @param session The session to be added
 	 */
-	public void createSession(int sessionId, int blockListId) {
-		this.sessions.add(new Session(sessionId, blockListId));
+	public void createSession(int blockListId) {
+		this.sessions.add(new Session(sessionIdTracker, blockListId));
+		this.sessionIdTracker++;
 	}
 
 	/**
@@ -82,5 +86,20 @@ public class SessionRepository {
 		ArrayList<Session> sessions = this.getNSessionsAsc(givenTime);
 		Collections.reverse(sessions);
 		return sessions;
+	}
+	
+	/**
+	 * 
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	public Session findSession(LocalDate startDate, LocalDate endDate) {
+		for(Session tmpSession : this.sessions) {
+			if(tmpSession.getStartTime().toLocalDate().equals(startDate) && tmpSession.getEndTime().toLocalDate().equals(endDate)) {
+				return tmpSession;
+			}
+		}
+		return null;
 	}
 }

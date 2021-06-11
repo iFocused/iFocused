@@ -3,6 +3,10 @@ package application.controllers;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -10,9 +14,10 @@ import com.calendarfx.model.Calendar;
 import com.calendarfx.model.Calendar.Style;
 import com.calendarfx.model.CalendarEvent;
 import com.calendarfx.model.CalendarSource;
+import com.calendarfx.model.Entry;
 import com.calendarfx.view.CalendarView;
-import com.calendarfx.view.DateControl;
 
+import application.usecases.SessionRepository;
 import application.usecases.UseCasePool;
 import application.views.FxmlViewBuilder;
 import javafx.application.Platform;
@@ -20,15 +25,17 @@ import javafx.collections.ListChangeListener;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.BorderPane;
-import javafx.util.Callback;
 
 public class ScheduleController implements Initializable {
 	private int calendarStyleCount;
-	private CalendarView calendar;
+	private Map<Calendar, ArrayList<Entry>> entryMap;
+	private CalendarView calendarView;
 	private UseCasePool useCasePool;
+	private SessionRepository sessionRepository;
 	private FxmlViewBuilder fxmlViewBuilder;
 
 	@FXML
@@ -37,41 +44,9 @@ public class ScheduleController implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		calendarStyleCount = 1;
-//		calendar = new CalendarView();
-//		Calendar calendarOrig = new Calendar("Demo");
-//		mainPane.setCenter(calendar);
 
-//		calendar.addEventHandler(CalendarEvent.ENTRY_TITLE_CHANGED, new EventHandler<CalendarEvent>() {
-//
-//			@Override
-//			public void handle(CalendarEvent arg0) {
-//				System.out.println("smth changed");
-//
-//			}
-//		});
-
-		CalendarView calendarView = new CalendarView();
-
-		// look into events and callbacks
-//		calendarView.setDefaultCalendarProvider(new Callback<DateControl, Calendar>() {
-//			
-//			@Override
-//			public Calendar call(DateControl arg0) {
-//				// TODO Auto-generated method stub
-//				System.out.println("lool");
-//				return null;
-//			}
-//		});
-
-		// creating calendars
-//		Calendar studyPlan = new Calendar("Study Plans");
-//		Calendar assignments = new Calendar("Assignments");
-//
-//		studyPlan.setStyle(Style.STYLE1);
-//		assignments.setStyle(Style.STYLE2);
-
+		calendarView = new CalendarView();
 		CalendarSource myCalendarSource = new CalendarSource("My Calendars");
-//		myCalendarSource.getCalendars().addAll(studyPlan, assignments);
 
 		calendarView.getCalendarSources().addAll(myCalendarSource);
 
@@ -106,92 +81,147 @@ public class ScheduleController implements Initializable {
 		EventHandler<CalendarEvent> handler = new EventHandler<CalendarEvent>() {
 
 			@Override
-			public void handle(CalendarEvent arg0) {
+			public void handle(CalendarEvent calEvent) {
 				System.out.println("smth changed");
 
 			}
 		};
-
+		
 //		studyPlan.addEventHandler(handler);
-		calendarView.getCalendarSources().addListener(new ListChangeListener<CalendarSource>() {
-
-			@Override
-			public void onChanged(Change<? extends CalendarSource> calenderSourceLst) {
-				TextInputDialog td = new TextInputDialog("Enter here");
-				td.setHeaderText("Enter calendar name");
-
-				Optional<String> result = td.showAndWait();
-				if (result.isPresent()) {
-					// ok was pressed
-					CalendarSource tmpCalendarSource = calenderSourceLst.getList()
-							.get(calenderSourceLst.getList().size() - 1);
-					
-					Calendar newCalendar = tmpCalendarSource
-							.getCalendars().get(calenderSourceLst.getList().get(calenderSourceLst.getList().size() - 1)
-									.getCalendars().size() - 1);
-
-					calenderSourceLst.getList().remove(tmpCalendarSource);
-
-					newCalendar.setStyle(getCurrStyle());
-					newCalendar.setName(result.get());
-					myCalendarSource.getCalendars().add(newCalendar);
-					calendarStyleCount++;
-
-				}
-
-//				System.out.println(calenderSourceLst.getList().get(calenderSourceLst.getList().size() - 1).getName());
-//				System.out.println(calenderSourceLst
-//						.getList().get(calenderSourceLst.getList().size() - 1).getCalendars().get(calenderSourceLst
-//								.getList().get(calenderSourceLst.getList().size() - 1).getCalendars().size() - 1)
-//						.getName());
-
-			}
-		});
-
-//		calendarView.showAddCalendarButtonProperty().set(false);
-
-//		System.out.println(calendarView.getCalendarSources().get(0).getName());
-//		System.out.println(calendarView.getCalendars().get(0).getName());
-
-//		calendarView.addEventHandler(CalendarEvent.CALENDAR_CHANGED, new EventHandler<CalendarEvent>() {
-//
-//			@Override
-//			public void handle(CalendarEvent arg0) {
-//				System.out.println("yoooo");
-//
-//			}
-//		});
-
+		
+		// order of listeners is important
+		addCalendarCreationEvent(myCalendarSource);
+		addEntryListener(myCalendarSource);
+		
 	}
 
 	public ScheduleController(UseCasePool useCasePool, FxmlViewBuilder fxmlViewBuilder) {
 		this.useCasePool = useCasePool;
+		this.sessionRepository = useCasePool.getSessionRepository();
 		this.fxmlViewBuilder = fxmlViewBuilder;
+		entryMap = new HashMap<>();
+	}
+
+	private void addCalendarCreationEvent(CalendarSource myCalendarSource) {
+		calendarView.getCalendarSources().addListener(new ListChangeListener<CalendarSource>() {
+
+			@Override
+			public void onChanged(Change<? extends CalendarSource> calendarSourceLst) {
+				TextInputDialog td = new TextInputDialog("Enter here");
+				td.initOwner(fxmlViewBuilder.getMainStage());
+				td.setTitle("Choose Calendar Name");
+				td.setHeaderText("Enter calendar name");
+
+				Optional<String> result = td.showAndWait();
+				if (result.isPresent()) {
+					if (result.get().isEmpty() || result.get().equals("Enter here")) {
+						Alert alert = new Alert(AlertType.ERROR);
+						alert.initOwner(fxmlViewBuilder.getMainStage());
+						alert.setTitle("Invalid Calendar Name");
+						alert.setHeaderText("Please enter a valid calendar name");
+						alert.setContentText("Invalid calendar name was entered");
+
+						alert.showAndWait();
+						// fire event change to prompt the user to re-enter the calendar name
+						calendarView.getCalendarSources().retainAll(calendarView.getCalendarSources());
+						return;
+					}
+
+					CalendarSource tmpCalendarSource = calendarSourceLst.getList()
+							.get(calendarSourceLst.getList().size() - 1);
+
+					Calendar newCalendar = tmpCalendarSource.getCalendars().get(calendarSourceLst.getList()
+							.get(calendarSourceLst.getList().size() - 1).getCalendars().size() - 1);
+
+					calendarSourceLst.getList().remove(tmpCalendarSource);
+
+					newCalendar.setStyle(getCurrStyle());
+					newCalendar.setName(result.get());
+					myCalendarSource.getCalendars().add(newCalendar);
+
+				} else {
+					calendarSourceLst.getList().remove(calendarSourceLst.getList().size()-1);
+				}
+
+			}
+		});
+	}
+
+	private void addEntryListener(CalendarSource myCalendarSource) {
+		calendarView.getCalendarSources().addListener(new ListChangeListener<CalendarSource>() {
+
+			@Override
+			public void onChanged(Change<? extends CalendarSource> calendarSourceLst) {
+				System.out.println("trigerred");
+				for (Calendar calendar : myCalendarSource.getCalendars()) {
+					calendar.addEventHandler(evt -> {
+						// check if the calendar entry (session) already exists
+						if (entryMap.containsKey(calendar)) {
+							entryMap.get(calendar).clear();
+						} else {
+							entryMap.put(calendar, new ArrayList<>());
+						}
+
+						Map<LocalDate, List<Entry<?>>> tmpCalendarMap = (calendar.findEntries(LocalDate.now(),
+								LocalDate.now().plusYears(5),
+								useCasePool.getUserManager().getUser().getTimeZone().toZoneId()));
+
+						if (tmpCalendarMap.size() > 0) {
+							tmpCalendarMap.values().forEach(entryLst -> {
+
+								entryLst.forEach(entry -> {
+									entryMap.get(calendar).add(entry);
+									System.out.println(entry.getTitle());
+								});
+								
+//								temporary
+//								sessionRepository.createSession(0);
+
+							});
+						}
+
+						System.out.println("change was done!");
+					});
+				}
+
+			}
+
+		});
 
 	}
 
 	private Style getCurrStyle() {
+		Style selectedStyle = null;
+
 		switch (this.calendarStyleCount % 6) {
 		case 0:
-			return Style.STYLE1;
+			selectedStyle = Style.STYLE1;
+			break;
 
 		case 1:
-			return Style.STYLE2;
+			selectedStyle = Style.STYLE2;
+			break;
 
 		case 2:
-			return Style.STYLE3;
+			selectedStyle = Style.STYLE3;
+			break;
 
 		case 3:
-			return Style.STYLE4;
+			selectedStyle = Style.STYLE4;
+			break;
 
 		case 4:
-			return Style.STYLE5;
+			selectedStyle = Style.STYLE5;
+			break;
 
 		case 5:
-			return Style.STYLE6;
+			selectedStyle = Style.STYLE6;
+			break;
 
 		}
-		return null;
+
+		this.calendarStyleCount++;
+		return selectedStyle;
 	}
 
 }
