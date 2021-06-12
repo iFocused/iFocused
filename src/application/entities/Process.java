@@ -7,12 +7,10 @@ public class Process {
 	private File process;
 	private int processId;
 	private int timesBlocked;
-	private String description;
 
-	public Process(File process, String description, int processId) {
+	public Process(File process, int processId) {
 		this.process = process;
 		this.processId = processId;
-		this.description = description;
 		this.timesBlocked = 0;
 	}
 
@@ -38,10 +36,6 @@ public class Process {
 
 	public void setTimesBlocked(int newTimesBlocked) {
 		this.timesBlocked = newTimesBlocked;
-	}
-	
-	public String getDescription() {
-		return this.description;
 	}
 
 }

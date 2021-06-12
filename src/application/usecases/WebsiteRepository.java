@@ -1,5 +1,6 @@
 package application.usecases;
 
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,10 +27,14 @@ public class WebsiteRepository {
 	 * 
 	 * @param Website The Website to be added
 	 */
-	public int createWebsite(String websiteName) {
-		this.websites.put(this.currId, new Website(websiteName, this.currId));
+	public int createWebsite(String websiteName, String websiteURL) {
 		int tmpId = this.currId;
-		this.currId++;
+		try {
+			this.websites.put(this.currId, new Website(websiteName, websiteURL, this.currId));
+			this.currId++;
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
 		return tmpId;
 	}
 

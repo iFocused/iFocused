@@ -6,27 +6,32 @@ import java.util.Arrays;
 import java.util.Date;
 
 public class BlockList {
+	private String blocklistName;
+	private String description;
 	private int blockListId;
 	private String updatedDate;
 	private ArrayList<Website> blockedWebsites;
 	private ArrayList<Process> blockedProcesses;
 	private boolean isEnabled;
 
-	public BlockList(int blockListId) {
-		this(blockListId, false);
+	public BlockList(String blocklistName, String description, int blockListId) {
+		this(blocklistName, description, blockListId, false);
 	}
 
-	public BlockList(int blockListId, boolean isEnabled) {
-		this(blockListId, isEnabled, new ArrayList<>(Arrays.asList()), new ArrayList<>(Arrays.asList()));
+	public BlockList(String blocklistName, String description, int blockListId, boolean isEnabled) {
+		this(blocklistName, description, blockListId, isEnabled, new ArrayList<>(Arrays.asList()),
+				new ArrayList<>(Arrays.asList()));
 	}
 
-	public BlockList(int blockListId, ArrayList<Website> blockedWebsites,
+	public BlockList(String blocklistName, String description, int blockListId, ArrayList<Website> blockedWebsites,
 			ArrayList<Process> blockedProcesses) {
-		this(blockListId, false, blockedWebsites, blockedProcesses);
+		this(blocklistName, description, blockListId, false, blockedWebsites, blockedProcesses);
 	}
 
-	public BlockList(int blockListId, boolean isEnabled, ArrayList<Website> blockedWebsites, 
-			ArrayList<Process> blockedProcesses) {
+	public BlockList(String blocklistName, String description, int blockListId, boolean isEnabled,
+			ArrayList<Website> blockedWebsites, ArrayList<Process> blockedProcesses) {
+		this.blocklistName = blocklistName;
+		this.description = description;
 		this.isEnabled = isEnabled;
 		this.blockListId = blockListId;
 		this.blockedWebsites = blockedWebsites;
@@ -74,6 +79,14 @@ public class BlockList {
 		return blockedProcesses;
 	}
 
+	public String getBlocklistName() {
+		return blocklistName;
+	}
+
+	public String getBlocklistDescription() {
+		return description;
+	}
+
 	/* Setters */
 
 	public void setIsEnabled(boolean isEnabled) {
@@ -94,6 +107,14 @@ public class BlockList {
 
 	public void setBlockedProcesses(ArrayList<Process> processes) {
 		this.blockedProcesses = processes;
+	}
+
+	public void setBlocklistName(String newBlocklistName) {
+		this.blocklistName = newBlocklistName;
+	}
+
+	public void setBlocklistDescription(String newDescription) {
+		this.description = newDescription;
 	}
 
 }

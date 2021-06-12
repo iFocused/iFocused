@@ -25,34 +25,33 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Text>
-            <TextField layoutX="88.0" layoutY="56.0" prefHeight="25.0" prefWidth="249.0" promptText="Enter list name" style="-fx-border-color: grey;" />
+            <TextField fx:id="blocklistNameLbl" layoutX="95.0" layoutY="55.0" prefHeight="25.0" prefWidth="249.0" promptText="Enter list name" style="-fx-border-color: grey;" />
             <Text fill="WHITE" layoutX="37.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Text>
-            <Text fill="WHITE" layoutX="37.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status">
+            <Text fill="WHITE" layoutX="37.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Text>
-            <CheckBox layoutX="88.0" layoutY="94.0" mnemonicParsing="false" text="Enabled" textFill="WHITE" />
-            <Button layoutX="47.0" layoutY="491.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="398.0" styleClass="btn-default" text="Create Block List" textFill="WHITE" />
+            <CheckBox fx:id="blocklistChkBox" layoutX="88.0" layoutY="123.0" mnemonicParsing="false" text="Enabled" textFill="WHITE" />
+            <Button layoutX="47.0" layoutY="491.0" mnemonicParsing="false" onAction="#onHandleCreateBlocklist" prefHeight="32.0" prefWidth="398.0" styleClass="btn-default" text="Create Block List" textFill="WHITE" />
             <Text fill="WHITE" layoutX="258.0" layoutY="378.0" strokeType="OUTSIDE" strokeWidth="0.0">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Text>
-            <TabPane layoutX="35.0" layoutY="125.0" prefHeight="354.0" prefWidth="420.0" styleClass="tab-pane-main" tabClosingPolicy="UNAVAILABLE">
+            <TabPane layoutX="35.0" layoutY="159.0" prefHeight="320.0" prefWidth="420.0" styleClass="tab-pane-main" tabClosingPolicy="UNAVAILABLE">
                <tabs>
                   <Tab styleClass="tab-two" text="Websites">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="tab-pane-main">
                            <children>
-                              <TextField alignment="CENTER" layoutX="10.0" layoutY="14.0" prefHeight="27.0" prefWidth="361.0" promptText="Add URL" style="-fx-border-color: grey; -fx-background-radius: 20; -fx-border-radius: 20;" />
-                              <ListView layoutX="10.0" layoutY="85.0" prefHeight="158.0" prefWidth="361.0" style="-fx-background-radius: 20px;" />
-                              <Button layoutX="89.0" layoutY="255.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="198.0" styleClass="btn-blocklists" text="Add" />
-                              <TextField alignment="CENTER" layoutX="10.0" layoutY="50.0" prefHeight="27.0" prefWidth="361.0" promptText="Add Description" style="-fx-border-color: grey; -fx-background-radius: 20; -fx-border-radius: 20;" />
+                              <TextField fx:id="websiteLbl" alignment="CENTER" layoutX="10.0" layoutY="19.0" prefHeight="27.0" prefWidth="361.0" promptText="Add URL" style="-fx-border-color: grey; -fx-background-radius: 20; -fx-border-radius: 20;" />
+                              <ListView fx:id="websiteListView" layoutX="10.0" layoutY="53.0" prefHeight="158.0" prefWidth="361.0" style="-fx-background-radius: 20px;" />
+                              <Button layoutX="91.0" layoutY="220.0" mnemonicParsing="false" onAction="#onHandleAddWebsite" prefHeight="27.0" prefWidth="198.0" styleClass="btn-blocklists" text="Add" />
                            </children>
                         </AnchorPane>
                      </content>
@@ -61,11 +60,10 @@
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="tab-pane-main">
                            <children>
-                              <TextField fx:id="processLbl" alignment="CENTER" layoutX="10.0" layoutY="14.0" prefHeight="27.0" prefWidth="276.0" promptText="Process Directory" style="-fx-border-color: grey; -fx-background-radius: 20; -fx-border-radius: 20;" />
-                              <ListView fx:id="appListView" layoutX="10.0" layoutY="85.0" prefHeight="158.0" prefWidth="361.0" style="-fx-background-radius: 20;" />
-                              <Button layoutX="89.0" layoutY="255.0" mnemonicParsing="false" onAction="#onHandleAddApp" prefHeight="24.0" prefWidth="198.0" styleClass="btn-blocklists" text="Add" />
-                              <TextField fx:id="appDescriptionTxt" alignment="CENTER" layoutX="10.0" layoutY="50.0" prefHeight="27.0" prefWidth="361.0" promptText="Add Description" style="-fx-border-color: grey; -fx-background-radius: 20; -fx-border-radius: 20;" />
-                              <Button layoutX="290.0" layoutY="15.0" mnemonicParsing="false" onAction="#onHandleAppBrowse" prefHeight="25.0" prefWidth="76.0" styleClass="btn-blocklists" text="Browse" />
+                              <TextField fx:id="processLbl" alignment="CENTER" layoutX="10.0" layoutY="19.0" prefHeight="27.0" prefWidth="276.0" promptText="Process Directory" style="-fx-border-color: grey; -fx-background-radius: 20; -fx-border-radius: 20;" />
+                              <ListView fx:id="appListView" layoutX="10.0" layoutY="53.0" prefHeight="158.0" prefWidth="361.0" style="-fx-background-radius: 20;" />
+                              <Button layoutX="91.0" layoutY="220.0" mnemonicParsing="false" onAction="#onHandleAddApp" prefHeight="27.0" prefWidth="198.0" styleClass="btn-blocklists" text="Add" />
+                              <Button layoutX="290.0" layoutY="19.0" mnemonicParsing="false" onAction="#onHandleAppBrowse" prefHeight="25.0" prefWidth="76.0" styleClass="btn-blocklists" text="Browse" />
                            </children>
                         </AnchorPane>
                      </content>
@@ -84,16 +82,21 @@
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="tab-pane-main">
                            <children>
-                              <TextField alignment="CENTER" layoutX="10.0" layoutY="14.0" prefHeight="27.0" prefWidth="361.0" promptText="Add URL" style="-fx-border-color: grey; -fx-background-radius: 20; -fx-border-radius: 20;" />
-                              <ListView layoutX="10.0" layoutY="85.0" prefHeight="158.0" prefWidth="361.0" style="-fx-background-radius: 20px;" />
-                              <Button layoutX="89.0" layoutY="255.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="198.0" styleClass="btn-blocklists" text="Add" />
-                              <TextField alignment="CENTER" layoutX="10.0" layoutY="50.0" prefHeight="27.0" prefWidth="361.0" promptText="Add Description" style="-fx-border-color: grey; -fx-background-radius: 20; -fx-border-radius: 20;" />
+                              <TextField alignment="CENTER" layoutX="10.0" layoutY="19.0" prefHeight="27.0" prefWidth="361.0" promptText="Add URL" style="-fx-border-color: grey; -fx-background-radius: 20; -fx-border-radius: 20;" />
+                              <ListView layoutX="10.0" layoutY="53.0" prefHeight="158.0" prefWidth="361.0" style="-fx-background-radius: 20px;" />
+                              <Button layoutX="91.0" layoutY="220.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="198.0" styleClass="btn-blocklists" text="Add" />
                            </children>
                         </AnchorPane>
                      </content>
                   </Tab>
                </tabs>
             </TabPane>
+            <TextField fx:id="blocklistDescription" layoutX="122.0" layoutY="87.0" prefHeight="27.0" prefWidth="222.0" promptText="Enter list description" style="-fx-border-color: grey;" />
+            <Text fill="WHITE" layoutX="37.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Text>
          </children>
       </Pane>
       <Pane layoutX="509.0" layoutY="10.0" prefHeight="537.0" prefWidth="481.0" style="-fx-background-color: #3F8EFC; -fx-background-radius: 20px;">
@@ -104,11 +107,11 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Text>
-            <TableView layoutX="14.0" layoutY="54.0" prefHeight="380.0" prefWidth="435.0">
+            <TableView fx:id="blocklistTableView" layoutX="14.0" layoutY="54.0" prefHeight="380.0" prefWidth="435.0">
                <columns>
-                  <TableColumn prefWidth="150.0" text="Name" />
-                  <TableColumn minWidth="0.0" prefWidth="140.0" text="Status" />
-                  <TableColumn prefWidth="144.0" text="Description" />
+                  <TableColumn fx:id="nameColumn" prefWidth="150.0" text="Name" />
+                  <TableColumn fx:id="statusColumn" minWidth="0.0" prefWidth="140.0" text="Status" />
+                  <TableColumn fx:id="descriptionColumn" prefWidth="144.0" text="Description" />
                </columns>
             </TableView>
             <Button layoutX="11.0" layoutY="448.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="215.0" styleClass="btn-default" text="Delete Selected" textFill="WHITE" />
@@ -120,7 +123,7 @@
             </Text>
             <Pane layoutX="11.0" layoutY="490.0" prefHeight="35.0" prefWidth="446.0" style="-fx-background-radius: 20;" styleClass="pane">
                <children>
-                  <JFXToggleButton layoutX="167.0" layoutY="-11.0" text="Enabled" textFill="WHITE" toggleColor="#3f8efc" toggleLineColor="#2461ab" />
+                  <JFXToggleButton fx:id="blocklistToggleBtn" layoutX="167.0" layoutY="-11.0" text="Enabled" textFill="WHITE" toggleColor="#3f8efc" toggleLineColor="#2461ab" />
                </children>
             </Pane>
          </children>

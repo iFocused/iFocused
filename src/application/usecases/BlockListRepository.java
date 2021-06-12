@@ -30,6 +30,7 @@ public class BlockListRepository {
 		this.blockListGateway = blockListGateway;
 		this.blockListGateway.populateUserData(this);
 	}
+	
 
 	/**
 	 * Updates the time since the last modification
@@ -38,9 +39,9 @@ public class BlockListRepository {
 		this.timeSinceLastModification = LocalDateTime.now();
 	}
 
-	public int saveBlockList(int id, boolean isEnabled, ArrayList<Website> blockedWebsites,
+	public int createBlockList(String blocklistName, String description, boolean isEnabled, ArrayList<Website> blockedWebsites,
 			ArrayList<Process> blockedProcesse) {
-		this.updateBlockListById(currId, isEnabled, blockedWebsites, blockedProcesse);
+		this.updateBlockListById(currId, blocklistName, description, isEnabled, blockedWebsites, blockedProcesse);
 		int tmpId = currId;
 		this.currId++;
 		return tmpId;
@@ -62,9 +63,9 @@ public class BlockListRepository {
 	 * @param id        Identifier of the block list to be added
 	 * @param blockList The block list to be added
 	 */
-	public void updateBlockListById(int id, boolean isEnabled, ArrayList<Website> blockedWebsites,
+	public void updateBlockListById(int id, String blocklistName, String description, boolean isEnabled, ArrayList<Website> blockedWebsites,
 			ArrayList<Process> blockedProcesses) {
-		this.blockLists.put(id, new BlockList(id, isEnabled, blockedWebsites, blockedProcesses));
+		this.blockLists.put(id, new BlockList(blocklistName, description, id, isEnabled, blockedWebsites, blockedProcesses));
 		this.updateTime();
 	}
 
