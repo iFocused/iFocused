@@ -15,18 +15,19 @@ import application.usecases.ProcessRepository;
 import application.usecases.UseCasePool;
 import application.usecases.WebsiteRepository;
 import application.views.FxmlViewBuilder;
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TableCell;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
@@ -77,24 +78,80 @@ public class BlocklistsController implements Initializable {
 	private TableColumn<BlockList, String> descriptionColumn;
 
 	@FXML
+	private Button blocklistCreationBtn;
+
+	@FXML
 	private CheckBox blocklistChkBox;
 
 	@FXML
 	private JFXToggleButton blocklistToggleBtn;
 
+	@FXML
+	private TabPane blocklistPane;
+
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		initListBindinds();
 		initTableViewBinding();
+		initBlocklistComponentBindings();
+
+		blocklistNameLbl.selectionProperty().addListener((observable, oldVal, newVal) -> {
+			if (blocklistNameLbl.getText().isEmpty()) {
+				blocklistPane.setDisable(true);
+				blocklistCreationBtn.setDisable(true);
+
+			} else {
+				blocklistPane.setDisable(false);
+				blocklistCreationBtn.setDisable(false);
+			}
+		});
 	}
 
 	@FXML
 	void onHandleCreateBlocklist(ActionEvent event) {
-		int blockListId = blockListRepository.createBlockList(blocklistNameLbl.getText(),
-				blocklistDescription.getText(), blocklistChkBox.isSelected(),
-				new ArrayList<>(websiteListView.getItems()), new ArrayList<>(appListView.getItems()));
-		blocklistTableView.getItems().add(this.blockListRepository.getBlockListById(blockListId));
-		System.out.println("done");
+		if (websiteListView.getItems().isEmpty() && appListView.getItems().isEmpty()) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.initOwner(fxmlViewBuilder.getMainStage());
+			alert.setTitle("Invalid block list input");
+			alert.setHeaderText("No website and applications were selected to be blocked");
+			alert.setContentText("Select at least a single website or application to be blocked and try again");
+			alert.showAndWait();
+		} else {
+			int blockListId = blockListRepository.createBlockList(blocklistNameLbl.getText(),
+					blocklistDescription.getText(), blocklistChkBox.isSelected(),
+					new ArrayList<>(websiteListView.getItems()), new ArrayList<>(appListView.getItems()));
+			blocklistTableView.getItems().add(this.blockListRepository.getBlockListById(blockListId));
+			blocklistToggleBtn.setDisable(false);
+			System.out.println("done");
+			resetBlocklistCreationFields();
+
+		}
+
+	}
+
+	@FXML
+	void onHandleBlocklistDeletion(ActionEvent event) {
+		BlockList selectedBlocklist = blocklistTableView.getSelectionModel().getSelectedItem();
+		if (selectedBlocklist != null) {
+			Alert alert = new Alert(AlertType.INFORMATION, "This action cannot be undone", ButtonType.YES,
+					ButtonType.NO);
+			alert.setTitle("Blocklist deletion confirmation");
+			alert.initOwner(fxmlViewBuilder.getMainStage());
+			alert.setHeaderText("Are you sure?");
+			alert.showAndWait();
+
+			if (alert.getResult() == ButtonType.YES) {
+				blocklistTableView.getItems().remove(selectedBlocklist);
+			}
+
+		} else {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.initOwner(fxmlViewBuilder.getMainStage());
+			alert.setTitle("iFocused - Blocklist Table View Error");
+			alert.setHeaderText("An invalid blocklist was selected");
+			alert.setContentText("Select a valid blocklist and try again");
+			alert.showAndWait();
+		}
 	}
 
 	@FXML
@@ -141,19 +198,29 @@ public class BlocklistsController implements Initializable {
 	@FXML
 	void onHandleAddWebsite(ActionEvent event) {
 		String tmpWebsiteURL = websiteLbl.getText();
-		if (!tmpWebsiteURL.startsWith("www.") && !tmpWebsiteURL.startsWith("https://")
-				&& !tmpWebsiteURL.startsWith("http://")) {
-			tmpWebsiteURL = "https://www." + tmpWebsiteURL;
+		if (!tmpWebsiteURL.isEmpty()) {
+			if (!tmpWebsiteURL.startsWith("www.") && !tmpWebsiteURL.startsWith("https://")
+					&& !tmpWebsiteURL.startsWith("http://")) {
+				tmpWebsiteURL = "https://www." + tmpWebsiteURL;
+			}
+
+			if (tmpWebsiteURL.startsWith("www.")) {
+				tmpWebsiteURL = "https://" + tmpWebsiteURL;
+			}
+
+			int newWebsiteID = this.websiteRepository.createWebsite(tmpWebsiteURL.replaceAll("https?://|/$", ""),
+					tmpWebsiteURL);
+			websiteListView.getItems().add(this.websiteRepository.getNWebsiteById(newWebsiteID));
+			websiteLbl.setText("");
+		} else {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.initOwner(fxmlViewBuilder.getMainStage());
+			alert.setTitle("Invalid Website URL");
+			alert.setHeaderText("An invalid website URL was entered");
+			alert.setContentText("Enter a valid website URL and try again");
+			alert.showAndWait();
 		}
 
-		if (tmpWebsiteURL.startsWith("www.")) {
-			tmpWebsiteURL = "https://" + tmpWebsiteURL;
-		}
-
-		int newWebsiteID = this.websiteRepository.createWebsite(tmpWebsiteURL.replaceAll("https?://|w*\\.|com|/$", ""),
-				tmpWebsiteURL);
-		websiteListView.getItems().add(this.websiteRepository.getNWebsiteById(newWebsiteID));
-		websiteLbl.setText("");
 	}
 
 	public BlocklistsController(UseCasePool useCasePool, FxmlViewBuilder fxmlViewBuilder) {
@@ -162,6 +229,16 @@ public class BlocklistsController implements Initializable {
 		this.websiteRepository = useCasePool.getWebsiteRepository();
 		this.blockListRepository = useCasePool.getBlockListRepository();
 		this.fxmlViewBuilder = fxmlViewBuilder;
+	}
+
+	private void initBlocklistComponentBindings() {
+		blocklistToggleBtn.selectedProperty().addListener((observable, oldValue, newValue) -> {
+			BlockList selectedBlocklist = blocklistTableView.getSelectionModel().getSelectedItem();
+			if (selectedBlocklist != null) {
+				selectedBlocklist.setIsEnabled(newValue);
+				blocklistTableView.refresh();
+			}
+		});
 	}
 
 	private void initListBindinds() {
@@ -222,8 +299,6 @@ public class BlocklistsController implements Initializable {
 	 */
 	public void initTableViewColumns() {
 		// Setting up the block list name column
-		nameColumn.setMinWidth(100);
-		nameColumn.setSortable(false);
 		nameColumn.setCellValueFactory(new PropertyValueFactory<>("Name"));
 
 		nameColumn.setCellValueFactory(
@@ -238,8 +313,6 @@ public class BlocklistsController implements Initializable {
 				});
 
 		// Setting up the block list status column
-		statusColumn.setMinWidth(100);
-		statusColumn.setSortable(false);
 		statusColumn.setCellValueFactory(new PropertyValueFactory<>("Status"));
 
 		statusColumn.setCellValueFactory(
@@ -256,8 +329,6 @@ public class BlocklistsController implements Initializable {
 				});
 
 		// Setting up the block list description column
-		descriptionColumn.setMinWidth(100);
-		descriptionColumn.setSortable(false);
 		descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("Description"));
 
 		descriptionColumn.setCellValueFactory(
@@ -265,6 +336,10 @@ public class BlocklistsController implements Initializable {
 
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<BlockList, String> cell) {
+						String descriptionText = cell.getValue().getBlocklistDescription();
+						if (descriptionText.isEmpty()) {
+							return new ReadOnlyStringWrapper("N/A");
+						}
 						return new ReadOnlyStringWrapper(cell.getValue().getBlocklistDescription());
 					}
 
@@ -272,6 +347,20 @@ public class BlocklistsController implements Initializable {
 	}
 
 	private void showBlocklistDetails(BlockList blocklist) {
-		blocklistToggleBtn.setSelected(blocklist.getIsEnabled());
+		if (blocklist != null) {
+			blocklistToggleBtn.setSelected(blocklist.getIsEnabled());
+			System.out.println("new blocklist was selected");
+		}
+
+	}
+
+	private void resetBlocklistCreationFields() {
+		blocklistNameLbl.setText("");
+		blocklistDescription.setText("");
+		blocklistChkBox.setSelected(false);
+		websiteListView.getItems().clear();
+		appListView.getItems().clear();
+		blocklistPane.setDisable(true);
+		blocklistCreationBtn.setDisable(true);
 	}
 }

@@ -25,7 +25,7 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Text>
-            <TextField fx:id="blocklistNameLbl" layoutX="95.0" layoutY="55.0" prefHeight="25.0" prefWidth="249.0" promptText="Enter list name" style="-fx-border-color: grey;" />
+            <TextField fx:id="blocklistNameLbl" layoutX="95.0" layoutY="55.0" prefHeight="25.0" prefWidth="249.0" promptText="Enter block list name" style="-fx-border-color: grey;" />
             <Text fill="WHITE" layoutX="37.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
                <font>
                   <Font name="System Bold" size="15.0" />
@@ -37,13 +37,13 @@
                </font>
             </Text>
             <CheckBox fx:id="blocklistChkBox" layoutX="88.0" layoutY="123.0" mnemonicParsing="false" text="Enabled" textFill="WHITE" />
-            <Button layoutX="47.0" layoutY="491.0" mnemonicParsing="false" onAction="#onHandleCreateBlocklist" prefHeight="32.0" prefWidth="398.0" styleClass="btn-default" text="Create Block List" textFill="WHITE" />
+            <Button fx:id="blocklistCreationBtn" disable="true" layoutX="47.0" layoutY="491.0" mnemonicParsing="false" onAction="#onHandleCreateBlocklist" prefHeight="32.0" prefWidth="398.0" styleClass="btn-default" text="Create Block List" textFill="WHITE" />
             <Text fill="WHITE" layoutX="258.0" layoutY="378.0" strokeType="OUTSIDE" strokeWidth="0.0">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Text>
-            <TabPane layoutX="35.0" layoutY="159.0" prefHeight="320.0" prefWidth="420.0" styleClass="tab-pane-main" tabClosingPolicy="UNAVAILABLE">
+            <TabPane fx:id="blocklistPane" disable="true" layoutX="35.0" layoutY="159.0" prefHeight="320.0" prefWidth="420.0" styleClass="tab-pane-main" tabClosingPolicy="UNAVAILABLE">
                <tabs>
                   <Tab styleClass="tab-two" text="Websites">
                      <content>
@@ -114,7 +114,7 @@
                   <TableColumn fx:id="descriptionColumn" prefWidth="144.0" text="Description" />
                </columns>
             </TableView>
-            <Button layoutX="11.0" layoutY="448.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="215.0" styleClass="btn-default" text="Delete Selected" textFill="WHITE" />
+            <Button layoutX="11.0" layoutY="448.0" mnemonicParsing="false" onAction="#onHandleBlocklistDeletion" prefHeight="32.0" prefWidth="215.0" styleClass="btn-default" text="Delete Selected" textFill="WHITE" />
             <Button layoutX="234.0" layoutY="448.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="215.0" styleClass="btn-default" text="Modify Contents" textFill="WHITE" />
             <Text fill="WHITE" layoutX="258.0" layoutY="378.0" strokeType="OUTSIDE" strokeWidth="0.0">
                <font>
@@ -123,7 +123,7 @@
             </Text>
             <Pane layoutX="11.0" layoutY="490.0" prefHeight="35.0" prefWidth="446.0" style="-fx-background-radius: 20;" styleClass="pane">
                <children>
-                  <JFXToggleButton fx:id="blocklistToggleBtn" layoutX="167.0" layoutY="-11.0" text="Enabled" textFill="WHITE" toggleColor="#3f8efc" toggleLineColor="#2461ab" />
+                  <JFXToggleButton fx:id="blocklistToggleBtn" disable="true" layoutX="167.0" layoutY="-11.0" text="Enabled" textFill="WHITE" toggleColor="#3f8efc" toggleLineColor="#2461ab" />
                </children>
             </Pane>
          </children>

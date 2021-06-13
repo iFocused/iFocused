@@ -63,4 +63,8 @@ public class FxmlViewBuilder {
 	public Stage getMainStage() {
 		return this.mainStage;
 	}
+	
+	public Stage onHandleAddWebsite() {
+		return this.mainStage;
+	}
 }
