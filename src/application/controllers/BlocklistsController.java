@@ -158,7 +158,8 @@ public class BlocklistsController implements Initializable {
 	void onHandleAppBrowse(ActionEvent event) {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("iFocused - Application Selection");
-		fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Exectuable Files", "*.exe"));
+		// .app for mac, .exe for windows
+		fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Exectuable Files", "*.app", "*.exe")); 
 		appToBlock = fileChooser.showOpenDialog(fxmlViewBuilder.getMainStage());
 		if (appToBlock != null) {
 			processLbl.setText(appToBlock.getAbsolutePath());
