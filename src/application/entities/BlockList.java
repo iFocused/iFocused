@@ -1,15 +1,14 @@
 package application.entities;
 
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 
 public class BlockList {
 	private String blocklistName;
 	private String description;
 	private int blockListId;
-	private String updatedDate;
+	private LocalDateTime updatedDate;
 	private ArrayList<Website> blockedWebsites;
 	private ArrayList<Process> blockedProcesses;
 	private boolean isEnabled;
@@ -37,8 +36,7 @@ public class BlockList {
 		this.blockedWebsites = blockedWebsites;
 		this.blockedProcesses = blockedProcesses;
 
-		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-		this.updatedDate = formatter.format(new Date());
+		this.updatedDate = LocalDateTime.now();
 	}
 
 	public void addWebsite(Website w) {
@@ -67,7 +65,7 @@ public class BlockList {
 		return blockListId;
 	}
 
-	public String getUpdatedDate() {
+	public LocalDateTime getUpdatedDate() {
 		return updatedDate;
 	}
 
@@ -97,7 +95,7 @@ public class BlockList {
 		this.blockListId = newId;
 	}
 
-	public void setUpdatedDate(String newDate) {
+	public void setUpdatedDate(LocalDateTime newDate) {
 		this.updatedDate = newDate;
 	}
 

@@ -49,7 +49,7 @@ public class UseCasePool {
 
 		pointEligbility = new PointEligibility(todoList, sessionRepository, pomodoroRepository);
 		blocksManager = new BlocksManager(null, blockListRepository, sessionRepository,
-				pomodoroRepository); /* TODO: FIX */
+				pomodoroRepository, websiteRepository, processRepository); /* TODO: FIX */
 
 		statisticsRepository = new StatisticsRepository(gatewayPool.getStatisticsRepositoryGateway()); /* TODO: FIX (-) */
 

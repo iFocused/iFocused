@@ -11,6 +11,7 @@ import application.entities.BlockList;
 import application.entities.Process;
 import application.entities.Website;
 import application.usecases.BlockListRepository;
+import application.usecases.BlocksManager;
 import application.usecases.ProcessRepository;
 import application.usecases.UseCasePool;
 import application.usecases.WebsiteRepository;
@@ -44,6 +45,7 @@ public class BlocklistsController implements Initializable {
 	private final BlockListRepository blockListRepository;
 	private final ProcessRepository processRepository;
 	private final WebsiteRepository websiteRepository;
+	private final BlocksManager blocksManager;
 	private FxmlViewBuilder fxmlViewBuilder;
 	private File appToBlock;
 
@@ -89,9 +91,12 @@ public class BlocklistsController implements Initializable {
 	@FXML
 	private TabPane blocklistPane;
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		initListBindinds();
+		populatetListCellRendering();
 		initTableViewBinding();
 		initBlocklistComponentBindings();
 
@@ -107,6 +112,11 @@ public class BlocklistsController implements Initializable {
 		});
 	}
 
+	/**
+	 * Handles the creation of a block list
+	 * 
+	 * @param event of the user's mouse click
+	 */
 	@FXML
 	void onHandleCreateBlocklist(ActionEvent event) {
 		if (websiteListView.getItems().isEmpty() && appListView.getItems().isEmpty()) {
@@ -129,6 +139,11 @@ public class BlocklistsController implements Initializable {
 
 	}
 
+	/**
+	 * Handles the deletion of a block list
+	 * 
+	 * @param event of the user's mouse click
+	 */
 	@FXML
 	void onHandleBlocklistDeletion(ActionEvent event) {
 		BlockList selectedBlocklist = blocklistTableView.getSelectionModel().getSelectedItem();
@@ -141,6 +156,8 @@ public class BlocklistsController implements Initializable {
 			alert.showAndWait();
 
 			if (alert.getResult() == ButtonType.YES) {
+				// unblocks all the websites and processes upon removal of blocklist
+				this.blocksManager.unblockById(selectedBlocklist);
 				blocklistTableView.getItems().remove(selectedBlocklist);
 			}
 
@@ -154,12 +171,17 @@ public class BlocklistsController implements Initializable {
 		}
 	}
 
+	/**
+	 * Handles the browsing for a process that is to be blocked
+	 * 
+	 * @param event of the user's mouse click
+	 */
 	@FXML
 	void onHandleAppBrowse(ActionEvent event) {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("iFocused - Application Selection");
 		// .app for mac, .exe for windows
-		fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Exectuable Files", "*.app", "*.exe")); 
+		fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Exectuable Files", "*.app", "*.exe"));
 		appToBlock = fileChooser.showOpenDialog(fxmlViewBuilder.getMainStage());
 		if (appToBlock != null) {
 			processLbl.setText(appToBlock.getAbsolutePath());
@@ -175,6 +197,11 @@ public class BlocklistsController implements Initializable {
 
 	}
 
+	/**
+	 * Handles the addition of a process that will be a part of a given block list
+	 * 
+	 * @param event of the user's mouse click
+	 */
 	@FXML
 	void onHandleAddApp(ActionEvent event) {
 		if (!processLbl.getText().isEmpty()) {
@@ -184,7 +211,6 @@ public class BlocklistsController implements Initializable {
 
 			processRepository.createProcess(appToBlock);
 			appListView.getItems().add(processRepository.getMostRecentProcess());
-
 		} else {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.initOwner(fxmlViewBuilder.getMainStage());
@@ -192,10 +218,15 @@ public class BlocklistsController implements Initializable {
 			alert.setHeaderText("No application to block was selected");
 			alert.setContentText("Enter the application directory path manually or select it using the browse button");
 			alert.showAndWait();
-			processLbl.setText("");
 		}
+		processLbl.setText("");
 	}
 
+	/**
+	 * Handles the addition of a website that will be a part of a given block list
+	 * 
+	 * @param event of the user's mouse click
+	 */
 	@FXML
 	void onHandleAddWebsite(ActionEvent event) {
 		String tmpWebsiteURL = websiteLbl.getText();
@@ -211,7 +242,7 @@ public class BlocklistsController implements Initializable {
 
 			int newWebsiteID = this.websiteRepository.createWebsite(tmpWebsiteURL.replaceAll("https?://|/$", ""),
 					tmpWebsiteURL);
-			websiteListView.getItems().add(this.websiteRepository.getNWebsiteById(newWebsiteID));
+			websiteListView.getItems().add(this.websiteRepository.getWebsiteById(newWebsiteID));
 			websiteLbl.setText("");
 		} else {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -224,25 +255,55 @@ public class BlocklistsController implements Initializable {
 
 	}
 
+	/**
+	 * Constructor to create a blocklist controller in order to have access to all
+	 * of the required components in the application
+	 * 
+	 * @param useCasePool     A pool containing all the use cases of the program
+	 * @param fxmlViewBuilder The main view builder containing reference to all the
+	 *                        views in the program
+	 */
 	public BlocklistsController(UseCasePool useCasePool, FxmlViewBuilder fxmlViewBuilder) {
 		this.useCasePool = useCasePool;
 		this.processRepository = useCasePool.getProcessRepository();
 		this.websiteRepository = useCasePool.getWebsiteRepository();
 		this.blockListRepository = useCasePool.getBlockListRepository();
+		this.blocksManager = useCasePool.getBlocksManager();
 		this.fxmlViewBuilder = fxmlViewBuilder;
 	}
 
+	/**
+	 * Initializes listeners for all the GUI components related to the block list
+	 * creation procedure in a one-way bindings fashion in order to sync it with the
+	 * view
+	 * 
+	 */
 	private void initBlocklistComponentBindings() {
+		System.out.println("exectued");
 		blocklistToggleBtn.selectedProperty().addListener((observable, oldValue, newValue) -> {
 			BlockList selectedBlocklist = blocklistTableView.getSelectionModel().getSelectedItem();
 			if (selectedBlocklist != null) {
-				selectedBlocklist.setIsEnabled(newValue);
-				blocklistTableView.refresh();
+				if (selectedBlocklist.getIsEnabled() == oldValue) {
+					if (newValue) {
+						this.blocksManager.blockById(selectedBlocklist);
+					} else {
+						this.blocksManager.unblockById(selectedBlocklist);
+					}
+
+					selectedBlocklist.setIsEnabled(newValue);
+					blocklistTableView.refresh();
+				}
 			}
+
 		});
 	}
 
-	private void initListBindinds() {
+	/**
+	 * Renders the website and application lists by showing the object's name
+	 * attributes
+	 * 
+	 */
+	private void populatetListCellRendering() {
 		/* Binding for application list view */
 		appListView.setCellFactory(new Callback<ListView<Process>, ListCell<Process>>() {
 			@Override
@@ -254,7 +315,6 @@ public class BlocklistsController implements Initializable {
 						if (item == null) {
 							setText(null);
 						} else {
-							// assume MyDataType.getSomeProperty() returns a string
 							setText(item.getProcessName().replace(".exe", ""));
 						}
 					}
@@ -273,7 +333,6 @@ public class BlocklistsController implements Initializable {
 						if (item == null) {
 							setText(null);
 						} else {
-							// assume MyDataType.getSomeProperty() returns a string
 							setText(item.getWebsiteName());
 						}
 					}
@@ -285,6 +344,11 @@ public class BlocklistsController implements Initializable {
 
 	}
 
+	/**
+	 * Initializes a one-way binding for the block list table to keep track of the
+	 * selected block lists in the table
+	 * 
+	 */
 	private void initTableViewBinding() {
 		// Initialize the block list table with the three columns
 		initTableViewColumns();
@@ -295,7 +359,7 @@ public class BlocklistsController implements Initializable {
 	}
 
 	/**
-	 * Initializing the actions table
+	 * Initializing the block list table
 	 *
 	 */
 	public void initTableViewColumns() {
@@ -347,6 +411,12 @@ public class BlocklistsController implements Initializable {
 				});
 	}
 
+	/**
+	 * Updates the GUI components based on the selected block list from the
+	 * blocklist table
+	 * 
+	 * @param blocklist The block list object whose information will be displayed
+	 */
 	private void showBlocklistDetails(BlockList blocklist) {
 		if (blocklist != null) {
 			blocklistToggleBtn.setSelected(blocklist.getIsEnabled());
@@ -355,6 +425,9 @@ public class BlocklistsController implements Initializable {
 
 	}
 
+	/**
+	 * Resets all the GUI components associated with creating a block list
+	 */
 	private void resetBlocklistCreationFields() {
 		blocklistNameLbl.setText("");
 		blocklistDescription.setText("");

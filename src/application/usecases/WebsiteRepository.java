@@ -29,13 +29,28 @@ public class WebsiteRepository {
 	 */
 	public int createWebsite(String websiteName, String websiteURL) {
 		int tmpId = this.currId;
+		int currSiteId;
 		try {
-			this.websites.put(this.currId, new Website(websiteName, websiteURL, this.currId));
-			this.currId++;
+			// check if a website with the given website name already exists
+			if ((currSiteId = checkWebsiteExisting(websiteName)) == -1) {
+				this.websites.put(this.currId, new Website(websiteName, websiteURL, this.currId));
+				this.currId++;
+			} else {
+				return currSiteId;
+			}
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
 		return tmpId;
+	}
+
+	private int checkWebsiteExisting(String websiteName) {
+		for (int websiteId : this.websites.keySet()) {
+			if (this.websites.get(websiteId).getWebsiteName().equals(websiteName)) {
+				return websiteId;
+			}
+		}
+		return -1;
 	}
 
 	/**
@@ -87,7 +102,7 @@ public class WebsiteRepository {
 	 * @param id The identifier for the sought after website
 	 * @return a list of Websites up to a certain time in asccurrIding order
 	 */
-	public Website getNWebsiteById(int id) {
+	public Website getWebsiteById(int id) {
 		return this.websites.get(id);
 	}
 

@@ -26,6 +26,7 @@
                </font>
             </Text>
             <TextField fx:id="blocklistNameLbl" layoutX="95.0" layoutY="55.0" prefHeight="25.0" prefWidth="249.0" promptText="Enter block list name" style="-fx-border-color: grey;" />
+            <TextField fx:id="blocklistDescription" layoutX="122.0" layoutY="87.0" prefHeight="27.0" prefWidth="222.0" promptText="Enter list description" style="-fx-border-color: grey;" />
             <Text fill="WHITE" layoutX="37.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
                <font>
                   <Font name="System Bold" size="15.0" />
@@ -91,7 +92,6 @@
                   </Tab>
                </tabs>
             </TabPane>
-            <TextField fx:id="blocklistDescription" layoutX="122.0" layoutY="87.0" prefHeight="27.0" prefWidth="222.0" promptText="Enter list description" style="-fx-border-color: grey;" />
             <Text fill="WHITE" layoutX="37.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description">
                <font>
                   <Font name="System Bold" size="15.0" />

@@ -2,10 +2,8 @@ package application.usecases;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
-
-import org.apache.commons.collections4.map.HashedMap;
-
 import application.entities.BlockList;
 import application.entities.Process;
 import application.entities.Website;
@@ -25,12 +23,11 @@ public class BlockListRepository {
 	 */
 	public BlockListRepository(BlockListGateway blockListGateway) {
 		this.currId = 0;
-		this.blockLists = new HashedMap<>();
+		this.blockLists = new HashMap<>();
 		this.updateTime();
 		this.blockListGateway = blockListGateway;
 		this.blockListGateway.populateUserData(this);
 	}
-	
 
 	/**
 	 * Updates the time since the last modification
@@ -39,8 +36,8 @@ public class BlockListRepository {
 		this.timeSinceLastModification = LocalDateTime.now();
 	}
 
-	public int createBlockList(String blocklistName, String description, boolean isEnabled, ArrayList<Website> blockedWebsites,
-			ArrayList<Process> blockedProcesse) {
+	public int createBlockList(String blocklistName, String description, boolean isEnabled,
+			ArrayList<Website> blockedWebsites, ArrayList<Process> blockedProcesse) {
 		this.updateBlockListById(currId, blocklistName, description, isEnabled, blockedWebsites, blockedProcesse);
 		int tmpId = currId;
 		this.currId++;
@@ -58,14 +55,31 @@ public class BlockListRepository {
 	}
 
 	/**
+	 * Returns the id that is associated with the given <blockList>.
+	 * 
+	 * @param blockList to look for the id
+	 * @return the id corresponding to the given block list. If this block list is
+	 *         not found, -1 is returned
+	 */
+	public int getIdByBlocklist(BlockList blockList) {
+		for (int tmpBlocklistId : this.blockLists.keySet()) {
+			if (this.blockLists.get(tmpBlocklistId).equals(blockList)) {
+				return tmpBlocklistId;
+			}
+		}
+		return -1;
+	}
+
+	/**
 	 * Adds a new block list with a specified identifier <id>.
 	 * 
 	 * @param id        Identifier of the block list to be added
 	 * @param blockList The block list to be added
 	 */
-	public void updateBlockListById(int id, String blocklistName, String description, boolean isEnabled, ArrayList<Website> blockedWebsites,
-			ArrayList<Process> blockedProcesses) {
-		this.blockLists.put(id, new BlockList(blocklistName, description, id, isEnabled, blockedWebsites, blockedProcesses));
+	public void updateBlockListById(int id, String blocklistName, String description, boolean isEnabled,
+			ArrayList<Website> blockedWebsites, ArrayList<Process> blockedProcesses) {
+		this.blockLists.put(id,
+				new BlockList(blocklistName, description, id, isEnabled, blockedWebsites, blockedProcesses));
 		this.updateTime();
 	}
 
@@ -88,7 +102,7 @@ public class BlockListRepository {
 	public ArrayList<BlockList> getBlockListsAsList() {
 		return (ArrayList<BlockList>) this.blockLists.values();
 	}
-	
+
 	/**
 	 * Returns a list containing all the block lists
 	 * 
@@ -101,7 +115,8 @@ public class BlockListRepository {
 	/**
 	 * Sets the new dictionary of block lists
 	 * 
-	 * @param blockLists	The dictionary containing the ids and their corresponding block lists
+	 * @param blockLists The dictionary containing the ids and their corresponding
+	 *                   block lists
 	 */
 	public void setBlockLists(Map<Integer, BlockList> blockLists) {
 		this.blockLists = blockLists;
@@ -177,5 +192,4 @@ public class BlockListRepository {
 	public BlockListGateway getBlockListGateway() {
 		return blockListGateway;
 	}
-
 }

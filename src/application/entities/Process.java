@@ -18,7 +18,7 @@ public class Process {
 		return process.getName();
 	}
 
-	public int getprocessId() {
+	public int getProcessId() {
 		return processId;
 	}
 
@@ -30,7 +30,7 @@ public class Process {
 		this.process = newProcess;
 	}
 
-	public void setprocessId(int newProcessId) {
+	public void setProcessId(int newProcessId) {
 		this.processId = newProcessId;
 	}
 

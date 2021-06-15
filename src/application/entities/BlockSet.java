@@ -3,9 +3,9 @@ package application.entities;
 import java.util.Set;
 
 public class BlockSet {
-	
+
 	/**
-	 * DISCUSS: 
+	 * DISCUSS:
 	 */
 	private Set<Integer> blockListIds;
 
@@ -15,5 +15,9 @@ public class BlockSet {
 
 	public void removeBlockListId(int blockListId) {
 		this.blockListIds.remove(blockListId);
+	}
+
+	public Set<Integer> getBlockListIds() {
+		return this.blockListIds;
 	}
 }
