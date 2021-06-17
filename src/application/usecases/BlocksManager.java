@@ -1,21 +1,21 @@
 package application.usecases;
 
-import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-import application.entities.*;
-import application.entities.Process;
+import application.entities.BlockList;
+import application.entities.BlockSet;
+import application.entities.PomodoroSession;
+import application.entities.Session;
+import application.entities.SessionStatus;
 
 public class BlocksManager {
 	private BlockSet blockSet;
-	private Map<Integer, Integer> blockedSites;
-	private Map<Integer, Integer> blockedApps;
 	private BlockListRepository blockListRepository;
 	private WebsiteRepository websiteRepository;
 	private ProcessRepository processRepository;
 	private SessionRepository sessionRepository;
 	private PomodoroRepository pomodoroRepository;
-	private FileEditor fe;
 
 	/**
 	 * Constructor for the Blocks Manager
@@ -34,10 +34,6 @@ public class BlocksManager {
 		this.pomodoroRepository = pomodoroRepository;
 		this.websiteRepository = websiteRepository;
 		this.processRepository = processRepository;
-		blockedSites = new HashMap<Integer, Integer>();
-		blockedApps = new HashMap<Integer, Integer>();
-		// foundHostFile(); /* this will be called instead of the line below once implemented */ 
-		fe = new FileEditor(new File("C:\\Windows\\System32\\drivers\\etc\\hosts"));
 	}
 
 	/**
@@ -94,19 +90,7 @@ public class BlocksManager {
 	 *         not
 	 */
 	public boolean blockById(BlockList selectedBlockList) {
-		int count = 0;
-		for (Website website : selectedBlockList.getBlockedWebsites()) {
-			if (this.blockedSites.containsKey(website.getWebsiteId())) {
-				count = this.blockedSites.get(website.getWebsiteId());
-				this.blockedSites.replace(website.getWebsiteId(), count + 1);
-
-			} else {
-				System.out.println("website id: " + website.getWebsiteId());
-				this.blockedSites.put(website.getWebsiteId(), 1);
-				fe.blockWebsite(website.getWebsiteName());
-			}
-		}
-		return true;
+		return blockSet.blockById(selectedBlockList);
 	}
 
 	/**
@@ -117,34 +101,7 @@ public class BlocksManager {
 	 *         not
 	 */
 	public boolean unblockById(BlockList selectedBlockList) {
-		int count = 0;
-		for (Website website : selectedBlockList.getBlockedWebsites()) {
-			if (this.blockedSites.containsKey(website.getWebsiteId())) {
-				// only occurred once
-				count = this.blockedSites.get(website.getWebsiteId());
-				if (this.blockedSites.get(website.getWebsiteId()) > 1) {
-					this.blockedSites.replace(website.getWebsiteId(), count - 1);
-				} else {
-					fe.unblockWebsite(website.getWebsiteName());
-					this.blockedSites.remove(website.getWebsiteId());
-				}
-
-			}
-		}
-
-		return true;
-	}
-	
-	
-	/**
-	 * Returns True iff the host file directory was found. Otherwise,
-	 * false is returned.
-	 * 
-	 * @return whether the host file was found and the host file object was set
-	 */
-	private boolean foundHostFile() {
-		// TODO. This can be useful: https://mkyong.com/java/search-directories-recursively-for-file-in-java/
-		return true;
+		return blockSet.unblockById(selectedBlockList);
 	}
 
 }

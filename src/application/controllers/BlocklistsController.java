@@ -378,7 +378,7 @@ public class BlocklistsController implements Initializable {
 				});
 
 		// Setting up the block list status column
-		statusColumn.setCellValueFactory(new PropertyValueFactory<>("Status"));
+		statusColumn.setCellValueFactory(new PropertyValueFactory<>("Active"));
 
 		statusColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<BlockList, String>, ObservableValue<String>>() {

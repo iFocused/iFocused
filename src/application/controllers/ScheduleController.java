@@ -27,6 +27,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.BorderPane;
 
@@ -86,13 +87,13 @@ public class ScheduleController implements Initializable {
 
 			}
 		};
-		
+
 //		studyPlan.addEventHandler(handler);
-		
+
 		// order of listeners is important
 		addCalendarCreationEvent(myCalendarSource);
 		addEntryListener(myCalendarSource);
-		
+
 	}
 
 	public ScheduleController(UseCasePool useCasePool, FxmlViewBuilder fxmlViewBuilder) {
@@ -140,7 +141,7 @@ public class ScheduleController implements Initializable {
 					myCalendarSource.getCalendars().add(newCalendar);
 
 				} else {
-					calendarSourceLst.getList().remove(calendarSourceLst.getList().size()-1);
+					calendarSourceLst.getList().remove(calendarSourceLst.getList().size() - 1);
 				}
 
 			}
@@ -173,7 +174,7 @@ public class ScheduleController implements Initializable {
 									entryMap.get(calendar).add(entry);
 									System.out.println(entry.getTitle());
 								});
-								
+
 //								temporary
 //								sessionRepository.createSession(0);
 

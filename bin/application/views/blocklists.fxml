@@ -25,8 +25,8 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Text>
-            <TextField fx:id="blocklistNameLbl" layoutX="95.0" layoutY="55.0" prefHeight="25.0" prefWidth="249.0" promptText="Enter block list name" style="-fx-border-color: grey;" />
-            <TextField fx:id="blocklistDescription" layoutX="122.0" layoutY="87.0" prefHeight="27.0" prefWidth="222.0" promptText="Enter list description" style="-fx-border-color: grey;" />
+            <TextField fx:id="blocklistNameLbl" layoutX="129.0" layoutY="55.0" prefHeight="27.0" prefWidth="215.0" promptText="Enter block list name" style="-fx-border-color: grey;" />
+            <TextField fx:id="blocklistDescription" layoutX="129.0" layoutY="87.0" prefHeight="27.0" prefWidth="215.0" promptText="Enter list description" style="-fx-border-color: grey;" />
             <Text fill="WHITE" layoutX="37.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
                <font>
                   <Font name="System Bold" size="15.0" />
@@ -37,7 +37,7 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Text>
-            <CheckBox fx:id="blocklistChkBox" layoutX="88.0" layoutY="123.0" mnemonicParsing="false" text="Enabled" textFill="WHITE" />
+            <CheckBox fx:id="blocklistChkBox" layoutX="130.0" layoutY="122.0" mnemonicParsing="false" text="Enabled" textFill="WHITE" />
             <Button fx:id="blocklistCreationBtn" disable="true" layoutX="47.0" layoutY="491.0" mnemonicParsing="false" onAction="#onHandleCreateBlocklist" prefHeight="32.0" prefWidth="398.0" styleClass="btn-default" text="Create Block List" textFill="WHITE" />
             <Text fill="WHITE" layoutX="258.0" layoutY="378.0" strokeType="OUTSIDE" strokeWidth="0.0">
                <font>
@@ -110,7 +110,7 @@
             <TableView fx:id="blocklistTableView" layoutX="14.0" layoutY="54.0" prefHeight="380.0" prefWidth="435.0">
                <columns>
                   <TableColumn fx:id="nameColumn" prefWidth="150.0" text="Name" />
-                  <TableColumn fx:id="statusColumn" minWidth="0.0" prefWidth="140.0" text="Status" />
+                  <TableColumn fx:id="statusColumn" minWidth="0.0" prefWidth="140.0" text="Active" />
                   <TableColumn fx:id="descriptionColumn" prefWidth="144.0" text="Description" />
                </columns>
             </TableView>
