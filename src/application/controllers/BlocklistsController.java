@@ -83,6 +83,9 @@ public class BlocklistsController implements Initializable {
 	private Button blocklistCreationBtn;
 
 	@FXML
+	private Button blocklistUpdateBtn;
+
+	@FXML
 	private CheckBox blocklistChkBox;
 
 	@FXML
@@ -99,17 +102,6 @@ public class BlocklistsController implements Initializable {
 		populatetListCellRendering();
 		initTableViewBinding();
 		initBlocklistComponentBindings();
-
-		blocklistNameLbl.selectionProperty().addListener((observable, oldVal, newVal) -> {
-			if (blocklistNameLbl.getText().isEmpty()) {
-				blocklistPane.setDisable(true);
-				blocklistCreationBtn.setDisable(true);
-
-			} else {
-				blocklistPane.setDisable(false);
-				blocklistCreationBtn.setDisable(false);
-			}
-		});
 	}
 
 	/**
@@ -127,16 +119,60 @@ public class BlocklistsController implements Initializable {
 			alert.setContentText("Select at least a single website or application to be blocked and try again");
 			alert.showAndWait();
 		} else {
+			// xu
 			int blockListId = blockListRepository.createBlockList(blocklistNameLbl.getText(),
 					blocklistDescription.getText(), blocklistChkBox.isSelected(),
 					new ArrayList<>(websiteListView.getItems()), new ArrayList<>(appListView.getItems()));
 			blocklistTableView.getItems().add(this.blockListRepository.getBlockListById(blockListId));
 			blocklistToggleBtn.setDisable(false);
 			System.out.println("done");
+			if (blocklistChkBox.isSelected())
+				this.blocksManager.blockById(blockListRepository.getBlockListById(blockListId));
 			resetBlocklistCreationFields();
 
 		}
 
+	}
+
+	/**
+	 * Handles the modification of a block list
+	 * 
+	 * @param event of the user's mouse click
+	 */
+	@FXML
+	void onHandleBlocklistModification(ActionEvent event) {
+//		populateBlocklistInfo();
+		BlockList selectedBlockList = blocklistTableView.getSelectionModel().getSelectedItem();
+		if (selectedBlockList != null) {
+			blocklistNameLbl.setText(selectedBlockList.getBlocklistName());
+			blocklistDescription.setText(selectedBlockList.getBlocklistDescription());
+			blocklistChkBox.setSelected(selectedBlockList.getIsEnabled());
+			websiteListView.getItems().setAll(selectedBlockList.getBlockedWebsites());
+			blocklistUpdateBtn.setVisible(true);
+			blocklistCreationBtn.setVisible(false);
+			blocklistTableView.setDisable(true);
+			blocklistPane.setDisable(false);
+		}
+
+	}
+
+	/**
+	 * Updating the selected block list with the new input
+	 * 
+	 * @param event of the user's mouse click
+	 */
+	@FXML
+	void onHandleUpdateBlocklist(ActionEvent event) {
+		blocklistUpdateBtn.setVisible(false);
+		blocklistCreationBtn.setVisible(true);
+		blocklistTableView.setDisable(false);
+
+		BlockList selectedBlockList = blocklistTableView.getSelectionModel().getSelectedItem();
+		this.blockListRepository.modifyBlockListContentsById(selectedBlockList.getBlockListId(),
+				blocklistNameLbl.getText(), blocklistDescription.getText(), selectedBlockList.getIsEnabled(),
+				websiteListView.getItems(), appListView.getItems());
+		resetBlocklistCreationFields();
+		blocklistTableView.refresh();
 	}
 
 	/**
@@ -158,6 +194,7 @@ public class BlocklistsController implements Initializable {
 			if (alert.getResult() == ButtonType.YES) {
 				// unblocks all the websites and processes upon removal of blocklist
 				this.blocksManager.unblockById(selectedBlocklist);
+				this.blockListRepository.removeBlockList(selectedBlocklist);
 				blocklistTableView.getItems().remove(selectedBlocklist);
 			}
 
@@ -295,6 +332,17 @@ public class BlocklistsController implements Initializable {
 				}
 			}
 
+		});
+
+		blocklistNameLbl.selectionProperty().addListener((observable, oldVal, newVal) -> {
+			if (blocklistNameLbl.getText().isEmpty()) {
+				blocklistPane.setDisable(true);
+				blocklistCreationBtn.setDisable(true);
+
+			} else {
+				blocklistPane.setDisable(false);
+				blocklistCreationBtn.setDisable(false);
+			}
 		});
 	}
 

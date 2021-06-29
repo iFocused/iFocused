@@ -1,8 +1,11 @@
 package application.controllers;
 
 import java.net.URL;
+import java.time.DayOfWeek;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,13 +13,28 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import org.controlsfx.control.PopOver;
+
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.Calendar.Style;
 import com.calendarfx.model.CalendarEvent;
 import com.calendarfx.model.CalendarSource;
 import com.calendarfx.model.Entry;
+import com.calendarfx.view.AllDayView;
 import com.calendarfx.view.CalendarView;
+import com.calendarfx.view.DateControl;
+import com.calendarfx.view.VirtualGrid;
+import com.calendarfx.view.DateControl.EntryDetailsParameter;
+import com.calendarfx.view.DateControl.EntryDetailsPopOverContentParameter;
+import com.calendarfx.view.popover.DatePopOver;
+import com.calendarfx.view.popover.EntryPopOverContentPane;
+import com.calendarfx.view.popover.EntryPopOverPane;
+import com.calendarfx.view.popover.PopOverContentPane;
+import com.calendarfx.view.popover.PopOverTitledPane;
 
+import application.ui.CalendarFx.CustomPopOverContentNode;
+import application.ui.CalendarFx.EntryWithBlockList;
+import application.usecases.BlockListRepository;
 import application.usecases.SessionRepository;
 import application.usecases.UseCasePool;
 import application.views.FxmlViewBuilder;
@@ -25,15 +43,18 @@ import javafx.collections.ListChangeListener;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.BorderPane;
+import javafx.util.Callback;
 
 public class ScheduleController implements Initializable {
 	private int calendarStyleCount;
-	private Map<Calendar, ArrayList<Entry>> entryMap;
+	private Map<Calendar, ArrayList<EntryWithBlockList>> entryMap;
+//	private Map<Calendar, ArrayList<Entry>> entryMap;
 	private CalendarView calendarView;
 	private UseCasePool useCasePool;
 	private SessionRepository sessionRepository;
@@ -79,20 +100,41 @@ public class ScheduleController implements Initializable {
 
 		mainPane.setCenter(calendarView);
 
-		EventHandler<CalendarEvent> handler = new EventHandler<CalendarEvent>() {
-
-			@Override
-			public void handle(CalendarEvent calEvent) {
-				System.out.println("smth changed");
-
-			}
-		};
-
-//		studyPlan.addEventHandler(handler);
-
 		// order of listeners is important
 		addCalendarCreationEvent(myCalendarSource);
 		addEntryListener(myCalendarSource);
+
+		calendarView.setEntryDetailsPopOverContentCallback(param -> new CustomPopOverContentNode(param.getPopOver(),
+				param.getDateControl(), param.getEntry(), useCasePool.getBlockListRepository().getBlockListsAsList()));
+
+		calendarView.setEntryFactory(param -> {
+			DateControl control = param.getDateControl();
+			VirtualGrid grid = control.getVirtualGrid();
+			ZonedDateTime time = param.getZonedDateTime();
+			DayOfWeek firstDayOfWeek = DayOfWeek.of(java.util.Calendar.getInstance().getFirstDayOfWeek());
+
+			ZonedDateTime lowerTime = grid.adjustTime(time, false, firstDayOfWeek);
+			ZonedDateTime upperTime = grid.adjustTime(time, true, firstDayOfWeek);
+
+			if (Duration.between(time, lowerTime).abs().minus(Duration.between(time, upperTime).abs()).isNegative()) {
+				time = lowerTime;
+			} else {
+				time = upperTime;
+			}
+
+			EntryWithBlockList<?> entry = new EntryWithBlockList<>("New Entry");
+			entry.changeStartDate(time.toLocalDate());
+			entry.changeStartTime(time.toLocalTime());
+			entry.changeEndDate(entry.getStartDate());
+			entry.changeEndTime(entry.getStartTime().plusHours(1));
+
+			if (control instanceof AllDayView) {
+				entry.setFullDay(true);
+			}
+
+			System.out.println(param.getClass().toString());
+			return entry;
+		});
 
 	}
 
@@ -171,17 +213,17 @@ public class ScheduleController implements Initializable {
 							tmpCalendarMap.values().forEach(entryLst -> {
 
 								entryLst.forEach(entry -> {
-									entryMap.get(calendar).add(entry);
-									System.out.println(entry.getTitle());
+									// since we used entry factory where we create
+									// an entry of type EntryWithBlockList, then
+									// we can cast it back to an EntryWithBlockList since
+									// we know it should have all the required fields
+									EntryWithBlockList<?> entryWithBlockList = (EntryWithBlockList<?>) entry;
+									entryMap.get(calendar).add(entryWithBlockList);
+									System.out.println(entryWithBlockList.getTitle());
 								});
-
-//								temporary
-//								sessionRepository.createSession(0);
-
 							});
 						}
 
-						System.out.println("change was done!");
 					});
 				}
 

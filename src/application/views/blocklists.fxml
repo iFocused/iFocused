@@ -17,7 +17,7 @@
 
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="557.0" prefWidth="1004.0" styleClass="root" stylesheets="@../resources/theme.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.BlocklistsController">
    <children>
-      <Pane layoutX="28.0" layoutY="10.0" prefHeight="537.0" prefWidth="481.0" style="-fx-background-color: #69B578; -fx-background-radius: 20px;">
+      <Pane layoutX="11.0" layoutY="10.0" prefHeight="537.0" prefWidth="481.0" style="-fx-background-color: #69B578; -fx-background-radius: 20px;">
          <children>
             <Separator layoutX="136.0" layoutY="44.0" prefWidth="200.0" />
             <Text fill="WHITE" layoutX="159.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create Block List">
@@ -97,6 +97,7 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Text>
+            <Button fx:id="blocklistUpdateBtn" layoutX="47.0" layoutY="491.0" mnemonicParsing="false" onAction="#onHandleUpdateBlocklist" prefHeight="32.0" prefWidth="398.0" styleClass="btn-default" text="Update Block List" textFill="WHITE" visible="false" />
          </children>
       </Pane>
       <Pane layoutX="509.0" layoutY="10.0" prefHeight="537.0" prefWidth="481.0" style="-fx-background-color: #3F8EFC; -fx-background-radius: 20px;">
@@ -115,7 +116,7 @@
                </columns>
             </TableView>
             <Button layoutX="11.0" layoutY="448.0" mnemonicParsing="false" onAction="#onHandleBlocklistDeletion" prefHeight="32.0" prefWidth="215.0" styleClass="btn-default" text="Delete Selected" textFill="WHITE" />
-            <Button layoutX="234.0" layoutY="448.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="215.0" styleClass="btn-default" text="Modify Contents" textFill="WHITE" />
+            <Button layoutX="234.0" layoutY="448.0" mnemonicParsing="false" onAction="#onHandleBlocklistModification" prefHeight="32.0" prefWidth="215.0" styleClass="btn-default" text="Modify Contents" textFill="WHITE" />
             <Text fill="WHITE" layoutX="258.0" layoutY="378.0" strokeType="OUTSIDE" strokeWidth="0.0">
                <font>
                   <Font name="System Bold" size="20.0" />

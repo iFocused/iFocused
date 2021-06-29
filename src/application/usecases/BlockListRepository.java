@@ -2,12 +2,15 @@ package application.usecases;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import application.entities.BlockList;
 import application.entities.Process;
 import application.entities.Website;
 import application.gateways.BlockListGateway;
+import javafx.application.Application;
 
 /**
  * Repository containing reference to all the block lists the user has created
@@ -37,8 +40,8 @@ public class BlockListRepository {
 	}
 
 	public int createBlockList(String blocklistName, String description, boolean isEnabled,
-			ArrayList<Website> blockedWebsites, ArrayList<Process> blockedProcesse) {
-		this.updateBlockListById(currId, blocklistName, description, isEnabled, blockedWebsites, blockedProcesse);
+			ArrayList<Website> blockedWebsites, ArrayList<Process> blockedProcesses) {
+		this.updateBlockListById(currId, blocklistName, description, isEnabled, blockedWebsites, blockedProcesses);
 		int tmpId = currId;
 		this.currId++;
 		return tmpId;
@@ -73,8 +76,11 @@ public class BlockListRepository {
 	/**
 	 * Adds a new block list with a specified identifier <id>.
 	 * 
-	 * @param id        Identifier of the block list to be added
-	 * @param blockList The block list to be added
+	 * @param id               Identifier of the block list to be added
+	 * @param description      of the block list
+	 * @param isEnabled        The activity status of the block list
+	 * @param blockedWebsites  The list containing the blocked websites
+	 * @param blockedProcesses The list containing the blocked applications
 	 */
 	public void updateBlockListById(int id, String blocklistName, String description, boolean isEnabled,
 			ArrayList<Website> blockedWebsites, ArrayList<Process> blockedProcesses) {
@@ -84,14 +90,46 @@ public class BlockListRepository {
 	}
 
 	/**
-	 * Removes a block list with a specified identifier <id>.
+	 * Removes a block list given the <blockList> to be removed
 	 * 
-	 * @param id        Identifier of the block list to be added
 	 * @param blockList The block list to be removed
 	 */
-	public void removeBlockList(int id, BlockList blockList) {
-		this.blockLists.remove(id, blockList);
+	public void removeBlockList(BlockList blockList) {
+		for (int tmpBlockListId : this.blockLists.keySet()) {
+			if (this.blockLists.get(tmpBlockListId).equals(blockList)) {
+				this.blockLists.remove(tmpBlockListId, blockList);
+			}
+		}
 		this.updateTime();
+	}
+
+	/**
+	 * Removes a block list with a specified identifier <id>
+	 * 
+	 * @param id Identifier of the block list to be added
+	 */
+	public void removeBlockListById(int id) {
+		this.blockLists.remove(id);
+		this.updateTime();
+	}
+
+	/**
+	 * Updates the block list with the given <id> with the new content
+	 * 
+	 * @param id               Identifier of the block list to be added
+	 * @param description      of the block list
+	 * @param isEnabled        The activity status of the block list
+	 * @param blockedWebsites  The list containing the blocked websites
+	 * @param blockedProcesses The list containing the blocked applications
+	 */
+	public void modifyBlockListContentsById(int id, String blocklistName, String description, boolean isEnabled,
+			List<Website> blockedWebsites, List<Process> blockedProcesses) {
+		BlockList selectedBlockList = this.blockLists.get(id);
+		selectedBlockList.setBlocklistName(blocklistName);
+		selectedBlockList.setBlocklistDescription(description);
+		selectedBlockList.setIsEnabled(isEnabled);
+		selectedBlockList.setBlockedWebsites(new ArrayList<Website>(blockedWebsites));
+		selectedBlockList.setBlockedProcesses(new ArrayList<Process>(blockedProcesses));
 	}
 
 	/**
@@ -99,8 +137,8 @@ public class BlockListRepository {
 	 * 
 	 * @return a list containing all the block lists
 	 */
-	public ArrayList<BlockList> getBlockListsAsList() {
-		return (ArrayList<BlockList>) this.blockLists.values();
+	public Collection<BlockList> getBlockListsAsList() {
+		return this.blockLists.values();
 	}
 
 	/**
