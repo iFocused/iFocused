@@ -1,39 +1,42 @@
 package application.entities;
 
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 
 public class BlockList {
+	private String blocklistName;
+	private String description;
 	private int blockListId;
-	private String updatedDate;
+	private LocalDateTime updatedDate;
 	private ArrayList<Website> blockedWebsites;
 	private ArrayList<Process> blockedProcesses;
 	private boolean isEnabled;
 
-	public BlockList(int blockListId) {
-		this(blockListId, false);
+	public BlockList(String blocklistName, String description, int blockListId) {
+		this(blocklistName, description, blockListId, false);
 	}
 
-	public BlockList(int blockListId, boolean isEnabled) {
-		this(blockListId, isEnabled, new ArrayList<>(Arrays.asList()), new ArrayList<>(Arrays.asList()));
+	public BlockList(String blocklistName, String description, int blockListId, boolean isEnabled) {
+		this(blocklistName, description, blockListId, isEnabled, new ArrayList<>(Arrays.asList()),
+				new ArrayList<>(Arrays.asList()));
 	}
 
-	public BlockList(int blockListId, ArrayList<Website> blockedWebsites,
+	public BlockList(String blocklistName, String description, int blockListId, ArrayList<Website> blockedWebsites,
 			ArrayList<Process> blockedProcesses) {
-		this(blockListId, false, blockedWebsites, blockedProcesses);
+		this(blocklistName, description, blockListId, false, blockedWebsites, blockedProcesses);
 	}
 
-	public BlockList(int blockListId, boolean isEnabled, ArrayList<Website> blockedWebsites, 
-			ArrayList<Process> blockedProcesses) {
+	public BlockList(String blocklistName, String description, int blockListId, boolean isEnabled,
+			ArrayList<Website> blockedWebsites, ArrayList<Process> blockedProcesses) {
+		this.blocklistName = blocklistName;
+		this.description = description;
 		this.isEnabled = isEnabled;
 		this.blockListId = blockListId;
 		this.blockedWebsites = blockedWebsites;
 		this.blockedProcesses = blockedProcesses;
 
-		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-		this.updatedDate = formatter.format(new Date());
+		this.updatedDate = LocalDateTime.now();
 	}
 
 	public void addWebsite(Website w) {
@@ -62,7 +65,7 @@ public class BlockList {
 		return blockListId;
 	}
 
-	public String getUpdatedDate() {
+	public LocalDateTime getUpdatedDate() {
 		return updatedDate;
 	}
 
@@ -72,6 +75,14 @@ public class BlockList {
 
 	public ArrayList<Process> getBlockedProcesses() {
 		return blockedProcesses;
+	}
+
+	public String getBlocklistName() {
+		return blocklistName;
+	}
+
+	public String getBlocklistDescription() {
+		return description;
 	}
 
 	/* Setters */
@@ -84,7 +95,7 @@ public class BlockList {
 		this.blockListId = newId;
 	}
 
-	public void setUpdatedDate(String newDate) {
+	public void setUpdatedDate(LocalDateTime newDate) {
 		this.updatedDate = newDate;
 	}
 
@@ -94,6 +105,14 @@ public class BlockList {
 
 	public void setBlockedProcesses(ArrayList<Process> processes) {
 		this.blockedProcesses = processes;
+	}
+
+	public void setBlocklistName(String newBlocklistName) {
+		this.blocklistName = newBlocklistName;
+	}
+
+	public void setBlocklistDescription(String newDescription) {
+		this.description = newDescription;
 	}
 
 }

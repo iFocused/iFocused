@@ -32,7 +32,7 @@
                   <VBox layoutX="-28.0" layoutY="119.0" prefHeight="493.0" prefWidth="256.0" style="-fx-spacing: 15;">
                      <children>
                         <Separator prefWidth="200.0" />
-                        <Button mnemonicParsing="false" onAction="#onDashboardSelection" prefHeight="52.0" prefWidth="224.0" style="-fx-graphic-text-gap: 25;" styleClass="btn_menu" text="Dashboard">
+                        <Button fx:id="btnDashboard" mnemonicParsing="false" onAction="#onDashboardSelection" prefHeight="52.0" prefWidth="224.0" style="-fx-graphic-text-gap: 25;" styleClass="btn_menu" text="Dashboard">
                            <graphic>
                               <ImageView fitHeight="27.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true" style="-fx-spacing: 10;">
                                  <image>
@@ -41,7 +41,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#onBlockListSelection" prefHeight="52.0" prefWidth="224.0" style="-fx-graphic-text-gap: 27;" styleClass="btn_menu" text="Block Lists">
+                        <Button fx:id="btnBlocklists" mnemonicParsing="false" onAction="#onBlockListSelection" prefHeight="52.0" prefWidth="224.0" style="-fx-graphic-text-gap: 27;" styleClass="btn_menu" text="Block Lists">
                            <graphic>
                               <ImageView fitHeight="27.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true" style="-fx-spacing: 10;">
                                  <image>
@@ -50,7 +50,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#onScheduleSelection" prefHeight="52.0" prefWidth="224.0" style="-fx-graphic-text-gap: 37;" styleClass="btn_menu" text="Schedule">
+                        <Button fx:id="btnSchedule" mnemonicParsing="false" onAction="#onScheduleSelection" prefHeight="52.0" prefWidth="224.0" style="-fx-graphic-text-gap: 37;" styleClass="btn_menu" text="Schedule">
                            <graphic>
                               <ImageView fitHeight="27.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true" style="-fx-spacing: 10;">
                                  <image>
@@ -59,7 +59,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#onTimerSelection" prefHeight="52.0" prefWidth="224.0" style="-fx-graphic-text-gap: 30;" styleClass="btn_menu" text="Pomodoro">
+                        <Button fx:id="btnPomodoro" mnemonicParsing="false" onAction="#onTimerSelection" prefHeight="52.0" prefWidth="224.0" style="-fx-graphic-text-gap: 30;" styleClass="btn_menu" text="Pomodoro">
                            <graphic>
                               <ImageView fitHeight="27.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true" style="-fx-spacing: 10;">
                                  <image>
@@ -68,7 +68,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#onStatsSelection" prefHeight="52.0" prefWidth="224.0" style="-fx-graphic-text-gap: 30;" styleClass="btn_menu" text="Statistics">
+                        <Button fx:id="btnStats" mnemonicParsing="false" onAction="#onStatsSelection" prefHeight="52.0" prefWidth="224.0" style="-fx-graphic-text-gap: 30;" styleClass="btn_menu" text="Statistics">
                            <graphic>
                               <ImageView fitHeight="27.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true" style="-fx-spacing: 10;">
                                  <image>
@@ -77,7 +77,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#onSettingsSelection" prefHeight="52.0" prefWidth="224.0" style="-fx-graphic-text-gap: 35;" styleClass="btn_menu" text="Settings">
+                        <Button fx:id="btnSettings" mnemonicParsing="false" onAction="#onSettingsSelection" prefHeight="52.0" prefWidth="224.0" style="-fx-graphic-text-gap: 35;" styleClass="btn_menu" text="Settings">
                            <graphic>
                               <ImageView fitHeight="27.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true" style="-fx-spacing: 10;">
                                  <image>

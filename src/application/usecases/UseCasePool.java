@@ -2,6 +2,7 @@ package application.usecases;
 
 import java.io.File;
 
+import application.entities.BlockSet;
 import application.gateways.GatewayPool;
 
 /**
@@ -48,8 +49,8 @@ public class UseCasePool {
 		todoList = new TODOList(gatewayPool.getTODOListGateway()); 
 
 		pointEligbility = new PointEligibility(todoList, sessionRepository, pomodoroRepository);
-		blocksManager = new BlocksManager(null, blockListRepository, sessionRepository,
-				pomodoroRepository); /* TODO: FIX */
+		blocksManager = new BlocksManager(new BlockSet(), blockListRepository, sessionRepository,
+				pomodoroRepository, websiteRepository, processRepository); /* TODO: FIX */
 
 		statisticsRepository = new StatisticsRepository(gatewayPool.getStatisticsRepositoryGateway()); /* TODO: FIX (-) */
 

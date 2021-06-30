@@ -85,6 +85,7 @@
 	-fx-background-color:#F26157;
 }
 
+
 .btn-stats {
 	-fx-border-color: white;
 	-fx-background-color: #2F384B;
@@ -191,6 +192,18 @@
     -fx-scale-x: 0.9;
 }
 
+/* Button selected style */
+.btn_selected{
+    -fx-background-color:#F26157;
+	-fx-background-radius:15px;
+	-fx-display:inline-block;
+	-fx-cursor:pointer;
+	-fx-color:#ffffff;
+	-fx-font-size:17px;
+	-fx-padding:16px 16px;
+	-fx-text-decoration:none;
+}
+
 /* Tab pane styling */
 
 .tab-pane {
@@ -277,10 +290,10 @@
     -fx-font-size: 16px; 
 }
 
-
+/*
 .table-row-cell {
     -fx-cell-size: 40px;
-}
+}*/
 
 .table-view .column-header-background .label{
     -fx-background-color: transparent;
@@ -290,7 +303,7 @@
     -fx-background-color:  #4A3CAB;
 }
 .table-view .table-cell{
-    -fx-text-fill: white;
+    -fx-text-fill: black;
 }
 
 .table-view .arrow {
@@ -299,13 +312,10 @@
     -fx-shape: " ";
 }
 
-
 .table-column{
     -fx-alignment: CENTER;  
 }
-.table-row-cell:even{
-    -fx-background-color: derive(blue, 10%);
-}
+
 .table-row-cell:selected {
     -fx-background-color: orange;
     -fx-text-fill: black;

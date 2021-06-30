@@ -28,8 +28,8 @@ public class ProcessRepository {
 	 * 
 	 * @param Process The Process to be added
 	 */
-	public int createProcess(File process, String description) {
-		this.processes.put(this.currId, new Process(process, description, this.currId));
+	public int createProcess(File process) {
+		this.processes.put(this.currId, new Process(process, this.currId));
 		int tmpId = this.currId;
 		this.currId++;
 		return tmpId;

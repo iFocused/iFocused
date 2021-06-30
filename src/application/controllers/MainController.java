@@ -10,6 +10,7 @@ import application.views.FxmlViewBuilder;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -18,7 +19,25 @@ public class MainController implements Initializable {
 
 	private final int NUM_TABS = 6;
 	private UseCasePool useCasePool;
-	private FxmlViewBuilder fxmlViewBuilder;	
+	private FxmlViewBuilder fxmlViewBuilder;
+
+	@FXML
+	private Button btnDashboard;
+
+	@FXML
+	private Button btnBlocklists;
+
+	@FXML
+	private Button btnSchedule;
+
+	@FXML
+	private Button btnPomodoro;
+
+	@FXML
+	private Button btnStats;
+
+	@FXML
+	private Button btnSettings;
 
 	@FXML
 	private TabPane tabsPane;
@@ -43,42 +62,65 @@ public class MainController implements Initializable {
 
 	@FXML
 	void onDashboardSelection(ActionEvent event) {
+		resetBtnStyles();
+		((Button) event.getSource()).getStyleClass().add("btn_selected");
 		changeView(0);
 	}
 
 	@FXML
 	void onBlockListSelection(ActionEvent event) {
+		resetBtnStyles();
+		((Button) event.getSource()).getStyleClass().add("btn_selected");
 		changeView(1);
 	}
 
 	@FXML
 	void onScheduleSelection(ActionEvent event) {
+		resetBtnStyles();
+		((Button) event.getSource()).getStyleClass().add("btn_selected");
 		changeView(2);
 	}
 
 	@FXML
 	void onTimerSelection(ActionEvent event) {
+		resetBtnStyles();
+		((Button) event.getSource()).getStyleClass().add("btn_selected");
 		changeView(3);
 	}
 
 	@FXML
 	void onStatsSelection(ActionEvent event) {
+		resetBtnStyles();
+		((Button) event.getSource()).getStyleClass().add("btn_selected");
 		changeView(4);
 	}
 
 	@FXML
 	void onSettingsSelection(ActionEvent event) {
+		resetBtnStyles();
+		((Button) event.getSource()).getStyleClass().add("btn_selected");
 		changeView(5);
 	}
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		populateTabs();
+		btnDashboard.getStyleClass().add("btn_selected");
+
 	}
 
 	public MainController(UseCasePool useCasePool, FxmlViewBuilder fxmlBuilder) {
 		this.useCasePool = useCasePool;
 		this.fxmlViewBuilder = fxmlBuilder;
+	}
+
+	private void resetBtnStyles() {
+		btnDashboard.getStyleClass().remove("btn_selected");
+		btnBlocklists.getStyleClass().remove("btn_selected");
+		btnSchedule.getStyleClass().remove("btn_selected");
+		btnPomodoro.getStyleClass().remove("btn_selected");
+		btnStats.getStyleClass().remove("btn_selected");
+		btnSettings.getStyleClass().remove("btn_selected");
 	}
 
 	private void setTab(ViewMode whichView) {
