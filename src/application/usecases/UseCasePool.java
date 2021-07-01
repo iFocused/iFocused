@@ -37,29 +37,16 @@ public class UseCasePool {
 		// https://github.com/nigow/TradingSystem/blob/e1241568adf33499be90258abe8cbef208d55a3a/src/main/java/org/twelve/usecases/UseCasePool.java#L15
 		// make every gateway take reference to controller pool
 		blockListRepository = new BlockListRepository(gatewayPool.getBlockListGateway()); 
-
 		sessionRepository = new SessionRepository(gatewayPool.getSessionRepositoryGateway());
-
 		pomodoroRepository = new PomodoroRepository(gatewayPool.getPomodoroRepositoryGateway()); 
-
 		websiteRepository = new WebsiteRepository(gatewayPool.getWebsiteRepositoryGateway()); 
-
 		processRepository = new ProcessRepository(gatewayPool.getProcessRepositoryGateway()); 
-
 		todoList = new TODOList(gatewayPool.getTODOListGateway()); 
-
 		pointEligbility = new PointEligibility(todoList, sessionRepository, pomodoroRepository);
 		blocksManager = new BlocksManager(new BlockSet(), blockListRepository, sessionRepository,
-				pomodoroRepository, websiteRepository, processRepository); /* TODO: FIX */
-
-		statisticsRepository = new StatisticsRepository(gatewayPool.getStatisticsRepositoryGateway()); /* TODO: FIX (-) */
-
+				pomodoroRepository, gatewayPool.getBlocksManagerGateway()); 
+		statisticsRepository = new StatisticsRepository(gatewayPool.getStatisticsRepositoryGateway()); 
 		userManager = new UserManager(gatewayPool.getUserManagerGateway());
-
-		/**
-		 * NEED TO FIGURE OUT WHERE TO GET THE USERNAME AND TIMEZONE TO initialize a
-		 * USER
-		 */
 	}
 
 	/**

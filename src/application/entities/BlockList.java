@@ -13,6 +13,8 @@ public class BlockList {
 	private ArrayList<Process> blockedProcesses;
 	private boolean isEnabled;
 
+	public BlockList() {}
+	
 	public BlockList(String blocklistName, String description, int blockListId) {
 		this(blocklistName, description, blockListId, false);
 	}
