@@ -3,14 +3,12 @@ package application.entities;
 import java.time.LocalDateTime;
 
 public class PomodoroSession {
-	private Session session;
 	private int breakDuration;
 	private LocalDateTime startTime;
 	private int timeUntilStateChange;
 	private LocalDateTime endTime;
 
-	public PomodoroSession(Session session, int breakDuration) {
-		this.session = session;
+	public PomodoroSession(int breakDuration) {
 		this.breakDuration = breakDuration;
 		this.timeUntilStateChange = 0;
 
@@ -27,17 +25,6 @@ public class PomodoroSession {
 
 		// resetting for next round
 		this.startTime = LocalDateTime.now();
-
-		// applying actual session status change
-		this.session.setSessionStatus(newSessionStatus);
-	}
-
-	public Session getSession() {
-		return session;
-	}
-
-	public void setSession(Session session) {
-		this.session = session;
 	}
 
 	public int getBreakDuration() {

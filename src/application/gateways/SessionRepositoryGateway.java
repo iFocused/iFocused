@@ -2,7 +2,6 @@ package application.gateways;
 
 import java.util.ArrayList;
 
-import application.entities.Session;
 import application.usecases.SessionRepository;
 
 public interface SessionRepositoryGateway {
@@ -30,5 +29,5 @@ public interface SessionRepositoryGateway {
 	 * 
 	 * @return True iff the the sync was successful, otherwise false is returned
 	 */
-	boolean saveUserData(ArrayList<Session> sessions);
+//	boolean saveUserData(ArrayList<Session> sessions);
 }

@@ -200,6 +200,8 @@ public class BlocklistsController implements Initializable {
 				this.blocksManager.unblockById(selectedBlocklist);
 				this.blockListRepository.removeBlockList(selectedBlocklist);
 				blocklistTableView.getItems().remove(selectedBlocklist);
+				this.blockListRepository.saveBlocklistData();
+				this.blocksManager.saveBlockSets();
 			}
 
 		} else {
@@ -323,8 +325,8 @@ public class BlocklistsController implements Initializable {
 		System.out.println("exectued");
 		blocklistToggleBtn.selectedProperty().addListener((observable, oldValue, newValue) -> {
 			BlockList selectedBlocklist = blocklistTableView.getSelectionModel().getSelectedItem();
-			System.out.println("selectedBlocklist.getIsEnabled == " + selectedBlocklist.getIsEnabled() + 
-					" | oldValue " + oldValue + " | newValue " + newValue);
+			System.out.println("selectedBlocklist.getIsEnabled == " + selectedBlocklist.getIsEnabled() + " | oldValue "
+					+ oldValue + " | newValue " + newValue);
 			if (selectedBlocklist != null) {
 				System.out.println("i got here");
 				if (selectedBlocklist.getIsEnabled() == oldValue) {

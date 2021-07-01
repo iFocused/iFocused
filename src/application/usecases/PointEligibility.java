@@ -27,10 +27,10 @@ public class PointEligibility {
 	private boolean checkPomodoroForCompletion() {
 		// check if a pomodoro session was completed
 		PomodoroSession recentPomodoroSession = pomodoroRepo.getMostRecentPomodoroSession();
-		if (recentPomodoroSession == null
-				|| !recentPomodoroSession.getSession().getSessionStatus().equals(SessionStatus.FINISHED)) {
-			return false;
-		}
+//		if (recentPomodoroSession == null
+//				|| !recentPomodoroSession.getSession().getSessionStatus().equals(SessionStatus.FINISHED)) {
+//			return false;
+//		}
 
 		// check if the pomodoro session was completed after the last time a point was
 		// given

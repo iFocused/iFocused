@@ -5,9 +5,6 @@ import java.util.Arrays;
 
 import application.entities.BlockList;
 import application.entities.BlockSet;
-import application.entities.PomodoroSession;
-import application.entities.Session;
-import application.entities.SessionStatus;
 import application.gateways.BlocksManagerGateway;
 
 public class BlocksManager {
@@ -71,20 +68,20 @@ public class BlocksManager {
 	 * 
 	 * @return true iff any of the sessions are in break mode
 	 */
-	public boolean isOnBreak() {
-		for (Session session : sessionRepository.getSessions()) {
-			if (session.getSessionStatus() == SessionStatus.BREAK) {
-				return true;
-			}
-		}
-
-		for (PomodoroSession pSession : pomodoroRepository.getPomodoroSessions()) {
-			if (pSession.getSession().getSessionStatus() == SessionStatus.BREAK) {
-				return true;
-			}
-		}
-		return false;
-	}
+//	public boolean isOnBreak() {
+//		for (Session session : sessionRepository.getSessions()) {
+//			if (session.getSessionStatus() == SessionStatus.BREAK) {
+//				return true;
+//			}
+//		}
+//
+//		for (PomodoroSession pSession : pomodoroRepository.getPomodoroSessions()) {
+//			if (pSession.getSession().getSessionStatus() == SessionStatus.BREAK) {
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
 
 	/**
 	 * Returns true if and only if the block list with <id> was successfully blocked

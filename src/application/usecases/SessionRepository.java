@@ -1,27 +1,24 @@
 package application.usecases;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
+import com.calendarfx.model.Calendar;
+import java.util.*;
 
-import application.entities.Session;
 import application.gateways.SessionRepositoryGateway;
 
 public class SessionRepository {
 
-	private ArrayList<Session> sessions;
-	private int sessionIdTracker;
+	private Map<Integer, Calendar> calendarsMap;
+	private int calendarId;
 	private final SessionRepositoryGateway sessionRepositoryGateway;
 
 	/**
 	 * Constructor for the session repository
 	 */
 	public SessionRepository(SessionRepositoryGateway sessionRepositoryGateway) {
-		this.sessions = new ArrayList<>();
+		this.calendarId = 0;
+		this.calendarsMap = new HashMap<>();
 		this.sessionRepositoryGateway = sessionRepositoryGateway;
 		this.sessionRepositoryGateway.populateUserData(this);
-		this.sessionIdTracker = 0;
 	}
 
 	/**
@@ -29,77 +26,57 @@ public class SessionRepository {
 	 * 
 	 * @param session The session to be added
 	 */
-	public void createSession(int blockListId) {
-		this.sessions.add(new Session(sessionIdTracker, blockListId));
-		this.sessionIdTracker++;
+	public void createCalendar(Calendar calendar) {
+		this.calendarsMap.put(calendarId, calendar);
+		calendarId++;
 	}
 
 	/**
-	 * Removes a session.
+	 * Removes a calendar by id.
 	 * 
-	 * @param session The session to be removed
+	 * @param calendar that is to be removed
 	 */
-	public void removeSessionById(int sessionId) {
-		for (Session session : this.sessions) {
-			if (session.getSessionId() == sessionId) {
-				this.sessions.remove(session);
+	public void removeCalendarById(int calendarId) {
+		this.calendarsMap.remove(calendarId);
+	}
+
+	/**
+	 * Removes a calendar by object reference.
+	 * 
+	 * @param calendar that is to be removed
+	 */
+	public void removeCalendarByReference(Calendar calendar) {
+		for (int calendarId : this.calendarsMap.keySet()) {
+			if (this.calendarsMap.get(calendarId).equals(calendar)) {
+				this.calendarsMap.remove(calendarId, calendar);
 				return;
 			}
 		}
 	}
 
 	/**
-	 * Return a list of all the sessions in this repository
+	 * Return a map of all the calendars in this repository corresponding to their
+	 * ids
 	 * 
-	 * @return a list of all the sessions
+	 * @return a map of all the calendars with their ids
 	 */
-	public ArrayList<Session> getSessions() {
-		return this.sessions;
+	public Map<Integer, Calendar> getCalendarsMap() {
+		return this.calendarsMap;
 	}
 
 	/**
-	 * Return a list of session prior to the given <time> in ascending order.
+	 * Returns True iff the given <calendar> exists in the calendar map. Otherwise,
+	 * false is returned.
 	 * 
-	 * @param time The time to be counted up to
-	 * @return a list of sessions up to a certain time in ascending order
+	 * @param calendar that is to be checked against calendar map entries
+	 * @return whether the given <calendar> exists in the calendar map
 	 */
-	public ArrayList<Session> getNSessionsAsc(LocalDateTime givenTime) {
-		ArrayList<Session> filteredSessions = new ArrayList<>();
-		
-		for (Session session : this.sessions) {
-			LocalDateTime tmpDateTime = session.getStartTime();
-			if (tmpDateTime.isBefore(givenTime)) {
-				filteredSessions.add(session);
+	public boolean isCalendarExists(Calendar calendar) {
+		for (Calendar tmpCalendar : this.calendarsMap.values()) {
+			if (tmpCalendar.equals(calendar)) {
+				return true;
 			}
 		}
-
-		return filteredSessions;
-	}
-
-	/**
-	 * Return a list of session prior to the given <time> in descending order.
-	 * 
-	 * @param time The time to be counted up to
-	 * @return a list of sessions up to a certain time in descending order
-	 */
-	public ArrayList<Session> getNSessionsDesc(LocalDateTime givenTime) {
-		ArrayList<Session> sessions = this.getNSessionsAsc(givenTime);
-		Collections.reverse(sessions);
-		return sessions;
-	}
-	
-	/**
-	 * 
-	 * @param startDate
-	 * @param endDate
-	 * @return
-	 */
-	public Session findSession(LocalDate startDate, LocalDate endDate) {
-		for(Session tmpSession : this.sessions) {
-			if(tmpSession.getStartTime().toLocalDate().equals(startDate) && tmpSession.getEndTime().toLocalDate().equals(endDate)) {
-				return tmpSession;
-			}
-		}
-		return null;
+		return false;
 	}
 }
