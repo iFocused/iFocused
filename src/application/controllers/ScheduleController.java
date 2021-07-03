@@ -6,16 +6,15 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.calendarfx.model.Calendar;
-import com.calendarfx.model.CalendarEvent;
 import com.calendarfx.model.Calendar.Style;
+import com.calendarfx.model.CalendarEvent;
 import com.calendarfx.model.CalendarSource;
 import com.calendarfx.model.Entry;
 import com.calendarfx.view.AllDayView;
@@ -43,6 +42,7 @@ public class ScheduleController implements Initializable {
 //	private Map<Calendar, ArrayList<EntryWithBlockList>> entryMap;
 //	private Map<Calendar, ArrayList<Entry>> entryMap;
 	private CalendarView calendarView;
+	private CalendarSource myCalendarSource;
 	private UseCasePool useCasePool;
 	private SessionRepository sessionRepository;
 	private FxmlViewBuilder fxmlViewBuilder;
@@ -55,7 +55,7 @@ public class ScheduleController implements Initializable {
 		calendarStyleCount = 1;
 
 		calendarView = new CalendarView();
-		CalendarSource myCalendarSource = new CalendarSource("My Calendars");
+		myCalendarSource = new CalendarSource("My Calendars");
 
 		calendarView.getCalendarSources().addAll(myCalendarSource);
 
@@ -91,7 +91,6 @@ public class ScheduleController implements Initializable {
 
 		// order of listeners is important
 		addCalendarCreationEvent(myCalendarSource);
-		addEntryListener(myCalendarSource);
 
 		calendarView.setEntryDetailsPopOverContentCallback(param -> new CustomPopOverContentNode(param.getPopOver(),
 				param.getDateControl(), param.getEntry(), useCasePool.getBlockListRepository().getBlockListsAsList()));
@@ -124,6 +123,9 @@ public class ScheduleController implements Initializable {
 			return entry;
 		});
 
+		importCalendars();
+		addEntryListener();
+
 	}
 
 	public ScheduleController(UseCasePool useCasePool, FxmlViewBuilder fxmlViewBuilder) {
@@ -131,6 +133,41 @@ public class ScheduleController implements Initializable {
 		this.sessionRepository = useCasePool.getSessionRepository();
 		this.fxmlViewBuilder = fxmlViewBuilder;
 //		entryMap = new HashMap<>();
+	}
+
+	private void importCalendars() {
+
+		if (this.sessionRepository.getCalendarsMap().size() > 0) {
+
+			// load calendars and its entries
+			for (String calendarName : this.sessionRepository.getCalendarsMap().keySet()) {
+				Calendar tmpCalendar;
+				if (calendarName.equals("Default")) {
+					tmpCalendar = calendarView.getCalendars().get(0);
+				} else {
+					tmpCalendar = new Calendar(calendarName);
+					tmpCalendar.setStyle(getCurrStyle());
+					myCalendarSource.getCalendars().add(tmpCalendar);
+				}
+
+				parseCalendarEntries(tmpCalendar, this.sessionRepository.getCalendarsMap().get(calendarName));
+
+			}
+		}
+	}
+
+	private void parseCalendarEntries(Calendar targetCalendar, List<EntryWithBlockList<?>> entryList) {
+		for (EntryWithBlockList<?> entry : entryList) {
+			final LocalDate startDate = LocalDate.parse(entry.getStartDateRep());
+			final LocalDate endDate = LocalDate.parse(entry.getEndDateRep());
+			final LocalTime startTime = LocalTime.parse(entry.getStartTimeRep());
+			final LocalTime endTime = LocalTime.parse(entry.getEndTimeRep());
+			entry.changeStartDate(startDate);
+			entry.changeEndDate(endDate);
+			entry.changeStartTime(startTime);
+			entry.changeEndTime(endTime);
+			targetCalendar.addEntry(entry);
+		}
 	}
 
 	private void addCalendarCreationEvent(CalendarSource myCalendarSource) {
@@ -184,13 +221,30 @@ public class ScheduleController implements Initializable {
 
 			@Override
 			public void handle(CalendarEvent event) {
-				Calendar calendar = event.getCalendar();
+				// ensuring no delete request was sent
+				if (event.getCalendar() != null) {
+					Calendar calendar = event.getCalendar();
+					Map<LocalDate, List<Entry<?>>> tmpCalendarMap = (calendar.findEntries(LocalDate.now(),
+							LocalDate.now().plusYears(25),
+							useCasePool.getUserManager().getUser().getTimeZone().toZoneId()));
 
-				if (sessionRepository.isCalendarExists(calendar)) {
-					sessionRepository.removeCalendarByReference(calendar);
+						tmpCalendarMap.values().forEach(entryLst -> {
+
+							entryLst.forEach(entry -> {
+								// since we used entry factory where we create
+								// an entry of type EntryWithBlockList, then
+								// we can cast it back to an EntryWithBlockList since
+								// we know it should have all the required fields
+								EntryWithBlockList<?> entryWithBlockList = (EntryWithBlockList<?>) entry;
+								sessionRepository.removeEntryByReference(entryWithBlockList);
+								sessionRepository.createCalendarEntry(calendar, entryWithBlockList);
+							});
+						});
+						sessionRepository.exportCalendarsData();
+				} else {
+					sessionRepository.removeEntryByReference((EntryWithBlockList<?>) event.getEntry());
+					sessionRepository.exportCalendarsData();
 				}
-
-				sessionRepository.createCalendar(calendar);
 
 			}
 		};
@@ -198,7 +252,7 @@ public class ScheduleController implements Initializable {
 		return eventHandler;
 	}
 
-	private void addEntryListener(CalendarSource myCalendarSource) {
+	private void addEntryListener() {
 		for (Calendar calendar : calendarView.getCalendars()) {
 			calendar.addEventHandler(getEntryListenerHandler());
 		}
