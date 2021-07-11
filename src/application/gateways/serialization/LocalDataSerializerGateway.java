@@ -1,14 +1,6 @@
 package application.gateways.serialization;
 
-import application.gateways.BlockListGateway;
-import application.gateways.GatewayPool;
-import application.gateways.PomodoroRepositoryGateway;
-import application.gateways.ProcessRepositoryGateway;
-import application.gateways.SessionRepositoryGateway;
-import application.gateways.StatisticsRepositoryGateway;
-import application.gateways.TODOListGateway;
-import application.gateways.UserManagerGateway;
-import application.gateways.WebsiteRepositoryGateway;
+import application.gateways.*;
 
 public class LocalDataSerializerGateway implements GatewayPool {
 	private final BlockListGateway blockListGateway;
@@ -19,6 +11,7 @@ public class LocalDataSerializerGateway implements GatewayPool {
 	private final TODOListGateway todoListGateway;
 	private final UserManagerGateway userManagerGateway;
 	private final StatisticsRepositoryGateway statisticsRepositoryGateway;
+	private final BlocksManagerGateway blocksManagerGateway;
 
 	public LocalDataSerializerGateway() {
 		blockListGateway = new SerBlockListGateway();
@@ -29,6 +22,7 @@ public class LocalDataSerializerGateway implements GatewayPool {
 		todoListGateway = new SerTODOListGateway();
 		userManagerGateway = new SerUserManagerGateway();
 		statisticsRepositoryGateway = new SerStatisticsRepositoryGateway();
+		blocksManagerGateway = new SerBlocksManagerGateway();
 
 	}
 
@@ -78,6 +72,12 @@ public class LocalDataSerializerGateway implements GatewayPool {
 	public StatisticsRepositoryGateway getStatisticsRepositoryGateway() {
 		// TODO Auto-generated method stub
 		return this.statisticsRepositoryGateway;
+	}
+
+	@Override
+	public BlocksManagerGateway getBlocksManagerGateway() {
+		// TODO Auto-generated method stub
+		return this.blocksManagerGateway;
 	}
 
 }

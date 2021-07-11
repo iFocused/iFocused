@@ -24,7 +24,6 @@ public class SerUserManagerGateway implements UserManagerGateway {
 	public boolean populateUserData(UserManager userManager) {
 		// creates data file if it exists, otherwise, overwrites it
 
-//		if (new File("./data/" + SERIALIZED_USER_DATA_FILE).exists()) {
 		User populatedUser = XmltoObject();
 		if(populatedUser != null) {
 			userManager.setUser(populatedUser);
@@ -32,8 +31,6 @@ public class SerUserManagerGateway implements UserManagerGateway {
 		}
 		
 		return false;
-//		}
-//;
 	}
 
 	/**

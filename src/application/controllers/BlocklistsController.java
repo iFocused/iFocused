@@ -102,6 +102,7 @@ public class BlocklistsController implements Initializable {
 		populatetListCellRendering();
 		initTableViewBinding();
 		initBlocklistComponentBindings();
+		this.blocklistTableView.getItems().setAll(this.blockListRepository.getBlockListsAsList());
 	}
 
 	/**
@@ -124,12 +125,13 @@ public class BlocklistsController implements Initializable {
 					blocklistDescription.getText(), blocklistChkBox.isSelected(),
 					new ArrayList<>(websiteListView.getItems()), new ArrayList<>(appListView.getItems()));
 			blocklistTableView.getItems().add(this.blockListRepository.getBlockListById(blockListId));
-			blocklistToggleBtn.setDisable(false);
+
 			System.out.println("done");
 			if (blocklistChkBox.isSelected())
 				this.blocksManager.blockById(blockListRepository.getBlockListById(blockListId));
 			resetBlocklistCreationFields();
-
+			this.blockListRepository.saveBlocklistData();
+			this.blocksManager.saveBlockSets();
 		}
 
 	}
@@ -173,6 +175,8 @@ public class BlocklistsController implements Initializable {
 				websiteListView.getItems(), appListView.getItems());
 		resetBlocklistCreationFields();
 		blocklistTableView.refresh();
+		this.blockListRepository.saveBlocklistData();
+		this.blocksManager.saveBlockSets();
 	}
 
 	/**
@@ -196,6 +200,8 @@ public class BlocklistsController implements Initializable {
 				this.blocksManager.unblockById(selectedBlocklist);
 				this.blockListRepository.removeBlockList(selectedBlocklist);
 				blocklistTableView.getItems().remove(selectedBlocklist);
+				this.blockListRepository.saveBlocklistData();
+				this.blocksManager.saveBlockSets();
 			}
 
 		} else {
@@ -319,7 +325,10 @@ public class BlocklistsController implements Initializable {
 		System.out.println("exectued");
 		blocklistToggleBtn.selectedProperty().addListener((observable, oldValue, newValue) -> {
 			BlockList selectedBlocklist = blocklistTableView.getSelectionModel().getSelectedItem();
+			System.out.println("selectedBlocklist.getIsEnabled == " + selectedBlocklist.getIsEnabled() + " | oldValue "
+					+ oldValue + " | newValue " + newValue);
 			if (selectedBlocklist != null) {
+				System.out.println("i got here");
 				if (selectedBlocklist.getIsEnabled() == oldValue) {
 					if (newValue) {
 						this.blocksManager.blockById(selectedBlocklist);
@@ -330,6 +339,8 @@ public class BlocklistsController implements Initializable {
 					selectedBlocklist.setIsEnabled(newValue);
 					blocklistTableView.refresh();
 				}
+				this.blockListRepository.saveBlocklistData();
+				this.blocksManager.saveBlockSets();
 			}
 
 		});

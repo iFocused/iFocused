@@ -10,6 +10,8 @@ public class Website {
 	private int websiteId;
 	private int timesBlocked;
 
+	public Website() {}
+	
 	public Website(String websiteName, String websiteURL, int websiteId) throws MalformedURLException {
 		this.websiteName = websiteName;
 		this.websiteId = websiteId;

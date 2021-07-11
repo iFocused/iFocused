@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import application.entities.PomodoroSession;
-import application.entities.Session;
 import application.gateways.PomodoroRepositoryGateway;
 
 public class PomodoroRepository {
@@ -26,8 +25,8 @@ public class PomodoroRepository {
 	 * 
 	 * @param PomodoroSession The PomodoroSession to be added
 	 */
-	public void createPomodoroSession(Session session, int breakDuration) {
-		this.pomodoroSessions.add(new PomodoroSession(session, breakDuration));
+	public void createPomodoroSession(int breakDuration) {
+		this.pomodoroSessions.add(new PomodoroSession(breakDuration));
 	}
 
 	/**

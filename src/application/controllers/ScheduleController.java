@@ -6,14 +6,11 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
-import org.controlsfx.control.PopOver;
 
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.Calendar.Style;
@@ -24,17 +21,9 @@ import com.calendarfx.view.AllDayView;
 import com.calendarfx.view.CalendarView;
 import com.calendarfx.view.DateControl;
 import com.calendarfx.view.VirtualGrid;
-import com.calendarfx.view.DateControl.EntryDetailsParameter;
-import com.calendarfx.view.DateControl.EntryDetailsPopOverContentParameter;
-import com.calendarfx.view.popover.DatePopOver;
-import com.calendarfx.view.popover.EntryPopOverContentPane;
-import com.calendarfx.view.popover.EntryPopOverPane;
-import com.calendarfx.view.popover.PopOverContentPane;
-import com.calendarfx.view.popover.PopOverTitledPane;
 
 import application.ui.CalendarFx.CustomPopOverContentNode;
 import application.ui.CalendarFx.EntryWithBlockList;
-import application.usecases.BlockListRepository;
 import application.usecases.SessionRepository;
 import application.usecases.UseCasePool;
 import application.views.FxmlViewBuilder;
@@ -43,19 +32,17 @@ import javafx.collections.ListChangeListener;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.BorderPane;
-import javafx.util.Callback;
 
 public class ScheduleController implements Initializable {
 	private int calendarStyleCount;
-	private Map<Calendar, ArrayList<EntryWithBlockList>> entryMap;
+//	private Map<Calendar, ArrayList<EntryWithBlockList>> entryMap;
 //	private Map<Calendar, ArrayList<Entry>> entryMap;
 	private CalendarView calendarView;
+	private CalendarSource myCalendarSource;
 	private UseCasePool useCasePool;
 	private SessionRepository sessionRepository;
 	private FxmlViewBuilder fxmlViewBuilder;
@@ -68,7 +55,7 @@ public class ScheduleController implements Initializable {
 		calendarStyleCount = 1;
 
 		calendarView = new CalendarView();
-		CalendarSource myCalendarSource = new CalendarSource("My Calendars");
+		myCalendarSource = new CalendarSource("My Calendars");
 
 		calendarView.getCalendarSources().addAll(myCalendarSource);
 
@@ -100,9 +87,10 @@ public class ScheduleController implements Initializable {
 
 		mainPane.setCenter(calendarView);
 
+//		System.out.println(calendarView.getCalendars().get(0).getName());
+
 		// order of listeners is important
 		addCalendarCreationEvent(myCalendarSource);
-		addEntryListener(myCalendarSource);
 
 		calendarView.setEntryDetailsPopOverContentCallback(param -> new CustomPopOverContentNode(param.getPopOver(),
 				param.getDateControl(), param.getEntry(), useCasePool.getBlockListRepository().getBlockListsAsList()));
@@ -132,9 +120,11 @@ public class ScheduleController implements Initializable {
 				entry.setFullDay(true);
 			}
 
-			System.out.println(param.getClass().toString());
 			return entry;
 		});
+
+		importCalendars();
+		addEntryListener();
 
 	}
 
@@ -142,7 +132,42 @@ public class ScheduleController implements Initializable {
 		this.useCasePool = useCasePool;
 		this.sessionRepository = useCasePool.getSessionRepository();
 		this.fxmlViewBuilder = fxmlViewBuilder;
-		entryMap = new HashMap<>();
+//		entryMap = new HashMap<>();
+	}
+
+	private void importCalendars() {
+
+		if (this.sessionRepository.getCalendarsMap().size() > 0) {
+
+			// load calendars and its entries
+			for (String calendarName : this.sessionRepository.getCalendarsMap().keySet()) {
+				Calendar tmpCalendar;
+				if (calendarName.equals("Default")) {
+					tmpCalendar = calendarView.getCalendars().get(0);
+				} else {
+					tmpCalendar = new Calendar(calendarName);
+					tmpCalendar.setStyle(getCurrStyle());
+					myCalendarSource.getCalendars().add(tmpCalendar);
+				}
+
+				parseCalendarEntries(tmpCalendar, this.sessionRepository.getCalendarsMap().get(calendarName));
+
+			}
+		}
+	}
+
+	private void parseCalendarEntries(Calendar targetCalendar, List<EntryWithBlockList<?>> entryList) {
+		for (EntryWithBlockList<?> entry : entryList) {
+			final LocalDate startDate = LocalDate.parse(entry.getStartDateRep());
+			final LocalDate endDate = LocalDate.parse(entry.getEndDateRep());
+			final LocalTime startTime = LocalTime.parse(entry.getStartTimeRep());
+			final LocalTime endTime = LocalTime.parse(entry.getEndTimeRep());
+			entry.changeStartDate(startDate);
+			entry.changeEndDate(endDate);
+			entry.changeStartTime(startTime);
+			entry.changeEndTime(endTime);
+			targetCalendar.addEntry(entry);
+		}
 	}
 
 	private void addCalendarCreationEvent(CalendarSource myCalendarSource) {
@@ -181,6 +206,7 @@ public class ScheduleController implements Initializable {
 					newCalendar.setStyle(getCurrStyle());
 					newCalendar.setName(result.get());
 					myCalendarSource.getCalendars().add(newCalendar);
+					newCalendar.addEventHandler(getEntryListenerHandler());
 
 				} else {
 					calendarSourceLst.getList().remove(calendarSourceLst.getList().size() - 1);
@@ -190,46 +216,46 @@ public class ScheduleController implements Initializable {
 		});
 	}
 
-	private void addEntryListener(CalendarSource myCalendarSource) {
-		calendarView.getCalendarSources().addListener(new ListChangeListener<CalendarSource>() {
+	private EventHandler<CalendarEvent> getEntryListenerHandler() {
+		EventHandler<CalendarEvent> eventHandler = new EventHandler<CalendarEvent>() {
 
 			@Override
-			public void onChanged(Change<? extends CalendarSource> calendarSourceLst) {
-				System.out.println("trigerred");
-				for (Calendar calendar : myCalendarSource.getCalendars()) {
-					calendar.addEventHandler(evt -> {
-						// check if the calendar entry (session) already exists
-						if (entryMap.containsKey(calendar)) {
-							entryMap.get(calendar).clear();
-						} else {
-							entryMap.put(calendar, new ArrayList<>());
-						}
+			public void handle(CalendarEvent event) {
+				// ensuring no delete request was sent
+				if (event.getCalendar() != null) {
+					Calendar calendar = event.getCalendar();
+					Map<LocalDate, List<Entry<?>>> tmpCalendarMap = (calendar.findEntries(LocalDate.now(),
+							LocalDate.now().plusYears(25),
+							useCasePool.getUserManager().getUser().getTimeZone().toZoneId()));
 
-						Map<LocalDate, List<Entry<?>>> tmpCalendarMap = (calendar.findEntries(LocalDate.now(),
-								LocalDate.now().plusYears(5),
-								useCasePool.getUserManager().getUser().getTimeZone().toZoneId()));
+						tmpCalendarMap.values().forEach(entryLst -> {
 
-						if (tmpCalendarMap.size() > 0) {
-							tmpCalendarMap.values().forEach(entryLst -> {
-
-								entryLst.forEach(entry -> {
-									// since we used entry factory where we create
-									// an entry of type EntryWithBlockList, then
-									// we can cast it back to an EntryWithBlockList since
-									// we know it should have all the required fields
-									EntryWithBlockList<?> entryWithBlockList = (EntryWithBlockList<?>) entry;
-									entryMap.get(calendar).add(entryWithBlockList);
-									System.out.println(entryWithBlockList.getTitle());
-								});
+							entryLst.forEach(entry -> {
+								// since we used entry factory where we create
+								// an entry of type EntryWithBlockList, then
+								// we can cast it back to an EntryWithBlockList since
+								// we know it should have all the required fields
+								EntryWithBlockList<?> entryWithBlockList = (EntryWithBlockList<?>) entry;
+								sessionRepository.removeEntryByReference(entryWithBlockList);
+								sessionRepository.createCalendarEntry(calendar, entryWithBlockList);
 							});
-						}
-
-					});
+						});
+						sessionRepository.exportCalendarsData();
+				} else {
+					sessionRepository.removeEntryByReference((EntryWithBlockList<?>) event.getEntry());
+					sessionRepository.exportCalendarsData();
 				}
 
 			}
+		};
 
-		});
+		return eventHandler;
+	}
+
+	private void addEntryListener() {
+		for (Calendar calendar : calendarView.getCalendars()) {
+			calendar.addEventHandler(getEntryListenerHandler());
+		}
 
 	}
 
