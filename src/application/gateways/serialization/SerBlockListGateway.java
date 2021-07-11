@@ -37,7 +37,6 @@ public class SerBlockListGateway implements BlockListGateway {
 	 */
 	@Override
 	public boolean saveUserData(BlockListRepository blockListRepository) {
-		
 		objectToXml(blockListRepository);
 
 		return true;

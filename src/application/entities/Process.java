@@ -4,20 +4,22 @@ import java.io.File;
 
 public class Process {
 
-	private File process;
+	private String processName;
 	private int processId;
 	private int timesBlocked;
 
-	public Process() {}
-	
+	public Process() {
+		this.processName = "";
+	}
+
 	public Process(File process, int processId) {
-		this.process = process;
+		this.processName = process.getName();
 		this.processId = processId;
 		this.timesBlocked = 0;
 	}
 
 	public String getProcessName() {
-		return process.getName();
+		return processName;
 	}
 
 	public int getProcessId() {
@@ -28,8 +30,8 @@ public class Process {
 		return timesBlocked;
 	}
 
-	public void setProcess(File newProcess) {
-		this.process = newProcess;
+	public void setProcess(String newProcessName) {
+		this.processName = newProcessName;
 	}
 
 	public void setProcessId(int newProcessId) {
@@ -38,6 +40,10 @@ public class Process {
 
 	public void setTimesBlocked(int newTimesBlocked) {
 		this.timesBlocked = newTimesBlocked;
+	}
+
+	public void setProcessName(String newProcessName) {
+		this.processName = newProcessName;
 	}
 
 }
