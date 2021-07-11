@@ -8,6 +8,8 @@ public class Process {
 	private int processId;
 	private int timesBlocked;
 
+	public Process() {}
+	
 	public Process(File process, int processId) {
 		this.process = process;
 		this.processId = processId;

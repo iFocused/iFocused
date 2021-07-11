@@ -6,11 +6,11 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import application.entities.BlockList;
 import application.entities.Process;
 import application.entities.Website;
 import application.gateways.BlockListGateway;
-import javafx.application.Application;
 
 /**
  * Repository containing reference to all the block lists the user has created
@@ -20,6 +20,10 @@ public class BlockListRepository {
 	private final BlockListGateway blockListGateway;
 	private LocalDateTime timeSinceLastModification;
 	private int currId;
+	
+	public BlockListRepository() {
+		this.blockListGateway = null;
+	}
 
 	/**
 	 * Constructor for the Block List repository
@@ -30,6 +34,10 @@ public class BlockListRepository {
 		this.updateTime();
 		this.blockListGateway = blockListGateway;
 		this.blockListGateway.populateUserData(this);
+	}
+
+	public void saveBlocklistData() {
+		this.blockListGateway.saveUserData(this);
 	}
 
 	/**

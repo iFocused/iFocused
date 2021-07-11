@@ -124,7 +124,7 @@
             </Text>
             <Pane layoutX="11.0" layoutY="490.0" prefHeight="35.0" prefWidth="446.0" style="-fx-background-radius: 20;" styleClass="pane">
                <children>
-                  <JFXToggleButton fx:id="blocklistToggleBtn" disable="true" layoutX="167.0" layoutY="-11.0" text="Enabled" textFill="WHITE" toggleColor="#3f8efc" toggleLineColor="#2461ab" />
+                  <JFXToggleButton fx:id="blocklistToggleBtn" layoutX="167.0" layoutY="-11.0" text="Enabled" textFill="WHITE" toggleColor="#3f8efc" toggleLineColor="#2461ab" />
                </children>
             </Pane>
          </children>

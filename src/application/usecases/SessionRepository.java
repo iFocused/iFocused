@@ -1,27 +1,35 @@
 package application.usecases;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 
-import application.entities.Session;
+import com.calendarfx.model.Calendar;
+
 import application.gateways.SessionRepositoryGateway;
+import application.ui.CalendarFx.EntryWithBlockList;
 
 public class SessionRepository {
 
-	private ArrayList<Session> sessions;
-	private int sessionIdTracker;
+	private Map<String, List<EntryWithBlockList<?>>> calendarsMap;
 	private final SessionRepositoryGateway sessionRepositoryGateway;
+
+	/**
+	 * Default constructor for the session repository
+	 */
+	public SessionRepository() {
+		this.sessionRepositoryGateway = null;
+	}
 
 	/**
 	 * Constructor for the session repository
 	 */
 	public SessionRepository(SessionRepositoryGateway sessionRepositoryGateway) {
-		this.sessions = new ArrayList<>();
+		this.calendarsMap = new HashMap<>();
 		this.sessionRepositoryGateway = sessionRepositoryGateway;
 		this.sessionRepositoryGateway.populateUserData(this);
-		this.sessionIdTracker = 0;
+	}
+
+	public void exportCalendarsData() {
+		this.sessionRepositoryGateway.saveUserData(this);
 	}
 
 	/**
@@ -29,77 +37,94 @@ public class SessionRepository {
 	 * 
 	 * @param session The session to be added
 	 */
-	public void createSession(int blockListId) {
-		this.sessions.add(new Session(sessionIdTracker, blockListId));
-		this.sessionIdTracker++;
-	}
+	public void createCalendarEntry(Calendar calendar, EntryWithBlockList<?> entry) {
+		entry.updateEntryTimeReps();
 
-	/**
-	 * Removes a session.
-	 * 
-	 * @param session The session to be removed
-	 */
-	public void removeSessionById(int sessionId) {
-		for (Session session : this.sessions) {
-			if (session.getSessionId() == sessionId) {
-				this.sessions.remove(session);
-				return;
-			}
-		}
-	}
-
-	/**
-	 * Return a list of all the sessions in this repository
-	 * 
-	 * @return a list of all the sessions
-	 */
-	public ArrayList<Session> getSessions() {
-		return this.sessions;
-	}
-
-	/**
-	 * Return a list of session prior to the given <time> in ascending order.
-	 * 
-	 * @param time The time to be counted up to
-	 * @return a list of sessions up to a certain time in ascending order
-	 */
-	public ArrayList<Session> getNSessionsAsc(LocalDateTime givenTime) {
-		ArrayList<Session> filteredSessions = new ArrayList<>();
-		
-		for (Session session : this.sessions) {
-			LocalDateTime tmpDateTime = session.getStartTime();
-			if (tmpDateTime.isBefore(givenTime)) {
-				filteredSessions.add(session);
-			}
+		if (this.calendarsMap.containsKey(calendar.getName())) {
+			this.calendarsMap.get(calendar.getName()).add(entry);
+		} else {
+			this.calendarsMap.put(calendar.getName(), new ArrayList<>(Arrays.asList(entry)));
 		}
 
-		return filteredSessions;
 	}
 
 	/**
-	 * Return a list of session prior to the given <time> in descending order.
+	 * Removes a calendar by name.
 	 * 
-	 * @param time The time to be counted up to
-	 * @return a list of sessions up to a certain time in descending order
+	 * @param calendar that is to be removed
 	 */
-	public ArrayList<Session> getNSessionsDesc(LocalDateTime givenTime) {
-		ArrayList<Session> sessions = this.getNSessionsAsc(givenTime);
-		Collections.reverse(sessions);
-		return sessions;
+	public void removeCalendarByName(String calendarName) {
+		this.calendarsMap.remove(calendarName);
 	}
-	
+
 	/**
+	 * Removes a calendar by object reference.
 	 * 
-	 * @param startDate
-	 * @param endDate
+	 * @param calendar that is to be removed
+	 */
+	public boolean removeEntryByReference(EntryWithBlockList<?> entry) {
+		for (String calendarName : this.calendarsMap.keySet()) {
+			for (EntryWithBlockList<?> e : this.calendarsMap.get(calendarName)) {
+				if (e.equals(entry)) {
+					this.calendarsMap.get(calendarName).remove(entry);
+					if (this.calendarsMap.get(calendarName).isEmpty())
+						this.calendarsMap.remove(calendarName);
+					return true;
+				}
+			}
+
+		}
+		return false;
+	}
+
+	/**
+	 * Return true iff the given <entry> was added successfully to the calendar with
+	 * <calendarName>. If a calendar with such name does not exist, returns false.
+	 * 
+	 * @param calendarName
+	 * @param entry
 	 * @return
 	 */
-	public Session findSession(LocalDate startDate, LocalDate endDate) {
-		for(Session tmpSession : this.sessions) {
-			if(tmpSession.getStartTime().toLocalDate().equals(startDate) && tmpSession.getEndTime().toLocalDate().equals(endDate)) {
-				return tmpSession;
-			}
+	public boolean addEntryToCalendar(String calendarName, EntryWithBlockList<?> entry) {
+		if (this.calendarsMap.containsKey(calendarName)) {
+			this.calendarsMap.get(calendarName).add(entry);
+			return true;
 		}
-		return null;
+		return false;
 	}
+
+	/**
+	 * Return a map of all the calendars in this repository corresponding to their
+	 * ids
+	 * 
+	 * @return a map of all the calendars with their ids
+	 */
+	public Map<String, List<EntryWithBlockList<?>>> getCalendarsMap() {
+		return this.calendarsMap;
+	}
+
+	/**
+	 * Sets a new map of all the calendars in this repository corresponding to their
+	 * ids
+	 * 
+	 */
+	public void setCalendarsMap(Map<String, List<EntryWithBlockList<?>>> calendarsMap) {
+		this.calendarsMap = calendarsMap;
+	}
+
+//	/**
+//	 * Returns True iff the given <calendar> exists in the calendar map. Otherwise,
+//	 * false is returned.
+//	 * 
+//	 * @param calendar that is to be checked against calendar map entries
+//	 * @return whether the given <calendar> exists in the calendar map
+//	 */
+//	public boolean isCalendarExists(Calendar calendar) {
+//		for (Calendar tmpCalendar : this.calendarsMap.values()) {
+//			if (tmpCalendar.equals(calendar)) {
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
 }
