@@ -21,6 +21,7 @@ class KillerController extends TimerTask {
 			for (int k : blockListRepository.getBlockLists().keySet()) {
 				for (Process process : blockListRepository.getBlockLists().get(k).getBlockedProcesses()) {
 					rt.exec(String.format("taskkill /im %s.exe /f", process.getProcessName()));
+					System.out.println(process.getProcessName());
 				}
 			}
 

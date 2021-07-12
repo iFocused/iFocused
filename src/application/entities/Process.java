@@ -1,7 +1,5 @@
 package application.entities;
 
-import java.io.File;
-
 public class Process {
 
 	private String processName;
@@ -12,8 +10,8 @@ public class Process {
 		this.processName = "";
 	}
 
-	public Process(File process, int processId) {
-		this.processName = process.getName();
+	public Process(String processName, int processId) {
+		this.processName = processName;
 		this.processId = processId;
 		this.timesBlocked = 0;
 	}

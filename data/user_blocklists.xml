@@ -4,17 +4,14 @@
   <void property="blockLists">
    <object class="java.util.HashMap">
     <void method="put">
-     <int>1</int>
+     <int>0</int>
      <object class="application.entities.BlockList">
-      <void property="blockListId">
-       <int>1</int>
-      </void>
       <void property="blockedProcesses">
        <object class="java.util.ArrayList">
         <void method="add">
          <object class="application.entities.Process">
           <void property="processName">
-           <string>notepad.exe</string>
+           <string>notepad</string>
           </void>
          </object>
         </void>
@@ -27,14 +24,14 @@
        <string></string>
       </void>
       <void property="blocklistName">
-       <string>tye</string>
+       <string>asda</string>
       </void>
      </object>
     </void>
    </object>
   </void>
   <void property="currId">
-   <int>2</int>
+   <int>1</int>
   </void>
  </object>
 </java>
