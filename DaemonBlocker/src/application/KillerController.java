@@ -12,6 +12,12 @@ class KillerController extends TimerTask {
 	public KillerController(BlockListRepository blockListRepository) {
 		this.blockListRepository = blockListRepository;
 	}
+	
+	public void updateKillerController(BlockListRepository blockListRepository) {
+		this.cancel();
+		this.blockListRepository = blockListRepository;
+		this.run();
+	}
 
 	public void run() {
 		System.out.println("1 min passed");

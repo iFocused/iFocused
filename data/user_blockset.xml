@@ -26,45 +26,7 @@
          <string></string>
         </void>
         <void property="blocklistName">
-         <string>asda</string>
-        </void>
-       </object>
-      </void>
-      <void method="put">
-       <int>1</int>
-       <object class="application.entities.BlockList">
-        <void property="blockListId">
-         <int>1</int>
-        </void>
-        <void property="blockedProcesses">
-         <object class="java.util.ArrayList"/>
-        </void>
-        <void property="blockedWebsites">
-         <object class="java.util.ArrayList">
-          <void method="add">
-           <object class="application.entities.Website">
-            <void property="websiteName">
-             <string>www.youtube.com</string>
-            </void>
-           </object>
-          </void>
-          <void method="add">
-           <object class="application.entities.Website">
-            <void property="websiteId">
-             <int>1</int>
-            </void>
-            <void property="websiteName">
-             <string>www.google.com</string>
-            </void>
-           </object>
-          </void>
-         </object>
-        </void>
-        <void property="blocklistDescription">
-         <string></string>
-        </void>
-        <void property="blocklistName">
-         <string>test</string>
+         <string>New Test</string>
         </void>
        </object>
       </void>

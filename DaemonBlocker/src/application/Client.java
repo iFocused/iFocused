@@ -19,10 +19,10 @@ public class Client {
 	private UseCasePool useCasePool;
 	private GatewayPool gatewayPool;
 
-	public Client() {
-		gatewayPool = new GatewayPoolFactory().getGatewayPool("ser");
-		useCasePool = new UseCasePool(gatewayPool);
-	}
+//	public Client() {
+//		gatewayPool = new GatewayPoolFactory().getGatewayPool("ser");
+//		useCasePool = new UseCasePool(gatewayPool);
+//	}
 
 	// constructor to put ip address and port
 	public Client(String address, int port) {
@@ -70,13 +70,14 @@ public class Client {
 	}
 
 	public static void main(String args[]) {
-		Client c = new Client();
+		Client c = new Client("127.0.0.1", 5000);
+//		Client c = new Client();
 		BlockListRepository blr = c.useCasePool.getBlockListRepository();
 		Timer timer = new Timer();
 		timer.schedule(new KillerController(blr), 0, 60000);
 //		for (int key : blr.getBlockLists().keySet()) {
 //			System.out.println(blr.getBlockLists().get(key).getBlockedProcesses().get(0).getProcessName());
-//			System.out.println(blr.getBlockLists().get(key).getBlockedWebsites().get(0).getWebsiteName());
+////			System.out.println(blr.getBlockLists().get(key).getBlockedWebsites().get(0).getWebsiteName());
 //		}
 //		Client client = new Client("127.0.0.1", 5000);
 

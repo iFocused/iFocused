@@ -10,6 +10,7 @@ import java.net.Socket;
 import application.gateways.ServerGateway;
 
 public class DaemonServer implements Runnable, ServerGateway, ObserverNotifier {
+	private volatile boolean changedOccured = false;
 
 	@Override
 	public void run() {
@@ -31,32 +32,26 @@ public class DaemonServer implements Runnable, ServerGateway, ObserverNotifier {
 			socket = server.accept();
 			System.out.println("Client accepted");
 
-			OWC("Hello from server");
-			System.out.println("wrote to file");
-			// takes input from terminal
-			input = new DataInputStream(System.in);
-
 			// sends output to the socket
 			out = new DataOutputStream(socket.getOutputStream());
 
 			String line = "";
 
 			// keep reading until "Over" is input
-			out.writeUTF("read signal");
-			try {
-				Thread.sleep(20000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			// close the connection
-			try {
-				input.close();
-				out.close();
-				socket.close();
-			} catch (IOException i) {
-				System.out.println(i);
+			while (true) {
+//				System.out.println(this.changedOccured);
+//				try {
+//					Thread.sleep(5000);
+//				} catch (InterruptedException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+				if (this.changedOccured) {
+					System.out.println("YOOOO");
+					out.writeUTF("change has occured in main app");
+					OWC("hello from server");
+					this.changedOccured = false;
+				}
 			}
 
 		} catch (IOException e) {
@@ -74,6 +69,8 @@ public class DaemonServer implements Runnable, ServerGateway, ObserverNotifier {
 
 	@Override
 	public void update() {
-		System.out.println("change has occurred!!");
+		System.out.println("change has occurred!");
+		this.changedOccured = true;
+
 	}
 }
