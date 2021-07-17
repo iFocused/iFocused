@@ -1,9 +1,11 @@
 package application.usecases;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import application.entities.BlockSet;
 import application.gateways.GatewayPool;
+import application.gateways.network.ObserverNotifier;
 
 /**
  * Used to initialize the use cases and provide a pool of references to access
@@ -36,16 +38,16 @@ public class UseCasePool {
 		// make every use case take a gateway that will de-serialized the data like here
 		// https://github.com/nigow/TradingSystem/blob/e1241568adf33499be90258abe8cbef208d55a3a/src/main/java/org/twelve/usecases/UseCasePool.java#L15
 		// make every gateway take reference to controller pool
-		blockListRepository = new BlockListRepository(gatewayPool.getBlockListGateway()); 
+		blockListRepository = new BlockListRepository(gatewayPool.getBlockListGateway());
 		sessionRepository = new SessionRepository(gatewayPool.getSessionRepositoryGateway());
-		pomodoroRepository = new PomodoroRepository(gatewayPool.getPomodoroRepositoryGateway()); 
-		websiteRepository = new WebsiteRepository(gatewayPool.getWebsiteRepositoryGateway()); 
-		processRepository = new ProcessRepository(gatewayPool.getProcessRepositoryGateway()); 
-		todoList = new TODOList(gatewayPool.getTODOListGateway()); 
+		pomodoroRepository = new PomodoroRepository(gatewayPool.getPomodoroRepositoryGateway());
+		websiteRepository = new WebsiteRepository(gatewayPool.getWebsiteRepositoryGateway());
+		processRepository = new ProcessRepository(gatewayPool.getProcessRepositoryGateway());
+		todoList = new TODOList(gatewayPool.getTODOListGateway());
 		pointEligbility = new PointEligibility(todoList, sessionRepository, pomodoroRepository);
-		blocksManager = new BlocksManager(new BlockSet(), blockListRepository, sessionRepository,
-				pomodoroRepository, gatewayPool.getBlocksManagerGateway()); 
-		statisticsRepository = new StatisticsRepository(gatewayPool.getStatisticsRepositoryGateway()); 
+		blocksManager = new BlocksManager(new BlockSet(), blockListRepository, sessionRepository, pomodoroRepository,
+				gatewayPool.getBlocksManagerGateway());
+		statisticsRepository = new StatisticsRepository(gatewayPool.getStatisticsRepositoryGateway());
 		userManager = new UserManager(gatewayPool.getUserManagerGateway());
 	}
 
@@ -61,8 +63,9 @@ public class UseCasePool {
 	}
 
 	/**
-	 * Returns true iff there is user data that can be populated and is being populated, 
-	 * otherwise, if the user is new and there is nothing to populate, false is returned
+	 * Returns true iff there is user data that can be populated and is being
+	 * populated, otherwise, if the user is new and there is nothing to populate,
+	 * false is returned
 	 * 
 	 * @return whether an attempt to populate the user data was placed
 	 */

@@ -8,14 +8,22 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 
 import application.entities.User;
 import application.gateways.UserManagerGateway;
+import application.gateways.network.ObserverNotifier;
+import application.gateways.network.UpdateNotifierObservable;
 import application.usecases.UserManager;
 
-public class SerUserManagerGateway implements UserManagerGateway {
+public class SerUserManagerGateway implements UserManagerGateway, UpdateNotifierObservable {
 
 	private static final String SERIALIZED_USER_DATA_FILE = "user_data.xml";
+	private ArrayList<ObserverNotifier> observers;
+
+	public SerUserManagerGateway(ArrayList<ObserverNotifier> observers) {
+		this.observers = observers;
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -25,11 +33,11 @@ public class SerUserManagerGateway implements UserManagerGateway {
 		// creates data file if it exists, otherwise, overwrites it
 
 		User populatedUser = XmltoObject();
-		if(populatedUser != null) {
+		if (populatedUser != null) {
 			userManager.setUser(populatedUser);
 			return true;
 		}
-		
+
 		return false;
 	}
 
@@ -39,7 +47,7 @@ public class SerUserManagerGateway implements UserManagerGateway {
 	@Override
 	public boolean saveUserData(User user) {
 		objectToXml(user);
-
+		setChanged();
 		return true;
 	}
 
@@ -65,6 +73,26 @@ public class SerUserManagerGateway implements UserManagerGateway {
 		}
 
 		return null;
+	}
+
+	@Override
+	public void addObserver(ObserverNotifier observer) {
+		this.observers.add(observer);
+
+	}
+
+	@Override
+	public void removeObserver(ObserverNotifier observer) {
+		this.observers.remove(observer);
+
+	}
+
+	@Override
+	public void setChanged() {
+		for (ObserverNotifier observer : this.observers) {
+			observer.update();
+		}
+
 	}
 
 }

@@ -8,14 +8,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import application.gateways.ServerGateway;
-import application.usecases.UseCasePool;
 
-public class DaemonServer implements Runnable, ServerGateway {
-	private UseCasePool useCasePool;
-
-	public DaemonServer(UseCasePool useCasePool) {
-		this.useCasePool = useCasePool;
-	}
+public class DaemonServer implements Runnable, ServerGateway, ObserverNotifier {
 
 	@Override
 	public void run() {
@@ -76,5 +70,10 @@ public class DaemonServer implements Runnable, ServerGateway {
 		FileWriter myFileWriter = new FileWriter("junk.txt", true);
 		myFileWriter.write(msg);
 		myFileWriter.close();
+	}
+
+	@Override
+	public void update() {
+		System.out.println("change has occurred!!");
 	}
 }

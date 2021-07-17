@@ -8,13 +8,21 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 
 import application.gateways.SessionRepositoryGateway;
+import application.gateways.network.ObserverNotifier;
+import application.gateways.network.UpdateNotifierObservable;
 import application.usecases.SessionRepository;
 
-public class SerSessionRepositoryGateway implements SessionRepositoryGateway {
+public class SerSessionRepositoryGateway implements SessionRepositoryGateway, UpdateNotifierObservable {
 
 	private static final String SERIALIZED_USER_CALENDARS = "calendar_entries.xml";
+	private ArrayList<ObserverNotifier> observers;
+
+	public SerSessionRepositoryGateway(ArrayList<ObserverNotifier> observers) {
+		this.observers = observers;
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -36,6 +44,7 @@ public class SerSessionRepositoryGateway implements SessionRepositoryGateway {
 	 */
 	@Override
 	public boolean saveUserData(SessionRepository sessionRepository) {
+		setChanged();
 		if (sessionRepository.getCalendarsMap().isEmpty()) {
 			new File("data/" + SERIALIZED_USER_CALENDARS).delete();
 			return false;
@@ -68,6 +77,26 @@ public class SerSessionRepositoryGateway implements SessionRepositoryGateway {
 		}
 
 		return null;
+	}
+
+	@Override
+	public void addObserver(ObserverNotifier observer) {
+		this.observers.add(observer);
+
+	}
+
+	@Override
+	public void removeObserver(ObserverNotifier observer) {
+		this.observers.remove(observer);
+
+	}
+
+	@Override
+	public void setChanged() {
+		for (ObserverNotifier observer : this.observers) {
+			observer.update();
+		}
+
 	}
 
 }

@@ -1,8 +1,11 @@
 package application.controllers;
 
+import java.util.ArrayList;
+
 import application.gateways.GatewayPool;
 import application.gateways.GatewayPoolFactory;
 import application.gateways.network.DaemonServer;
+import application.gateways.network.ObserverNotifier;
 import application.usecases.UseCasePool;
 import application.views.FxmlViewBuilder;
 import javafx.application.Platform;
@@ -20,9 +23,18 @@ public class ControllerPool {
 	private FxmlViewBuilder fxmlViewBuilder;
 
 	public ControllerPool(FxmlViewBuilder fxmlViewBuilder) {
+		// starting the server up
+		DaemonServer daemonServer = new DaemonServer();
+		Thread thread = new Thread(daemonServer);
+		thread.start();
+		
+		// initializing the observers
+		ArrayList<ObserverNotifier> observers = new ArrayList<>();
+		observers.add(daemonServer);
+
 		// DISCUSS: Since the controller and view interact with each other, give every
 		// controller a reference to fxmlViewBuilder like mainController
-		GatewayPool gatewayPool = new GatewayPoolFactory().getGatewayPool("ser");
+		GatewayPool gatewayPool = new GatewayPoolFactory().getGatewayPool("ser", observers);
 		UseCasePool useCasePool = new UseCasePool(gatewayPool);
 		mainController = new MainController(useCasePool, fxmlViewBuilder);
 		statsController = new StatsController(useCasePool, fxmlViewBuilder);
@@ -33,10 +45,6 @@ public class ControllerPool {
 		timerController = new TimerController(useCasePool, fxmlViewBuilder);
 		blocklistsController = new BlocklistsController(useCasePool, fxmlViewBuilder);
 		this.fxmlViewBuilder = fxmlViewBuilder;
-
-		// starting the server up
-		Thread thread = new Thread(new DaemonServer(useCasePool));
-		thread.start();
 	}
 
 	/**
