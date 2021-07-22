@@ -6,14 +6,14 @@ import java.util.TimerTask;
 import application.entities.Process;
 import application.usecases.BlockListRepository;
 
-class KillerController extends TimerTask {
+class WindowsKillerController extends TimerTask implements KillerStrategy {
 	private BlockListRepository blockListRepository;
 
-	public KillerController(BlockListRepository blockListRepository) {
+	public WindowsKillerController(BlockListRepository blockListRepository) {
 		this.blockListRepository = blockListRepository;
 	}
 	
-	public void updateKillerController(BlockListRepository blockListRepository) {
+	public void update(BlockListRepository blockListRepository) {
 		this.cancel();
 		this.blockListRepository = blockListRepository;
 		this.run();

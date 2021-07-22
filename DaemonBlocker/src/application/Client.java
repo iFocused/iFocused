@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Timer;
+import java.util.TimerTask;
 
 import application.gateways.GatewayPool;
 import application.gateways.GatewayPoolFactory;
@@ -92,7 +93,9 @@ public class Client {
 //		Client c = new Client();
 		BlockListRepository blr = c.useCasePool.getBlockListRepository();
 		Timer timer = new Timer();
-		timer.schedule(new KillerController(blr), 0, 60000);
+		OSFactory osFactory = new OSFactory();
+		
+		timer.schedule( (TimerTask) osFactory.getKiller(blr), 0, 60000);
 //		for (int key : blr.getBlockLists().keySet()) {
 //			System.out.println(blr.getBlockLists().get(key).getBlockedProcesses().get(0).getProcessName());
 //			System.out.println(blr.getBlockLists().get(key).getBlockedWebsites().get(0).getWebsiteName());
