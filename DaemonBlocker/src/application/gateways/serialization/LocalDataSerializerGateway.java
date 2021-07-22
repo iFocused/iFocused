@@ -1,6 +1,7 @@
 package application.gateways.serialization;
 
 import application.gateways.*;
+import application.usecases.UseCasePool;
 
 public class LocalDataSerializerGateway implements GatewayPool {
 	private final BlockListGateway blockListGateway;
@@ -70,6 +71,14 @@ public class LocalDataSerializerGateway implements GatewayPool {
 	public BlocksManagerGateway getBlocksManagerGateway() {
 		// TODO Auto-generated method stub
 		return this.blocksManagerGateway;
+	}
+
+	@Override
+	public void refreshData(UseCasePool useCasePool) {
+		this.blockListGateway.populateUserData(useCasePool.getBlockListRepository());
+		this.blocksManagerGateway.populateBlockSet(useCasePool.getBlocksManager());
+		// TODO rest
+		
 	}
 
 }

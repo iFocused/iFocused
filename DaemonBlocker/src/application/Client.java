@@ -21,11 +21,7 @@ public class Client {
 	private GatewayPool gatewayPool;
 	private String address;
 	private int port;
-
-//	public Client() {
-//		gatewayPool = new GatewayPoolFactory().getGatewayPool("ser");
-//		useCasePool = new UseCasePool(gatewayPool);
-//	}
+	private Timer timer;
 
 	// constructor to put ip address and port
 	public Client(String address, int port) {
@@ -33,6 +29,7 @@ public class Client {
 		useCasePool = new UseCasePool(gatewayPool);
 		this.address = address;
 		this.port = port;
+		this.timer = new Timer();
 	}
 
 	public void buildClient() {
@@ -60,6 +57,13 @@ public class Client {
 				line = in.readUTF();
 				System.out.println(line);
 
+				if (!line.isEmpty()) {
+					this.timer.cancel();
+					gatewayPool.refreshData(useCasePool);
+					this.timer = new Timer();
+					this.runTimer();
+				}
+
 			} catch (IOException i) {
 				System.out.println(i);
 			}
@@ -77,9 +81,16 @@ public class Client {
 		}
 	}
 
+	private void runTimer() {
+		BlockListRepository blr = this.useCasePool.getBlockListRepository();
+		OSFactory osFactory = new OSFactory();
+
+		this.timer.schedule((TimerTask) osFactory.getKiller(blr), 0, 60000);
+	}
+
 	public static void main(String args[]) {
 		Client c = new Client("127.0.0.1", 5000);
-		
+
 		Thread t1 = new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -87,20 +98,10 @@ public class Client {
 				c.buildClient();
 			}
 		});
-		
-		t1.start();
 
-//		Client c = new Client();
-		BlockListRepository blr = c.useCasePool.getBlockListRepository();
-		Timer timer = new Timer();
-		OSFactory osFactory = new OSFactory();
-		
-		timer.schedule( (TimerTask) osFactory.getKiller(blr), 0, 60000);
-//		for (int key : blr.getBlockLists().keySet()) {
-//			System.out.println(blr.getBlockLists().get(key).getBlockedProcesses().get(0).getProcessName());
-//			System.out.println(blr.getBlockLists().get(key).getBlockedWebsites().get(0).getWebsiteName());
-//		}
-//		Client client = new Client("127.0.0.1", 5000);
+		t1.start();
+		c.runTimer();
 
 	}
+
 }

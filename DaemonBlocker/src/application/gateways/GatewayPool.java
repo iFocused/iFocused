@@ -1,5 +1,7 @@
 package application.gateways;
 
+import application.usecases.UseCasePool;
+
 public interface GatewayPool {
 
 	BlockListGateway getBlockListGateway();
@@ -17,5 +19,7 @@ public interface GatewayPool {
 	StatisticsRepositoryGateway getStatisticsRepositoryGateway();
 
 	BlocksManagerGateway getBlocksManagerGateway();
+	
+	void refreshData(UseCasePool useCasePool);
 
 }
