@@ -7,13 +7,21 @@ import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 
 import application.gateways.BlockListGateway;
+import application.gateways.network.ObserverNotifier;
+import application.gateways.network.UpdateNotifierObservable;
 import application.usecases.BlockListRepository;
 
-public class SerBlockListGateway implements BlockListGateway {
+public class SerBlockListGateway implements BlockListGateway, UpdateNotifierObservable {
 
 	private static final String SERIALIZED_USER_BLOCKLISTS_FILE = "user_blocklists.xml";
+	private ArrayList<ObserverNotifier> observers;
+
+	public SerBlockListGateway(ArrayList<ObserverNotifier> observers) {
+		this.observers = observers;
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -21,13 +29,13 @@ public class SerBlockListGateway implements BlockListGateway {
 	@Override
 	public boolean populateUserData(BlockListRepository blockListRepository) {
 		BlockListRepository tmpBlockListRepository = XmltoObject();
-		if(tmpBlockListRepository != null) {
+		if (tmpBlockListRepository != null) {
 			blockListRepository.setCurrId(tmpBlockListRepository.getCurrId());
 			blockListRepository.setTimeSinceLastModification(tmpBlockListRepository.getTimeSinceLastModification());
 			blockListRepository.setBlockLists(tmpBlockListRepository.getBlockLists());
 			return true;
 		}
-		
+
 		// something went wrong
 		return false;
 	}
@@ -37,9 +45,8 @@ public class SerBlockListGateway implements BlockListGateway {
 	 */
 	@Override
 	public boolean saveUserData(BlockListRepository blockListRepository) {
-		
 		objectToXml(blockListRepository);
-
+		setChanged();
 		return true;
 	}
 
@@ -66,5 +73,25 @@ public class SerBlockListGateway implements BlockListGateway {
 		}
 
 		return null;
+	}
+
+	@Override
+	public void addObserver(ObserverNotifier observer) {
+		this.observers.add(observer);
+
+	}
+
+	@Override
+	public void removeObserver(ObserverNotifier observer) {
+		this.observers.remove(observer);
+
+	}
+
+	@Override
+	public void setChanged() {
+		for (ObserverNotifier observer : this.observers) {
+			observer.update();
+		}
+
 	}
 }

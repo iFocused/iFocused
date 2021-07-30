@@ -150,6 +150,7 @@ public class BlocklistsController implements Initializable {
 			blocklistDescription.setText(selectedBlockList.getBlocklistDescription());
 			blocklistChkBox.setSelected(selectedBlockList.getIsEnabled());
 			websiteListView.getItems().setAll(selectedBlockList.getBlockedWebsites());
+			appListView.getItems().setAll(selectedBlockList.getBlockedProcesses());
 			blocklistUpdateBtn.setVisible(true);
 			blocklistCreationBtn.setVisible(false);
 			blocklistTableView.setDisable(true);

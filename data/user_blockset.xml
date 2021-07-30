@@ -1,52 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<java version="11.0.11" class="java.beans.XMLDecoder">
+<java version="15.0.2" class="java.beans.XMLDecoder">
  <object class="application.usecases.BlocksManager">
   <void property="blockListRepository">
    <object class="application.usecases.BlockListRepository">
     <void property="blockLists">
      <object class="java.util.HashMap">
       <void method="put">
-       <int>2</int>
+       <int>0</int>
        <object class="application.entities.BlockList">
-        <void property="blockListId">
-         <int>2</int>
-        </void>
         <void property="blockedProcesses">
-         <object class="java.util.ArrayList"/>
-        </void>
-        <void property="blockedWebsites">
          <object class="java.util.ArrayList">
           <void method="add">
-           <object class="application.entities.Website">
-            <void property="websiteName">
-             <string>www.youtube.com</string>
-            </void>
-           </object>
-          </void>
-          <void method="add">
-           <object class="application.entities.Website">
-            <void property="websiteId">
-             <int>1</int>
-            </void>
-            <void property="websiteName">
-             <string>www.reddit.com</string>
+           <object class="application.entities.Process">
+            <void property="processName">
+             <string>notepad</string>
             </void>
            </object>
           </void>
          </object>
         </void>
+        <void property="blockedWebsites">
+         <object class="java.util.ArrayList"/>
+        </void>
         <void property="blocklistDescription">
-         <string>School work</string>
+         <string></string>
         </void>
         <void property="blocklistName">
-         <string>Study Plans</string>
+         <string>New TestA</string>
         </void>
        </object>
       </void>
      </object>
     </void>
     <void property="currId">
-     <int>3</int>
+     <int>2</int>
     </void>
    </object>
   </void>

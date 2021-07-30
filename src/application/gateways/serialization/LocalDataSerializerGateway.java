@@ -1,6 +1,18 @@
 package application.gateways.serialization;
 
-import application.gateways.*;
+import java.util.ArrayList;
+
+import application.gateways.BlockListGateway;
+import application.gateways.BlocksManagerGateway;
+import application.gateways.GatewayPool;
+import application.gateways.PomodoroRepositoryGateway;
+import application.gateways.ProcessRepositoryGateway;
+import application.gateways.SessionRepositoryGateway;
+import application.gateways.StatisticsRepositoryGateway;
+import application.gateways.TODOListGateway;
+import application.gateways.UserManagerGateway;
+import application.gateways.WebsiteRepositoryGateway;
+import application.gateways.network.ObserverNotifier;
 
 public class LocalDataSerializerGateway implements GatewayPool {
 	private final BlockListGateway blockListGateway;
@@ -13,16 +25,17 @@ public class LocalDataSerializerGateway implements GatewayPool {
 	private final StatisticsRepositoryGateway statisticsRepositoryGateway;
 	private final BlocksManagerGateway blocksManagerGateway;
 
-	public LocalDataSerializerGateway() {
-		blockListGateway = new SerBlockListGateway();
-		pomodoroRepositoryGateway = new SerPomodoroRepositoryGateway();
-		processRepositoryGateway = new SerProcessRepositoryGateway();
-		websiteRepositoryGateway = new SerWebsiteRepositoryGateway();
-		sessionRepositoryGateway = new SerSessionRepositoryGateway();
-		todoListGateway = new SerTODOListGateway();
-		userManagerGateway = new SerUserManagerGateway();
-		statisticsRepositoryGateway = new SerStatisticsRepositoryGateway();
-		blocksManagerGateway = new SerBlocksManagerGateway();
+	public LocalDataSerializerGateway(ArrayList<ObserverNotifier> observers) {
+		blockListGateway = new SerBlockListGateway(observers);
+		pomodoroRepositoryGateway = new SerPomodoroRepositoryGateway(observers);
+		processRepositoryGateway = new SerProcessRepositoryGateway(observers);
+		websiteRepositoryGateway = new SerWebsiteRepositoryGateway(observers);
+		sessionRepositoryGateway = new SerSessionRepositoryGateway(observers);
+		todoListGateway = new SerTODOListGateway(observers);
+		userManagerGateway = new SerUserManagerGateway(observers);
+		statisticsRepositoryGateway = new SerStatisticsRepositoryGateway(observers);
+		blocksManagerGateway = new SerBlocksManagerGateway(observers);
+		
 
 	}
 
