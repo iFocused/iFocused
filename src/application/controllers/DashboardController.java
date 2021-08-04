@@ -1,18 +1,21 @@
 package application.controllers;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
+import application.entities.Task;
 import application.entities.ViewMode;
 import application.usecases.UseCasePool;
 import application.usecases.UserManager;
 import application.views.FxmlViewBuilder;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -27,6 +30,9 @@ public class DashboardController implements Initializable {
 	@FXML
 	private Text usernameLbl;
 
+	@FXML
+	private ListView<String> todoListView;
+
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		if (!useCasePool.populateAll()) {
@@ -37,6 +43,22 @@ public class DashboardController implements Initializable {
 
 		viewListeners();
 
+	}
+
+	@FXML
+	void onHandleAddTask(ActionEvent event) {
+		TextInputDialog td = new TextInputDialog();
+
+		td.setTitle("TodoList Task Addition");
+		td.setHeaderText("Enter task:");
+		td.setContentText("Task description:");
+
+		Optional<String> result = td.showAndWait();
+
+		result.ifPresent(name -> {
+			this.useCasePool.getTodoList().addTask(new Task(name));
+			todoListView.getItems().add(name);
+		});
 	}
 
 	public DashboardController(UseCasePool useCasePool, FxmlViewBuilder fxmlViewBuilder) {
