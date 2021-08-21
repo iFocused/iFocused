@@ -2,6 +2,8 @@ package application;
 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -33,10 +35,10 @@ public class Client {
 	}
 
 	public void buildClient() {
-
 		// establish a connection
 		try {
 			socket = new Socket(this.address, this.port);
+			OAC("Connected");
 			System.out.println("Connected");
 
 			// takes input from the server socket
@@ -69,7 +71,8 @@ public class Client {
 			}
 		}
 
-		System.out.println("Closing connection");
+		OAC("Closing Connection");
+		//System.out.println("Closing connection");
 
 		// close connection
 		try {
@@ -88,12 +91,24 @@ public class Client {
 		this.timer.schedule((TimerTask) osFactory.getKiller(blr), 0, 60000);
 	}
 
+	private static void OAC(String str) {
+		try {
+			FileWriter myWriter = new FileWriter("logsCSC392.txt", true);
+			myWriter.write(str + "\n");
+			myWriter.close();
+		} catch (IOException e) {
+			System.out.println("An error occurred.");
+			e.printStackTrace();
+		}
+	}
+
 	public static void main(String args[]) {
 		Client c = new Client("127.0.0.1", 5000);
 
 		Thread t1 = new Thread(new Runnable() {
 			@Override
 			public void run() {
+				OAC("in runnable");
 				System.out.println("in runnable");
 				c.buildClient();
 			}

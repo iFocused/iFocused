@@ -2,7 +2,6 @@ package application.gateways.network;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -15,6 +14,7 @@ public class DaemonServer implements Runnable, ServerGateway, ObserverNotifier {
 	@Override
 	public void run() {
 		buildServer(5000);
+
 	}
 
 	public void buildServer(int port) {
@@ -29,6 +29,7 @@ public class DaemonServer implements Runnable, ServerGateway, ObserverNotifier {
 
 			System.out.println("Waiting for a client ...");
 
+			//runDaemonClient();
 			socket = server.accept();
 			System.out.println("Client accepted");
 
@@ -39,17 +40,8 @@ public class DaemonServer implements Runnable, ServerGateway, ObserverNotifier {
 
 			// keep reading until "Over" is input
 			while (true) {
-//				System.out.println(this.changedOccured);
-//				try {
-//					Thread.sleep(5000);
-//				} catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
 				if (this.changedOccured) {
-					System.out.println("YOOOO");
 					out.writeUTF("change has occured in main app");
-					OWC("hello from server");
 					this.changedOccured = false;
 				}
 			}
@@ -61,10 +53,17 @@ public class DaemonServer implements Runnable, ServerGateway, ObserverNotifier {
 
 	}
 
-	private static void OWC(String msg) throws IOException {
-		FileWriter myFileWriter = new FileWriter("junk.txt", true);
-		myFileWriter.write(msg);
-		myFileWriter.close();
+	private void runDaemonClient() {
+		try {
+//			Runtime.getRuntime().exec(
+//					"java -jar \"C:\\Users\\Abwatts\\Desktop\\School\\University Courses\\Second Year\\Summer\\CSC392\\Project\\iFocused\\DaemonBlocker\\DaemonBlocker.jar\" ");
+			Runtime.getRuntime().exec(
+					"java -jar DaemonBlocker.jar");
+			System.out.println("jar file exectued");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override

@@ -1,4 +1,5 @@
 .root {
+	-fx-font-family: 'calibri';
     -fx-hgap: 20px;
     -fx-padding: 40px;
 
@@ -22,27 +23,32 @@
 }
 
 .pane {
+	-fx-font-family: 'calibri';
 	-fx-background-color: #4A3CAB;
 	-fx-background-radius: 0px;
 }
 
 .pane-box-small {
+	-fx-font-family: 'calibri';
 	-fx-background-color: #4A3CAB;
 	-fx-background-radius: 20px;
 }
 
 .pane-box-big {
+	-fx-font-family: 'calibri';
 	-fx-background-color: #C0EFFF;
 	-fx-background-radius: 20px;
 }
 
 /* Button layout */
 .btn-default {
+	-fx-font-family: 'calibri';
 	-fx-background-color: #4A3CAB;
 	-fx-background-radius: 20;
 }
 
 .btn-default:hover {
+	-fx-font-family: 'calibri';
 	-fx-background-color:#F26157;
 	-fx-background-radius:15px;
 	-fx-display:inline-block;
@@ -52,11 +58,13 @@
 }
 
 .btn-default:pressed  {
+	-fx-font-family: 'calibri';
 	-fx-scale-y: 0.9;
     -fx-scale-x: 0.9;
 }
 
 .btn_menu {
+	-fx-font-family: 'calibri';
 	-fx-background-color:transparent;
 	-fx-text-fill:white;
 	-fx-font-size:14px;
@@ -65,6 +73,7 @@
 }
 
 .btn_menu:hover {
+	-fx-font-family: 'calibri';
 	-fx-background-color:orange;
 	-fx-background-radius:15px;
 	-fx-display:inline-block;
@@ -75,11 +84,13 @@
 	-fx-text-decoration:none;
 }
 .btn_menu:active {
+	-fx-font-family: 'calibri';
 	-fx-position:relative;
 	-fx-top:1px;
 }
 
 .btn_menu:pressed  {
+	-fx-font-family: 'calibri';
 	-fx-scale-y: 0.9;
     -fx-scale-x: 0.9;
 	-fx-background-color:#F26157;
@@ -87,6 +98,7 @@
 
 
 .btn-stats {
+	-fx-font-family: 'calibri';
 	-fx-border-color: white;
 	-fx-background-color: #2F384B;
 	-fx-background-radius: 5;
@@ -96,6 +108,7 @@
 }
 
 .btn-stats:hover {
+	-fx-font-family: 'calibri';
 	-fx-border-color: transparent;
 	-fx-text-fill: black;
 	-fx-background-color:orange;
@@ -107,6 +120,7 @@
 }
 
 .btn-stats:pressed  {
+	-fx-font-family: 'calibri';
 	-fx-scale-y: 0.9;
     -fx-scale-x: 0.9;
 	-fx-text-fill: white;
@@ -114,11 +128,13 @@
 }
 
 .btn-type1 {
+	-fx-font-family: 'calibri';
 	-fx-background-color:  #E07400;
 	-fx-background-radius: 5;
 }
 
 .btn-type1:hover {
+	-fx-font-family: 'calibri';
 	-fx-font-weight: bold;
 	-fx-background-radius: 50;
 	-fx-background-color: #F26157;
@@ -131,16 +147,19 @@
 }
 
 .btn-type1:pressed  {
+	-fx-font-family: 'calibri';
 	-fx-scale-y: 0.9;
     -fx-scale-x: 0.9;
 }
 
 .btn-type2 {
+	-fx-font-family: 'calibri';
 	-fx-background-color: #604F92;
 	-fx-background-radius: 20;
 }
 
 .btn-type2:hover {
+	-fx-font-family: 'calibri';
 	-fx-background-color:#F26157;
 	-fx-background-radius:15px;
 	-fx-display:inline-block;
@@ -150,16 +169,19 @@
 }
 
 .btn-type2:pressed  {
+	-fx-font-family: 'calibri';
 	-fx-scale-y: 0.9;
     -fx-scale-x: 0.9;
 }
 
 .btn-type3 {
+	-fx-font-family: 'calibri';
 	-fx-background-color: #4F345A;
 	-fx-background-radius: 50;
 }
 
 .btn-type3:hover {
+	-fx-font-family: 'calibri';
 	-fx-background-color:#F26157;
 	-fx-background-radius:15px;
 	-fx-display:inline-block;
@@ -169,16 +191,19 @@
 }
 
 .btn-type3:pressed  {
+	-fx-font-family: 'calibri';
 	-fx-scale-y: 0.9;
     -fx-scale-x: 0.9;
 }
 
 .btn-blocklists {
+	-fx-font-family: 'calibri';
 	-fx-background-color: #DDDDDD;
 	-fx-background-radius: 20;
 }
 
 .btn-blocklists:hover {
+	-fx-font-family: 'calibri';
 	-fx-font-weight : bold;
 	-fx-background-radius:5px;
 	-fx-display:inline-block;
@@ -188,12 +213,14 @@
 }
 
 .btn-blocklists:pressed  {
+	-fx-font-family: 'calibri';
 	-fx-scale-y: 0.9;
     -fx-scale-x: 0.9;
 }
 
 /* Button selected style */
 .btn_selected{
+	-fx-font-family: 'calibri';
     -fx-background-color:#F26157;
 	-fx-background-radius:15px;
 	-fx-display:inline-block;
@@ -207,6 +234,7 @@
 /* Tab pane styling */
 
 .tab-pane {
+	-fx-font-family: 'calibri';
 	-fx-tab-max-height: 0 ;
 	-fx-hgap: 20px;
     -fx-padding: 40px;
@@ -219,11 +247,13 @@
 }
 
 .tab-pane .tab-header-area {
+	-fx-font-family: 'calibri';
     visibility: hidden ;
 	-fx-border-width: 5px;
 }
 
 .tab-pane-main {
+	-fx-font-family: 'calibri';
 	-fx-tab-max-height: 50 ;
     -fx-padding: 20px;
 
@@ -235,12 +265,14 @@
 }
 
 .tab-pane-main .tab-header-area {
+	-fx-font-family: 'calibri';
     visibility: visible ;
 }
 
 .tab-two{
+	-fx-font-family: 'calibri';
     -fx-background-color: derive(#4A3CAB, 10%);
-	-fx-pref-width: 125;
+	-fx-pref-width: 180;
 }
 
 .tab-two .tab-label{
@@ -254,24 +286,29 @@
 
 .tab-pane
 {
+	-fx-font-family: 'calibri';
     -fx-tab-min-width:90px;
 }
 
 .tab{
+	-fx-font-family: 'calibri';
     -fx-background-insets: 0 1 0 1,0,0;
 }
 .tab-pane .tab
 {
+	-fx-font-family: 'calibri';
     -fx-background-color: white;
 
 }
 
 .tab-pane .tab:selected
 {
+	-fx-font-family: 'calibri';
     -fx-background-color: #4A3CAB;
 }
 
 .tab .tab-label { 
+	-fx-font-family: 'calibri';
     -fx-alignment: CENTER;
     -fx-text-fill: #828282;
     -fx-font-size: 12px;
@@ -279,6 +316,7 @@
 }
 
 .tab:selected .tab-label { 
+-fx-font-family: 'calibri';
     -fx-alignment: CENTER;
     -fx-text-fill: white;
 }
@@ -286,6 +324,7 @@
 /*TableView Default*/
 
 .table-view{
+	-fx-font-family: 'calibri';
     -fx-background-color: #433b80;
     -fx-font-size: 16px; 
 }
@@ -296,6 +335,7 @@
 }*/
 
 .table-view .column-header-background .label{
+	-fx-font-family: 'calibri';
     -fx-background-color: transparent;
     -fx-text-fill:  white;
 }
@@ -313,6 +353,7 @@
 }
 
 .table-column{
+	-fx-font-family: 'calibri';
     -fx-alignment: CENTER;  
 }
 
@@ -326,6 +367,60 @@
     -fx-text-fill: white;
 }
 
+/* List view */
+.list-cell:filled:selected:focused, .list-cell:filled:selected {
+	-fx-font-family: 'calibri';
+    /*-fx-background-color: #4A3CAB;*/
+    -fx-text-fill: white;
+	-fx-background-radius: 20px;
+}
+
+.list-view {
+	-fx-font-family: 'calibri';
+	-fx-background-color: #4A3CAB;
+}
+
+.list-view .list-cell:selected:odd {
+	-fx-text-fill: white;
+    /*-fx-background-color: #0096C9;*/
+	-fx-background-radius: 20px;
+}
+
+.list-cell:odd {
+    -fx-background-color: #4A3CAB;
+	-fx-text-fill: white;
+	-fx-background-radius: 20px;
+}
+
+/*
+.list-cell:even {
+    /*-fx-cell-hover-color: #0093ff;*/
+    -fx-background-color: #4A3CAB;
+	-fx-text-fill: white;
+}
+*/
+
+.list-cell:filled:hover {
+	-fx-font-family: 'calibri';
+    /*-fx-cell-hover-color: #0093ff;*/
+    -fx-text-fill: white;
+	-fx-background-radius: 20px;
+}
+
+/* charts */
+.chart {
+	-fx-font-family: 'calibri';
+}
+
+.axis {
+    -fx-font-family: 'calibri';
+}
+ 
+.axis-label {
+   -fx-font-family: 'calibri';
+}
+
+
 /* ComboBox Style */
 .combo-box .cell{
     -fx-text-fill: black;
@@ -335,3 +430,10 @@
 .combo-box-settings .cell{
     -fx-text-fill: white;
 }
+
+
+/* ComboBox 2 Style 
+.default-combo-box .cell{
+    -fx-text-fill: #0x3F8EFC;
+}
+*/

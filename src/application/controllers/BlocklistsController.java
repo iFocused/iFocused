@@ -114,6 +114,7 @@ public class BlocklistsController implements Initializable {
 	void onHandleCreateBlocklist(ActionEvent event) {
 		if (websiteListView.getItems().isEmpty() && appListView.getItems().isEmpty()) {
 			Alert alert = new Alert(AlertType.ERROR);
+			alert.getDialogPane().setStyle("-fx-font-family: 'calibri';");
 			alert.initOwner(fxmlViewBuilder.getMainStage());
 			alert.setTitle("Invalid block list input");
 			alert.setHeaderText("No website and applications were selected to be blocked");
@@ -179,6 +180,30 @@ public class BlocklistsController implements Initializable {
 		this.blockListRepository.saveBlocklistData();
 		this.blocksManager.saveBlockSets();
 	}
+	
+
+	/**
+	 * Removing website from website list when creating the block list
+	 * @param event
+	 */
+    @FXML
+    void onRemoveWebsite(ActionEvent event) {
+    	Website tmpWebsite = this.websiteListView.getSelectionModel().getSelectedItem();
+    	if(tmpWebsite != null)
+    		this.websiteListView.getItems().remove(tmpWebsite);
+    }
+    
+    
+    /**
+	 * Removing application from application list when creating the block list
+	 * @param event
+	 */
+    @FXML
+    void onRemoveApp(ActionEvent event) {
+    	Process tmpProcess = this.appListView.getSelectionModel().getSelectedItem();
+    	if(tmpProcess != null)
+    		this.appListView.getItems().remove(tmpProcess);
+    }
 
 	/**
 	 * Handles the deletion of a block list
@@ -191,6 +216,7 @@ public class BlocklistsController implements Initializable {
 		if (selectedBlocklist != null) {
 			Alert alert = new Alert(AlertType.INFORMATION, "This action cannot be undone", ButtonType.YES,
 					ButtonType.NO);
+			alert.getDialogPane().setStyle("-fx-font-family: 'calibri';");
 			alert.setTitle("Blocklist deletion confirmation");
 			alert.initOwner(fxmlViewBuilder.getMainStage());
 			alert.setHeaderText("Are you sure?");
@@ -207,6 +233,7 @@ public class BlocklistsController implements Initializable {
 
 		} else {
 			Alert alert = new Alert(AlertType.ERROR);
+			alert.getDialogPane().setStyle("-fx-font-family: 'calibri';");
 			alert.initOwner(fxmlViewBuilder.getMainStage());
 			alert.setTitle("iFocused - Blocklist Table View Error");
 			alert.setHeaderText("An invalid blocklist was selected");
@@ -231,6 +258,7 @@ public class BlocklistsController implements Initializable {
 			processLbl.setText(appToBlock.getAbsolutePath());
 		} else {
 			Alert alert = new Alert(AlertType.ERROR);
+			alert.getDialogPane().setStyle("-fx-font-family: 'calibri';");
 			alert.initOwner(fxmlViewBuilder.getMainStage());
 			alert.setTitle("iFocused - File Selection Error");
 			alert.setHeaderText("The selected file could not be recognized");
@@ -257,6 +285,7 @@ public class BlocklistsController implements Initializable {
 			appListView.getItems().add(processRepository.getMostRecentProcess());
 		} else {
 			Alert alert = new Alert(AlertType.ERROR);
+			alert.getDialogPane().setStyle("-fx-font-family: 'calibri';");
 			alert.initOwner(fxmlViewBuilder.getMainStage());
 			alert.setTitle("iFocused - File Addition Error");
 			alert.setHeaderText("No application to block was selected");
@@ -290,6 +319,7 @@ public class BlocklistsController implements Initializable {
 			websiteLbl.setText("");
 		} else {
 			Alert alert = new Alert(AlertType.ERROR);
+			alert.getDialogPane().setStyle("-fx-font-family: 'calibri';");
 			alert.initOwner(fxmlViewBuilder.getMainStage());
 			alert.setTitle("Invalid Website URL");
 			alert.setHeaderText("An invalid website URL was entered");

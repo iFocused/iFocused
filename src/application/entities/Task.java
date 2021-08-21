@@ -4,12 +4,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Task {
-	private String description;
+	private String name;
 	private TaskStatus taskStatus;
 	private String startTime;
 	private String endTime;
 
-	public Task(String description) {
+	public Task(String name) {
 		// getting today's date and time (keep in mind the possibility where
 		// the user will manually change their time on the machine)
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
@@ -17,7 +17,7 @@ public class Task {
 
 		this.endTime = "";
 		this.taskStatus = TaskStatus.INITALIZED;
-		this.description = description;
+		this.name = name;
 	}
 
 	public TaskStatus getTaskStatus() {
@@ -28,8 +28,8 @@ public class Task {
 		this.taskStatus = taskStatus;
 	}
 
-	public String getDescription() {
-		return this.description;
+	public String getName() {
+		return this.name;
 	}
 
 	public String getStartTime() {
@@ -40,8 +40,8 @@ public class Task {
 		return this.endTime;
 	}
 
-	public void setDescription(String newDescription) {
-		this.description = newDescription;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

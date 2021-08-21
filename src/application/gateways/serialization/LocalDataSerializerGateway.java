@@ -35,7 +35,6 @@ public class LocalDataSerializerGateway implements GatewayPool {
 		userManagerGateway = new SerUserManagerGateway(observers);
 		statisticsRepositoryGateway = new SerStatisticsRepositoryGateway(observers);
 		blocksManagerGateway = new SerBlocksManagerGateway(observers);
-		
 
 	}
 
