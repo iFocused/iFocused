@@ -26,14 +26,17 @@
          <string></string>
         </void>
         <void property="blocklistName">
-         <string>New TestA</string>
+         <string>kl;jwsf</string>
+        </void>
+        <void property="isEnabled">
+         <boolean>true</boolean>
         </void>
        </object>
       </void>
      </object>
     </void>
     <void property="currId">
-     <int>2</int>
+     <int>1</int>
     </void>
    </object>
   </void>

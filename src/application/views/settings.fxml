@@ -16,31 +16,31 @@
             <Separator layoutX="386.0" layoutY="44.0" prefWidth="200.0" />
             <Text fill="WHITE" layoutX="448.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Settings">
                <font>
-                  <Font name="System Bold" size="20.0" />
+                  <Font name="Calibri" size="20.0" />
                </font>
             </Text>
             <Text fill="WHITE" layoutX="258.0" layoutY="378.0" strokeType="OUTSIDE" strokeWidth="0.0">
                <font>
-                  <Font name="System Bold" size="20.0" />
+                  <Font name="Calibri" size="20.0" />
                </font>
             </Text>
             <Pane layoutX="14.0" layoutY="67.0" prefHeight="406.0" prefWidth="262.0" style="-fx-background-color: #69B578; -fx-background-radius: 10;">
                <children>
                   <Text fill="#2f384b" layoutX="23.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Study Mode">
                      <font>
-                        <Font name="System Bold" size="20.0" />
+                        <Font name="Calibri" size="20.0" />
                      </font>
                   </Text>
                   <ComboBox fx:id="studyModeComb" layoutX="25.0" layoutY="51.0" prefHeight="25.0" prefWidth="212.0" promptText="Motivation" style="-fx-background-color: #2F384B; -fx-text-fill: white;" styleClass="combo-box-settings" />
                   <Text fill="#2f384b" layoutX="25.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Block Mode">
                      <font>
-                        <Font name="System Bold" size="20.0" />
+                        <Font name="Calibri" size="20.0" />
                      </font>
                   </Text>
                   <ComboBox fx:id="blockModeComb" layoutX="25.0" layoutY="136.0" prefHeight="25.0" prefWidth="212.0" promptText="Simple" style="-fx-background-color: #2F384B; -fx-text-fill: white;" styleClass="combo-box-settings" />
                   <Text fill="#2f384b" layoutX="24.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Color Theme">
                      <font>
-                        <Font name="System Bold" size="20.0" />
+                        <Font name="Calibri" size="20.0" />
                      </font>
                   </Text>
                   <ComboBox fx:id="ColorThemeComb" layoutX="26.0" layoutY="223.0" prefHeight="25.0" prefWidth="212.0" promptText="Default" style="-fx-background-color: #2F384B; -fx-text-fill: white;" styleClass="combo-box-settings" />
@@ -50,17 +50,23 @@
                <children>
                   <Text fill="#2f384b" layoutX="23.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
                      <font>
-                        <Font name="System Bold" size="20.0" />
+                        <Font name="Calibri" size="20.0" />
                      </font>
                   </Text>
                   <Text fill="#2f384b" layoutX="25.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time Zone">
                      <font>
-                        <Font name="System Bold" size="20.0" />
+                        <Font name="Calibri" size="20.0" />
                      </font>
                   </Text>
                   <ComboBox fx:id="timezoneComb" layoutX="25.0" layoutY="167.0" prefHeight="25.0" prefWidth="212.0" promptText="Choose Time Zone" style="-fx-background-color: #2F384B; -fx-text-fill: white;" styleClass="combo-box-settings" />
-                  <TextField fx:id="usernameLbl" layoutX="23.0" layoutY="49.0" prefHeight="25.0" prefWidth="212.0" promptText="Enter username" style="-fx-background-color: #2F384B; -fx-text-fill: white;" />
-                  <Button layoutX="25.0" layoutY="84.0" mnemonicParsing="false" onAction="#onHandleUsernameChange" prefHeight="25.0" prefWidth="212.0" styleClass="btn-stats" text="Change" textFill="WHITE" />
+                  <TextField fx:id="usernameLbl" layoutX="23.0" layoutY="49.0" prefHeight="25.0" prefWidth="212.0" promptText="Enter username" style="-fx-background-color: #2F384B; -fx-text-fill: white;">
+                     <font>
+                        <Font name="Calibri" size="12.0" />
+                     </font></TextField>
+                  <Button layoutX="25.0" layoutY="84.0" mnemonicParsing="false" onAction="#onHandleUsernameChange" prefHeight="25.0" prefWidth="212.0" styleClass="btn-stats" text="Change" textFill="WHITE">
+                     <font>
+                        <Font name="Calibri" size="12.0" />
+                     </font></Button>
                </children>
             </Pane>
          </children>

@@ -20,12 +20,12 @@
             <Separator layoutX="374.0" layoutY="43.0" prefWidth="200.0" />
             <Text fill="WHITE" layoutX="433.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Statistics">
                <font>
-                  <Font name="System Bold" size="20.0" />
+                  <Font name="Calibri" size="20.0" />
                </font>
             </Text>
             <Text fill="WHITE" layoutX="258.0" layoutY="378.0" strokeType="OUTSIDE" strokeWidth="0.0">
                <font>
-                  <Font name="System Bold" size="20.0" />
+                  <Font name="Calibri" size="20.0" />
                </font>
             </Text>
             <TabPane fx:id="statsTabPane" layoutX="28.0" layoutY="75.0" prefHeight="427.0" prefWidth="894.0" tabClosingPolicy="UNAVAILABLE">
@@ -38,15 +38,21 @@
                                  <children>
                                     <BarChart layoutX="215.0" layoutY="60.0" prefHeight="267.0" prefWidth="403.0" style="-fx-background-color: white; -fx-background-radius: 20;">
                                        <xAxis>
-                                          <CategoryAxis side="BOTTOM" />
+                                          <CategoryAxis side="BOTTOM">
+                                             <tickLabelFont>
+                                                <Font name="Calibri" size="8.0" />
+                                             </tickLabelFont></CategoryAxis>
                                        </xAxis>
                                        <yAxis>
-                                          <NumberAxis side="LEFT" />
+                                          <NumberAxis side="LEFT">
+                                             <tickLabelFont>
+                                                <Font name="Calibri" size="8.0" />
+                                             </tickLabelFont></NumberAxis>
                                        </yAxis>
                                     </BarChart>
                                     <Text fill="WHITE" layoutX="276.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Most commonly used apps">
                                        <font>
-                                          <Font name="System Bold" size="20.0" />
+                                          <Font name="Calibri" size="20.0" />
                                        </font>
                                     </Text>
                                  </children>
@@ -61,22 +67,28 @@
                            <children>
                               <Pane prefHeight="339.0" prefWidth="805.0" style="-fx-background-color: #2F384B; -fx-background-radius: 20;">
                                  <children>
-                                    <BarChart layoutX="215.0" layoutY="60.0" prefHeight="267.0" prefWidth="403.0" style="-fx-background-color: white; -fx-background-radius: 20;">
+                                    <BarChart layoutX="215.0" layoutY="60.0" prefHeight="267.0" prefWidth="403.0" style="-fx-background-color: white; -fx-background-radius: 20;" styleClass="chart">
                                        <xAxis>
-                                          <CategoryAxis side="BOTTOM" />
+                                          <CategoryAxis side="BOTTOM">
+                                             <tickLabelFont>
+                                                <Font name="Calibri" size="8.0" />
+                                             </tickLabelFont></CategoryAxis>
                                        </xAxis>
                                        <yAxis>
-                                          <NumberAxis side="LEFT" />
+                                          <NumberAxis side="LEFT">
+                                             <tickLabelFont>
+                                                <Font name="Calibri" size="8.0" />
+                                             </tickLabelFont></NumberAxis>
                                        </yAxis>
                                     </BarChart>
                                     <Text fill="WHITE" layoutX="238.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Proccesses and their number of times ">
                                        <font>
-                                          <Font name="System Bold" size="20.0" />
+                                          <Font name="Calibri" size="20.0" />
                                        </font>
                                     </Text>
                                     <Text fill="WHITE" layoutX="350.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="being blocked">
                                        <font>
-                                          <Font name="System Bold" size="20.0" />
+                                          <Font name="Calibri" size="20.0" />
                                        </font>
                                     </Text>
                                  </children>
@@ -93,15 +105,21 @@
                                  <children>
                                     <Text fill="WHITE" layoutX="242.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time Studying vs. Time on Computer">
                                        <font>
-                                          <Font name="System Bold" size="20.0" />
+                                          <Font name="Calibri" size="20.0" />
                                        </font>
                                     </Text>
-                                    <LineChart layoutX="215.0" layoutY="60.0" prefHeight="267.0" prefWidth="403.0" style="-fx-background-color: white; -fx-background-radius: 20;">
+                                    <LineChart layoutX="215.0" layoutY="60.0" prefHeight="267.0" prefWidth="403.0" style="-fx-background-color: white; -fx-background-radius: 20;" styleClass="visual-chart">
                                        <xAxis>
-                                          <CategoryAxis side="BOTTOM" />
+                                          <CategoryAxis side="BOTTOM">
+                                             <tickLabelFont>
+                                                <Font name="Calibri" size="8.0" />
+                                             </tickLabelFont></CategoryAxis>
                                        </xAxis>
                                        <yAxis>
-                                          <NumberAxis side="LEFT" />
+                                          <NumberAxis side="LEFT">
+                                             <tickLabelFont>
+                                                <Font name="Calibri" size="8.0" />
+                                             </tickLabelFont></NumberAxis>
                                        </yAxis>
                                     </LineChart>
                                  </children>
@@ -114,10 +132,16 @@
             </TabPane>
             <Button alignment="CENTER" layoutX="90.0" layoutY="63.0" mnemonicParsing="false" onAction="#onHandleCommonApps" prefHeight="25.0" prefWidth="242.0" styleClass="btn-stats" text="Common Apps">
                <font>
-                  <Font name="System Bold" size="12.0" />
+                  <Font name="Calibri" size="12.0" />
                </font></Button>
-            <Button alignment="CENTER" layoutX="354.0" layoutY="63.0" mnemonicParsing="false" onAction="#onHandleBlockedProccesses" prefHeight="25.0" prefWidth="242.0" styleClass="btn-stats" text="Blocked Proccesses " textFill="WHITE" />
-            <Button alignment="CENTER" layoutX="632.0" layoutY="63.0" mnemonicParsing="false" onAction="#onHandleTimeStudying" prefHeight="25.0" prefWidth="242.0" styleClass="btn-stats" text="Time Studying" textFill="WHITE" />
+            <Button alignment="CENTER" layoutX="354.0" layoutY="63.0" mnemonicParsing="false" onAction="#onHandleBlockedProccesses" prefHeight="25.0" prefWidth="242.0" styleClass="btn-stats" text="Blocked Proccesses " textFill="WHITE">
+               <font>
+                  <Font name="Calibri" size="12.0" />
+               </font></Button>
+            <Button alignment="CENTER" layoutX="632.0" layoutY="63.0" mnemonicParsing="false" onAction="#onHandleTimeStudying" prefHeight="25.0" prefWidth="242.0" styleClass="btn-stats" text="Time Studying" textFill="WHITE">
+               <font>
+                  <Font name="Calibri" size="12.0" />
+               </font></Button>
          </children>
       </Pane>
    </children>

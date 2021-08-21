@@ -29,7 +29,7 @@
                <left>
                   <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="52.3251953125" BorderPane.alignment="CENTER">
                      <font>
-                        <Font size="20.0" />
+                        <Font name="Calibri" size="20.0" />
                      </font>
                   </Text>
                </left>
@@ -49,14 +49,14 @@
          <children>
             <Text fill="WHITE" layoutX="104.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TODO List">
                <font>
-                  <Font size="22.0" />
+                  <Font name="Calibri" size="22.0" />
                </font>
             </Text>
             <Separator layoutX="1.0" layoutY="46.0" prefHeight="3.0" prefWidth="305.0" />
             <ListView fx:id="todoListView" layoutX="9.0" layoutY="56.0" prefHeight="214.0" prefWidth="290.0" style="-fx-background-color: #4A3CAB;" />
          </children>
       </Pane>
-      <Button layoutX="662.0" layoutY="496.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="309.0" style="-fx-background-color: #4A3CAB; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20; -fx-graphic-text-gap: 10;" text="Remove Task" textFill="WHITE">
+      <Button layoutX="662.0" layoutY="496.0" mnemonicParsing="false" onAction="#onHandleRemoveTask" prefHeight="27.0" prefWidth="309.0" style="-fx-background-color: #4A3CAB; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20; -fx-graphic-text-gap: 10;" text="Remove Task" textFill="WHITE">
          <graphic>
             <ImageView fitHeight="22.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -64,6 +64,9 @@
                </image>
             </ImageView>
          </graphic>
+         <font>
+            <Font name="Calibri" size="12.0" />
+         </font>
       </Button>
       <Pane layoutX="52.0" layoutY="85.0" prefHeight="143.0" prefWidth="290.0" style="-fx-background-color: #C0EFFF; -fx-background-radius: 20px;">
          <children>
@@ -74,19 +77,19 @@
             </ImageView>
             <Text fill="#363636" layoutX="127.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pomodoro">
                <font>
-                  <Font size="22.0" />
+                  <Font name="Calibri" size="22.0" />
                </font>
             </Text>
             <Text fill="#363636" layoutX="127.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sessions">
                <font>
-                  <Font size="22.0" />
+                  <Font name="Calibri" size="22.0" />
                </font>
             </Text>
             <BorderPane layoutX="128.0" layoutY="11.0" prefHeight="61.0" prefWidth="160.0">
                <left>
                   <Text fill="#373b6d" strokeType="OUTSIDE" strokeWidth="0.0" text="0" BorderPane.alignment="CENTER">
                      <font>
-                        <Font name="System Bold" size="30.0" />
+                        <Font name="Calibri" size="30.0" />
                      </font>
                   </Text>
                </left>
@@ -102,39 +105,45 @@
             </ImageView>
             <Text fill="#363636" layoutX="127.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tasks">
                <font>
-                  <Font size="22.0" />
+                  <Font name="Calibri" size="22.0" />
                </font>
             </Text>
             <Text fill="#363636" layoutX="127.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Completed">
                <font>
-                  <Font size="22.0" />
+                  <Font name="Calibri" size="22.0" />
                </font>
             </Text>
             <BorderPane layoutX="128.0" layoutY="11.0" prefHeight="61.0" prefWidth="160.0">
                <left>
                   <Text fill="#373b6d" strokeType="OUTSIDE" strokeWidth="0.0" text="0" BorderPane.alignment="CENTER">
                      <font>
-                        <Font name="System Bold" size="30.0" />
+                        <Font name="Calibri" size="30.0" />
                      </font>
                   </Text>
                </left>
             </BorderPane>
          </children>
       </Pane>
-      <Text layoutX="58.0" layoutY="275.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time spent (Today)">
+      <Text layoutX="58.0" layoutY="275.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tasks Completed (Today)">
          <font>
-            <Font name="CoolveticaRg-Regular" size="18.0" />
+            <Font name="Calibri" size="18.0" />
          </font>
       </Text>
-      <BarChart layoutX="51.0" layoutY="281.0" prefHeight="273.0" prefWidth="592.0">
+      <BarChart fx:id="barChart" barGap="5.0" layoutX="46.0" layoutY="283.0" prefHeight="265.0" prefWidth="592.0">
          <xAxis>
-            <CategoryAxis side="BOTTOM" />
+            <CategoryAxis side="BOTTOM">
+               <tickLabelFont>
+                  <Font name="Calibri" size="8.0" />
+               </tickLabelFont></CategoryAxis>
          </xAxis>
          <yAxis>
-            <NumberAxis side="LEFT" />
+            <NumberAxis side="LEFT" upperBound="24.0">
+               <tickLabelFont>
+                  <Font name="Calibri" size="8.0" />
+               </tickLabelFont></NumberAxis>
          </yAxis>
       </BarChart>
-      <Button layoutX="662.0" layoutY="453.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="309.0" style="-fx-background-color: #4A3CAB; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20; -fx-graphic-text-gap: 10;" text="Complete Task" textFill="WHITE">
+      <Button layoutX="662.0" layoutY="453.0" mnemonicParsing="false" onAction="#onHandleCompleteTask" prefHeight="27.0" prefWidth="309.0" style="-fx-background-color: #4A3CAB; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20; -fx-graphic-text-gap: 10;" text="Complete Task" textFill="WHITE">
          <graphic>
             <ImageView fitHeight="22.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -142,6 +151,9 @@
                </image>
             </ImageView>
          </graphic>
+         <font>
+            <Font name="Calibri" size="12.0" />
+         </font>
       </Button>
       <Button layoutX="660.0" layoutY="412.0" mnemonicParsing="false" onAction="#onHandleAddTask" prefHeight="27.0" prefWidth="309.0" style="-fx-background-color: #4A3CAB; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20; -fx-graphic-text-gap: 10;" text="Add Task" textFill="WHITE">
          <graphic>
@@ -151,12 +163,15 @@
                </image>
             </ImageView>
          </graphic>
+         <font>
+            <Font name="Calibri" size="12.0" />
+         </font>
       </Button>
       <BorderPane layoutX="58.0" layoutY="33.0" prefHeight="52.0" prefWidth="99.0">
          <center>
             <Text fill="#575757" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome, " BorderPane.alignment="CENTER">
                <font>
-                  <Font name="CoolveticaRg-Regular" size="22.0" />
+                  <Font name="Calibri" size="22.0" />
                </font>
             </Text>
          </center>
@@ -165,7 +180,7 @@
          <left>
             <Text fx:id="usernameLbl" strokeType="OUTSIDE" strokeWidth="0.0" text="DemoMario" BorderPane.alignment="CENTER">
                <font>
-                  <Font name="CoolveticaRg-Regular" size="22.0" />
+                  <Font name="Calibri" size="22.0" />
                </font>
                <effect>
                   <Bloom />

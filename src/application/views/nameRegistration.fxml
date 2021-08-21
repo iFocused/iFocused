@@ -18,21 +18,24 @@
             <Separator layoutX="165.0" layoutY="48.0" prefWidth="200.0" />
             <Text fx:id="label" fill="WHITE" layoutX="165.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username Selection">
                <font>
-                  <Font name="System Bold" size="20.0" />
+                  <Font name="Calibri" size="20.0" />
                </font>
             </Text>
             <Text fill="WHITE" layoutX="258.0" layoutY="378.0" strokeType="OUTSIDE" strokeWidth="0.0">
                <font>
-                  <Font name="System Bold" size="20.0" />
+                  <Font name="Calibri" size="20.0" />
                </font>
             </Text>
-            <TextField fx:id="usernameLabel" layoutX="117.0" layoutY="72.0" prefHeight="25.0" prefWidth="297.0" />
+            <TextField fx:id="usernameLabel" layoutX="117.0" layoutY="72.0" prefHeight="25.0" prefWidth="297.0">
+               <font>
+                  <Font name="Calibri" size="12.0" />
+               </font></TextField>
             <Button fx:id="selectionBtn" disable="true" layoutX="114.0" layoutY="106.0" mnemonicParsing="false" onAction="#onHandleProfileCreation" prefHeight="35.0" prefWidth="304.0" styleClass="btn-type2" text="Finalize" textFill="WHITE">
                <font>
-                  <Font size="16.0" />
+                  <Font name="Calibri" size="16.0" />
                </font>
             </Button>
-            <ComboBox fx:id="combTimeZone" layoutX="104.0" layoutY="72.0" prefHeight="25.0" prefWidth="323.0" promptText="Select TimeZone" visible="false" />
+            <ComboBox fx:id="combTimeZone" layoutX="104.0" layoutY="72.0" prefHeight="25.0" prefWidth="323.0" promptText="Select TimeZone" styleClass="default-combo-box" visible="false" />
             <Button fx:id="rightArrowBtn" disable="true" layoutX="468.0" layoutY="63.0" mnemonicParsing="false" onAction="#onClickArrowRight" prefHeight="43.0" prefWidth="48.0" style="-fx-background-color: #3F8EFC; -fx-border-color: #3F8EFC;" styleClass="btn-stats">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
@@ -41,6 +44,9 @@
                      </image>
                   </ImageView>
                </graphic>
+               <font>
+                  <Font name="Calibri" size="12.0" />
+               </font>
             </Button>
             <Button fx:id="leftArrowBtn" disable="true" layoutX="21.0" layoutY="63.0" mnemonicParsing="false" onAction="#onClickArrowLeft" prefHeight="43.0" prefWidth="48.0" style="-fx-background-color: #3F8EFC; -fx-border-color: #3F8EFC;" styleClass="btn-stats">
                <graphic>
@@ -50,6 +56,9 @@
                      </image>
                   </ImageView>
                </graphic>
+               <font>
+                  <Font name="Calibri" size="12.0" />
+               </font>
             </Button>
          </children>
       </Pane>

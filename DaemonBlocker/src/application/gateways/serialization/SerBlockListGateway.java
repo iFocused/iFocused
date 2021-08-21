@@ -46,7 +46,7 @@ public class SerBlockListGateway implements BlockListGateway {
 		XMLEncoder encoder = null;
 		try {
 			encoder = new XMLEncoder(
-					new BufferedOutputStream(new FileOutputStream("../data/" + SERIALIZED_USER_BLOCKLISTS_FILE)));
+					new BufferedOutputStream(new FileOutputStream("data/" + SERIALIZED_USER_BLOCKLISTS_FILE)));
 		} catch (FileNotFoundException fileNotFound) {
 			System.err.println("ERROR: While Creating or Opening the File " + SERIALIZED_USER_BLOCKLISTS_FILE);
 		}
@@ -58,7 +58,7 @@ public class SerBlockListGateway implements BlockListGateway {
 		XMLDecoder decoder = null;
 		try {
 			decoder = new XMLDecoder(
-					new BufferedInputStream(new FileInputStream("../data/" + SERIALIZED_USER_BLOCKLISTS_FILE)));
+					new BufferedInputStream(new FileInputStream("data/" + SERIALIZED_USER_BLOCKLISTS_FILE)));
 			return (BlockListRepository) decoder.readObject();
 		} catch (FileNotFoundException e) {
 			System.err.println("ERROR: File " + SERIALIZED_USER_BLOCKLISTS_FILE + " not found");

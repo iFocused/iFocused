@@ -184,6 +184,7 @@ public class ScheduleController implements Initializable {
 				if (result.isPresent()) {
 					if (result.get().isEmpty() || result.get().equals("Enter here")) {
 						Alert alert = new Alert(AlertType.ERROR);
+						alert.getDialogPane().setStyle("-fx-font-family: 'calibri';");
 						alert.initOwner(fxmlViewBuilder.getMainStage());
 						alert.setTitle("Invalid Calendar Name");
 						alert.setHeaderText("Please enter a valid calendar name");
