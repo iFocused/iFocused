@@ -4,6 +4,8 @@ import java.util.TimeZone;
 
 public class User {
 	private int points;
+	private int pomodoroSessionsCount;
+	private int tasksCompleted;
 	private String username;
 	private BlockMode blockMode;
 	private TimeZone timeZone;
@@ -11,7 +13,7 @@ public class User {
 	public User() {
 		this("", null);
 	}
-	
+
 	public User(String username, TimeZone timeZone) {
 		this.points = 0;
 		this.blockMode = BlockMode.SIMPLE;
@@ -25,6 +27,22 @@ public class User {
 
 	public int getPoints() {
 		return this.points;
+	}
+
+	public int getPomodoroSessionsCount() {
+		return pomodoroSessionsCount;
+	}
+
+	public void setPomodoroSessionsCount(int pomodoroSessionsCount) {
+		this.pomodoroSessionsCount = pomodoroSessionsCount;
+	}
+
+	public int getTasksCompleted() {
+		return tasksCompleted;
+	}
+
+	public void setTasksCompleted(int tasksCompleted) {
+		this.tasksCompleted = tasksCompleted;
 	}
 
 	public String getUsername() {

@@ -39,6 +39,12 @@ public class DashboardController implements Initializable {
 	private Text usernameLbl;
 
 	@FXML
+	private Text pomodoroLbl;
+
+	@FXML
+	private Text tasksCompletedLbl;
+
+	@FXML
 	private ListView<Task> todoListView;
 
 	@FXML
@@ -54,9 +60,9 @@ public class DashboardController implements Initializable {
 
 		viewListeners();
 		renderTodoListByName();
-		
+
 		// loading dummy data into bar chart
-		//barChart.getData().add(new XYChart.Data("", ))
+		// barChart.getData().add(new XYChart.Data("", ))
 
 	}
 
@@ -82,23 +88,9 @@ public class DashboardController implements Initializable {
 		Task selTask = todoListView.getSelectionModel().getSelectedItem();
 		if (selTask != null) {
 			selTask.setTaskStatus(TaskStatus.COMPLETED);
-
-			todoListView.setCellFactory(new Callback<ListView<Task>, ListCell<Task>>() {
-				@Override
-				public ListCell<Task> call(ListView<Task> lv) {
-					return new ListCell<Task>() {
-						@Override
-						public void updateItem(Task task, boolean empty) {
-							super.updateItem(task, empty);
-							if (task != null) {
-								setStyle("-fx-font-weight: bold;");
-							}
-
-						}
-					};
-				}
-			});
-
+			this.userManager.incrementTasksCompleted();
+			tasksCompletedLbl.setText(String.valueOf(this.userManager.getUser().getTasksCompleted()));
+			todoListView.getItems().remove(selTask);
 		}
 	}
 
@@ -131,6 +123,7 @@ public class DashboardController implements Initializable {
 		userManager.getIsDataChangedProperty().addListener((observable, oldValue, newValue) -> {
 			if (newValue) {
 				usernameLbl.setText(this.userManager.getUser().getUsername());
+				pomodoroLbl.setText(String.valueOf(this.userManager.getUser().getPomodoroSessionsCount()));
 				userManager.SetIsUserManagerChangedProperty(false);
 			}
 		});

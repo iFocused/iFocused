@@ -10,8 +10,11 @@ import application.views.FxmlViewBuilder;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
@@ -90,16 +93,33 @@ public class MainController implements Initializable {
 
 	@FXML
 	void onStatsSelection(ActionEvent event) {
+		Alert alert = new Alert(AlertType.INFORMATION, "Please upgrade to pro!", ButtonType.OK);
+		alert.getDialogPane().setStyle("-fx-font-family: 'calibri';");
+		alert.setTitle("Page unavailable"); 
+		alert.setHeaderText("Page unavailable");
+		alert.initOwner(fxmlViewBuilder.getMainStage());
+		alert.showAndWait();
+		
+		/*
 		resetBtnStyles();
 		((Button) event.getSource()).getStyleClass().add("btn_selected");
 		changeView(4);
+		*/
 	}
 
 	@FXML
 	void onSettingsSelection(ActionEvent event) {
+		Alert alert = new Alert(AlertType.INFORMATION, "Please upgrade to pro to customize the application!", ButtonType.OK);
+		alert.getDialogPane().setStyle("-fx-font-family: 'calibri';");
+		alert.setTitle("Page unavailable"); 
+		alert.setHeaderText("Page unavailable");
+		alert.initOwner(fxmlViewBuilder.getMainStage());
+		alert.showAndWait();
+		/*
 		resetBtnStyles();
 		((Button) event.getSource()).getStyleClass().add("btn_selected");
 		changeView(5);
+		*/
 	}
 
 	@Override
@@ -150,6 +170,7 @@ public class MainController implements Initializable {
 					break;
 
 				case SETTINGS:
+					
 					settingsPane.setCenter(currPane);
 					break;
 

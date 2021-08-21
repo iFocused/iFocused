@@ -71,4 +71,18 @@ public class UserManager {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
+	/**
+	 * Increments the number of pomodoro sessions the user has done
+	 */
+	public void incrementPomodoroCounter() {
+		this.user.setPomodoroSessionsCount(this.user.getPomodoroSessionsCount() + 1);
+	}
+	
+	/**
+	 * Increments the number of tasks the user has completed
+	 */
+	public void incrementTasksCompleted() {
+		this.user.setTasksCompleted(this.user.getTasksCompleted() + 1);
+	}
 }

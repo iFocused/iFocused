@@ -129,7 +129,7 @@
                   <Font name="Calibri" size="20.0" />
                </font>
             </Text>
-            <Text fx:id="roundLbl" fill="#f26157" layoutX="525.0" layoutY="517.0" opacity="0.66" strokeType="OUTSIDE" strokeWidth="0.0" text="Round: 1">
+            <Text fx:id="roundLbl" fill="#f26157" layoutX="525.0" layoutY="517.0" opacity="0.66" strokeType="OUTSIDE" strokeWidth="0.0">
                <font>
                   <Font name="Calibri" size="20.0" />
                </font>

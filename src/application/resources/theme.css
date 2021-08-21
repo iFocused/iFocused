@@ -386,24 +386,45 @@
 	-fx-background-radius: 20px;
 }
 
+.list-view:focused .list-cell:filled:selected {
+    -fx-background-color: orange;
+ 	
+}
+
+/* Selected when control is not focused */
+.list-cell:filled:selected:odd {
+	/*-fx-background-color: white;*/
+    -fx-text-fill: white;
+} 
+
+
+.list-cell:filled:selected:even {
+	/*-fx-background-color: #4A3CAB;*/
+    -fx-text-fill: black;
+}
+
+
+
 .list-cell:odd {
     -fx-background-color: #4A3CAB;
 	-fx-text-fill: white;
 	-fx-background-radius: 20px;
 }
 
+
 /*
 .list-cell:even {
     /*-fx-cell-hover-color: #0093ff;*/
-    -fx-background-color: #4A3CAB;
-	-fx-text-fill: white;
+    -fx-background-color: white;
+	-fx-text-fill: black;
 }
 */
+
 
 .list-cell:filled:hover {
 	-fx-font-family: 'calibri';
     /*-fx-cell-hover-color: #0093ff;*/
-    -fx-text-fill: white;
+  /*  -fx-text-fill: white;*/
 	-fx-background-radius: 20px;
 }
 

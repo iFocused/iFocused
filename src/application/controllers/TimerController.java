@@ -67,7 +67,7 @@ public class TimerController implements Initializable {
 		roundLbl.setVisible(false);
 
 		/* Creating circle component */
-		countDownTimer = new CountDownTimer((int) sessionSlider.getValue());
+		countDownTimer = new CountDownTimer((int) sessionSlider.getValue(), (int) breakSlider.getValue(), useCasePool);
 		ringProgressIndicator = countDownTimer.getProgressIndicator();
 		ringProgressIndicator.setProgress(0, sessionLbl.getText());
 		timerPane.setCenter(ringProgressIndicator);
@@ -98,12 +98,11 @@ public class TimerController implements Initializable {
 		settingsPane.setDisable(true);
 		startBtn.setDisable(true);
 		// run <rounds> many times
-		for (int i = 0; i < (int) roundsSlider.getValue(); i++) {
-			if (countDownTimer.getTimeline() == null)
-				countDownTimer.startCountDown();
-			else if (countDownTimer.getStatus() != Status.RUNNING)
-				countDownTimer.startCountDown();
 
+		if (countDownTimer.getTimeline() == null)
+			countDownTimer.startCountDown((int) roundsSlider.getValue(), 0, false, roundLbl, sessionLbl, descriptionLbl); // need to make i no increment as long as this is running
+		else if (countDownTimer.getStatus() != Status.RUNNING) {
+			countDownTimer.startCountDown((int) roundsSlider.getValue(), 0, false, roundLbl, sessionLbl, descriptionLbl);
 		}
 
 	}
@@ -132,7 +131,8 @@ public class TimerController implements Initializable {
 			@Override
 			public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
 				sessionLbl.setText(String.valueOf(newValue.intValue()) + ":00");
-				countDownTimer.setTimeMins(newValue.intValue());
+				//countDownTimer.setTimeMins(newValue.intValue());
+				countDownTimer.setTimeMins(1); /* change */
 				ringProgressIndicator.setProgress(0, sessionLbl.getText());
 			}
 		});
@@ -149,6 +149,8 @@ public class TimerController implements Initializable {
 			@Override
 			public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
 				breakLbl.setText(String.valueOf(newValue.intValue()) + ":00");
+				countDownTimer.setBreakTime(newValue.intValue()); /* change */
+				ringProgressIndicator.setProgress(0, sessionLbl.getText());
 			}
 		});
 	}
