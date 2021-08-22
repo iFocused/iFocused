@@ -1,10 +1,12 @@
 package application.usecases;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import application.entities.BlockList;
 import application.entities.BlockSet;
+import application.entities.Website;
 import application.gateways.BlocksManagerGateway;
 
 public class BlocksManager {
@@ -13,10 +15,10 @@ public class BlocksManager {
 	private SessionRepository sessionRepository;
 	private PomodoroRepository pomodoroRepository;
 	private final BlocksManagerGateway blocksManagerGateway;
+	private FileEditor fe;
 
 	public BlocksManager() {
 		this.blocksManagerGateway = null;
-
 	}
 
 	/**
@@ -36,14 +38,18 @@ public class BlocksManager {
 		this.pomodoroRepository = pomodoroRepository;
 		this.blocksManagerGateway = blocksManagerGateway;
 		this.blocksManagerGateway.populateBlockSet(this);
-		System.out.println(this.blockSet.getBlockedSites());
+		if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+			fe = new FileEditor(new File("C:\\Windows\\System32\\drivers\\etc\\hosts"));
+		} else {
+			fe = new FileEditor(new File("/etc/hosts"));
+		}
+
 	}
-	
+
 	/**
 	 * Syncs the user's block sets with external storage
 	 */
 	public void saveBlockSets() {
-		System.out.println(this.getBlockSet().getBlockedSites());
 		this.blocksManagerGateway.saveBlockSet(this);
 	}
 
@@ -91,7 +97,19 @@ public class BlocksManager {
 	 *         not
 	 */
 	public boolean blockById(BlockList selectedBlockList) {
-		return blockSet.blockById(selectedBlockList);
+		int count = 0;
+		for (Website website : selectedBlockList.getBlockedWebsites()) {
+			if (this.blockSet.getBlockedSites().containsKey(website.getWebsiteId())) {
+				count = this.blockSet.getBlockedSites().get(website.getWebsiteId());
+				this.blockSet.getBlockedSites().replace(website.getWebsiteId(), count + 1);
+
+			} else {
+				System.out.println("website id: " + website.getWebsiteId());
+				this.blockSet.getBlockedSites().put(website.getWebsiteId(), 1);
+				fe.blockWebsite(website.getWebsiteName());
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -102,7 +120,31 @@ public class BlocksManager {
 	 *         not
 	 */
 	public boolean unblockById(BlockList selectedBlockList) {
-		return blockSet.unblockById(selectedBlockList);
+		int count = 0;
+		for (Website website : selectedBlockList.getBlockedWebsites()) {
+			if (this.blockSet.getBlockedSites().containsKey(website.getWebsiteId())) {
+
+				/*
+				 * PROBLEM: does not get here after de-serialization of the block list
+				 * repository. need to serialize data in BlocksManager and make sure BlockSet
+				 * also has data from the previous time the program ran
+				 * 
+				 */
+
+				// only occurred once
+				count = this.blockSet.getBlockedSites().get(website.getWebsiteId());
+				if (this.blockSet.getBlockedSites().get(website.getWebsiteId()) > 1) {
+					this.blockSet.getBlockedSites().replace(website.getWebsiteId(), count - 1);
+				} else {
+					// System.out.println(this.blockedSites.get(website.getWebsiteId()));
+					fe.unblockWebsite(website.getWebsiteName());
+					this.blockSet.getBlockedSites().remove(website.getWebsiteId());
+				}
+
+			}
+		}
+
+		return true;
 	}
 
 	/**

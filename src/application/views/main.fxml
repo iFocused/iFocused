@@ -92,7 +92,7 @@
                   </VBox>
                   <ImageView fitHeight="160.0" fitWidth="200.0" layoutX="-5.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../resources/pics/app-logo.PNG" />
+                        <Image url="@../resources/pics/app-logo.png" />
                      </image>
                   </ImageView>
                </children>

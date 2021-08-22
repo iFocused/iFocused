@@ -180,30 +180,31 @@ public class BlocklistsController implements Initializable {
 		this.blockListRepository.saveBlocklistData();
 		this.blocksManager.saveBlockSets();
 	}
-	
 
 	/**
 	 * Removing website from website list when creating the block list
+	 * 
 	 * @param event
 	 */
-    @FXML
-    void onRemoveWebsite(ActionEvent event) {
-    	Website tmpWebsite = this.websiteListView.getSelectionModel().getSelectedItem();
-    	if(tmpWebsite != null)
-    		this.websiteListView.getItems().remove(tmpWebsite);
-    }
-    
-    
-    /**
+	@FXML
+	void onRemoveWebsite(ActionEvent event) {
+		Website tmpWebsite = this.websiteListView.getSelectionModel().getSelectedItem();
+		if (tmpWebsite != null) {
+			this.websiteListView.getItems().remove(tmpWebsite);
+		}
+	}
+
+	/**
 	 * Removing application from application list when creating the block list
+	 * 
 	 * @param event
 	 */
-    @FXML
-    void onRemoveApp(ActionEvent event) {
-    	Process tmpProcess = this.appListView.getSelectionModel().getSelectedItem();
-    	if(tmpProcess != null)
-    		this.appListView.getItems().remove(tmpProcess);
-    }
+	@FXML
+	void onRemoveApp(ActionEvent event) {
+		Process tmpProcess = this.appListView.getSelectionModel().getSelectedItem();
+		if (tmpProcess != null)
+			this.appListView.getItems().remove(tmpProcess);
+	}
 
 	/**
 	 * Handles the deletion of a block list
