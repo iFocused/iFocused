@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import application.entities.BlockSet;
+import application.entities.TodoList;
 import application.gateways.GatewayPool;
 import application.gateways.network.ObserverNotifier;
 
@@ -21,7 +22,7 @@ public class UseCasePool {
 	private BlocksManager blocksManager;
 	private StatisticsRepository statisticsRepository;
 	private UserManager userManager;
-	private TODOList todoList;
+	private TodoListManager todoListManager;
 	private GatewayPool gatewayPool;
 
 	public UseCasePool(GatewayPool gatewayPool) {
@@ -43,8 +44,8 @@ public class UseCasePool {
 		pomodoroRepository = new PomodoroRepository(gatewayPool.getPomodoroRepositoryGateway());
 		websiteRepository = new WebsiteRepository(gatewayPool.getWebsiteRepositoryGateway());
 		processRepository = new ProcessRepository(gatewayPool.getProcessRepositoryGateway());
-		todoList = new TODOList(gatewayPool.getTODOListGateway());
-		pointEligbility = new PointEligibility(todoList, sessionRepository, pomodoroRepository);
+		todoListManager = new TodoListManager(gatewayPool.getTODOListGateway());
+		pointEligbility = new PointEligibility(todoListManager, sessionRepository, pomodoroRepository);
 		blocksManager = new BlocksManager(new BlockSet(), blockListRepository, sessionRepository, pomodoroRepository,
 				gatewayPool.getBlocksManagerGateway());
 		statisticsRepository = new StatisticsRepository(gatewayPool.getStatisticsRepositoryGateway());
@@ -80,7 +81,7 @@ public class UseCasePool {
 			gatewayPool.getPomodoroRepositoryGateway().populateUserData(pomodoroRepository);
 			gatewayPool.getWebsiteRepositoryGateway().populateUserData(websiteRepository);
 			gatewayPool.getProcessRepositoryGateway().populateUserData(processRepository);
-			gatewayPool.getTODOListGateway().populateUserData(todoList);
+			gatewayPool.getTODOListGateway().populateTodoListContents(todoListManager);
 			gatewayPool.getStatisticsRepositoryGateway().populateUserData(statisticsRepository);
 			return true;
 		}
@@ -158,11 +159,11 @@ public class UseCasePool {
 		this.userManager = userManager;
 	}
 
-	public TODOList getTodoList() {
-		return todoList;
+	public TodoListManager getTodoListManager() {
+		return todoListManager;
 	}
 
-	public void setTodoList(TODOList todoList) {
-		this.todoList = todoList;
+	public void setTodoListManager(TodoListManager todoListManager) {
+		this.todoListManager = todoListManager;
 	}
 }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="15.0.2" class="java.beans.XMLDecoder">
+ <object class="application.usecases.TodoListManager">
+  <void property="todoList">
+   <object class="application.entities.TodoList" id="TodoList0">
+    <void property="completedTasks">
+     <void method="add">
+      <object class="application.entities.Task">
+       <void property="name">
+        <string>Eat pineapple</string>
+       </void>
+       <void property="taskStatus">
+        <object class="java.lang.Enum" method="valueOf">
+         <class>application.entities.TaskStatus</class>
+         <string>COMPLETED</string>
+        </object>
+       </void>
+      </object>
+     </void>
+    </void>
+   </object>
+  </void>
+ </object>
+</java>

@@ -4,24 +4,25 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 import application.entities.PomodoroSession;
-import application.entities.SessionStatus;
 
 public class PointEligibility {
 	private LocalDateTime timeSinceLastPt;
 	private LocalDateTime timeAppRunning;
-	private TODOList todoList;
+	private TodoListManager todoListManager;
 	private PomodoroRepository pomodoroRepo;
 	private SessionRepository sessionRepo;
 
-	public PointEligibility(TODOList todoList, SessionRepository sessionRepo, PomodoroRepository pomodoroRepo) {
-		this.todoList = todoList;
+	public PointEligibility(TodoListManager todoListManager, SessionRepository sessionRepo,
+			PomodoroRepository pomodoroRepo) {
+		this.todoListManager = todoListManager;
 		this.sessionRepo = sessionRepo;
 		this.pomodoroRepo = pomodoroRepo;
 		this.timeAppRunning = LocalDateTime.now();
 	}
 
 	private boolean checkTaskForCompletion() {
-		return todoList.getCurrentTasks().isEmpty() && !todoList.getCompletedTasks().isEmpty();
+		return todoListManager.getTodoList().getCurrentTasks().isEmpty()
+				&& !todoListManager.getTodoList().getCompletedTasks().isEmpty();
 	}
 
 	private boolean checkPomodoroForCompletion() {

@@ -60,6 +60,7 @@ public class UserManager {
 	}
 	
 	public void SetIsUserManagerChangedProperty(boolean state) {
+		if(state) this.userManagerGateway.saveUserData(user);
 		this.isDataChanged.set(state);
 	}
 

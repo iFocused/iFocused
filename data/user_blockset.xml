@@ -20,16 +20,21 @@
          </object>
         </void>
         <void property="blockedWebsites">
-         <object class="java.util.ArrayList"/>
+         <object class="java.util.ArrayList">
+          <void method="add">
+           <object class="application.entities.Website">
+            <void property="websiteName">
+             <string>www.facebook.com</string>
+            </void>
+           </object>
+          </void>
+         </object>
         </void>
         <void property="blocklistDescription">
          <string></string>
         </void>
         <void property="blocklistName">
-         <string>kl;jwsf</string>
-        </void>
-        <void property="isEnabled">
-         <boolean>true</boolean>
+         <string>Test</string>
         </void>
        </object>
       </void>

@@ -131,8 +131,7 @@ public class TimerController implements Initializable {
 			@Override
 			public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
 				sessionLbl.setText(String.valueOf(newValue.intValue()) + ":00");
-				//countDownTimer.setTimeMins(newValue.intValue());
-				countDownTimer.setTimeMins(1); /* change */
+				countDownTimer.setTimeMins(newValue.intValue());
 				ringProgressIndicator.setProgress(0, sessionLbl.getText());
 			}
 		});

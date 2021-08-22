@@ -1,9 +1,6 @@
 package application.gateways;
 
-import java.util.ArrayList;
-
-import application.entities.Task;
-import application.usecases.TODOList;
+import application.usecases.TodoListManager;
 
 public interface TODOListGateway {
 	/**
@@ -14,7 +11,7 @@ public interface TODOListGateway {
 	 * 
 	 * @return True iff loading the data was successful, otherwise false is returned
 	 */
-	boolean populateUserData(TODOList pomodoroRepository);
+	boolean populateTodoListContents(TodoListManager todoListManager);
 
 	/**
 	 * Syncs the user's data with external storage
@@ -30,5 +27,5 @@ public interface TODOListGateway {
 	 * 
 	 * @return True iff the the sync was successful, otherwise false is returned
 	 */
-	boolean saveUserData(ArrayList<Task> currentTasks, ArrayList<Task> completedTasks);
+	boolean saveTodoListContents(TodoListManager todoListManager);
 }

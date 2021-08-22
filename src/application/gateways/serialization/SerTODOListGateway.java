@@ -1,14 +1,22 @@
 package application.gateways.serialization;
 
+import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 
-import application.entities.Task;
 import application.gateways.TODOListGateway;
 import application.gateways.network.ObserverNotifier;
 import application.gateways.network.UpdateNotifierObservable;
-import application.usecases.TODOList;
+import application.usecases.TodoListManager;
 
 public class SerTODOListGateway implements TODOListGateway, UpdateNotifierObservable {
+	private static final String SERIALIZED_USER_TODOLIST_FILE = "user_todolist.xml";
+
 	private ArrayList<ObserverNotifier> observers;
 
 	public SerTODOListGateway(ArrayList<ObserverNotifier> observers) {
@@ -19,8 +27,14 @@ public class SerTODOListGateway implements TODOListGateway, UpdateNotifierObserv
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean populateUserData(TODOList pomodoroRepository) {
-		// TODO Auto-generated method stub
+	public boolean populateTodoListContents(TodoListManager todoListManager) {
+		TodoListManager tmpTodoListManager = XmltoObject();
+		if (tmpTodoListManager != null) {
+			todoListManager.setTodoList(tmpTodoListManager.getTodoList());
+			return true;
+		}
+
+		// something went wrong
 		return false;
 	}
 
@@ -28,10 +42,35 @@ public class SerTODOListGateway implements TODOListGateway, UpdateNotifierObserv
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean saveUserData(ArrayList<Task> currentTasks, ArrayList<Task> completedTasks) {
-		// TODO Auto-generated method stub
+	public boolean saveTodoListContents(TodoListManager todoListManager) {
+		objectToXml(todoListManager);
 		setChanged();
-		return false;
+		return true;
+	}
+
+	private void objectToXml(TodoListManager todoListManager) {
+		XMLEncoder encoder = null;
+		try {
+			encoder = new XMLEncoder(
+					new BufferedOutputStream(new FileOutputStream("data/" + SERIALIZED_USER_TODOLIST_FILE)));
+		} catch (FileNotFoundException fileNotFound) {
+			System.err.println("ERROR: While Creating or Opening the File " + SERIALIZED_USER_TODOLIST_FILE);
+		}
+		encoder.writeObject(todoListManager);
+		encoder.close();
+	}
+
+	private TodoListManager XmltoObject() {
+		XMLDecoder decoder = null;
+		try {
+			decoder = new XMLDecoder(
+					new BufferedInputStream(new FileInputStream("data/" + SERIALIZED_USER_TODOLIST_FILE)));
+			return (TodoListManager) decoder.readObject();
+		} catch (FileNotFoundException e) {
+			System.err.println("ERROR: File " + SERIALIZED_USER_TODOLIST_FILE + " not found");
+		}
+
+		return null;
 	}
 
 	@Override

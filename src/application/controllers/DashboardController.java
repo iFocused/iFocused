@@ -56,6 +56,9 @@ public class DashboardController implements Initializable {
 			handleFirstLogin();
 		} else {
 			usernameLbl.setText(userManager.getUser().getUsername());
+			tasksCompletedLbl.setText(String.valueOf(userManager.getUser().getTasksCompleted()));
+			pomodoroLbl.setText(String.valueOf(userManager.getUser().getPomodoroSessionsCount()));
+			todoListView.getItems().setAll(useCasePool.getTodoListManager().getTodoList().getCurrentTasks());
 		}
 
 		viewListeners();
@@ -78,8 +81,9 @@ public class DashboardController implements Initializable {
 
 		result.ifPresent(name -> {
 			Task newTask = new Task(name);
-			this.useCasePool.getTodoList().addTask(newTask);
+			this.useCasePool.getTodoListManager().addTask(newTask);
 			todoListView.getItems().add(newTask);
+			this.useCasePool.getTodoListManager().saveTodoListContents();
 		});
 	}
 
@@ -91,6 +95,9 @@ public class DashboardController implements Initializable {
 			this.userManager.incrementTasksCompleted();
 			tasksCompletedLbl.setText(String.valueOf(this.userManager.getUser().getTasksCompleted()));
 			todoListView.getItems().remove(selTask);
+			this.useCasePool.getTodoListManager().completeTask(selTask);
+			this.useCasePool.getTodoListManager().saveTodoListContents();
+			userManager.SetIsUserManagerChangedProperty(true);
 		}
 	}
 
@@ -100,6 +107,8 @@ public class DashboardController implements Initializable {
 		Task selTask = todoListView.getSelectionModel().getSelectedItem();
 		if (selTask != null) {
 			todoListView.getItems().remove(selTask);
+			this.useCasePool.getTodoListManager().removeTask(selTask);
+			this.useCasePool.getTodoListManager().saveTodoListContents();
 		} else {
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.getDialogPane().setStyle("-fx-font-family: 'calibri';");

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <java version="15.0.2" class="java.beans.XMLDecoder">
  <object class="application.entities.User">
+  <void property="tasksCompleted">
+   <int>4</int>
+  </void>
   <void property="timeZone">
    <object class="sun.util.calendar.ZoneInfo">
     <void property="ID">
