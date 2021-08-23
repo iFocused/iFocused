@@ -1,13 +1,13 @@
 package application.controllers;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 import application.entities.Task;
 import application.entities.TaskStatus;
 import application.entities.ViewMode;
-import application.entities.Website;
 import application.usecases.UseCasePool;
 import application.usecases.UserManager;
 import application.views.FxmlViewBuilder;
@@ -19,10 +19,10 @@ import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextInputDialog;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -45,6 +45,9 @@ public class DashboardController implements Initializable {
 	private Text tasksCompletedLbl;
 
 	@FXML
+	private Text ptsLbl;
+
+	@FXML
 	private ListView<Task> todoListView;
 
 	@FXML
@@ -58,14 +61,16 @@ public class DashboardController implements Initializable {
 			usernameLbl.setText(userManager.getUser().getUsername());
 			tasksCompletedLbl.setText(String.valueOf(userManager.getUser().getTasksCompleted()));
 			pomodoroLbl.setText(String.valueOf(userManager.getUser().getPomodoroSessionsCount()));
+			ptsLbl.setText(String.valueOf(userManager.getUser().getPoints())); /* TODO:
+			// FINISH */
 			todoListView.getItems().setAll(useCasePool.getTodoListManager().getTodoList().getCurrentTasks());
 		}
 
 		viewListeners();
-		renderTodoListByName();
+		renderTodoListByName();		
+		populateChart();
 
-		// loading dummy data into bar chart
-		// barChart.getData().add(new XYChart.Data("", ))
+		
 
 	}
 
@@ -133,9 +138,42 @@ public class DashboardController implements Initializable {
 			if (newValue) {
 				usernameLbl.setText(this.userManager.getUser().getUsername());
 				pomodoroLbl.setText(String.valueOf(this.userManager.getUser().getPomodoroSessionsCount()));
+				ptsLbl.setText(String.valueOf(this.userManager.getUser().getPoints()));
 				userManager.SetIsUserManagerChangedProperty(false);
 			}
 		});
+	}
+
+	private void populateChart() {
+		LocalDate timeNow = LocalDate.now();
+		System.out.println(timeNow.getDayOfWeek().toString());
+
+		System.out.println("---> " + this.useCasePool.getTodoListManager().getCompletedTasksByDate(timeNow).size());
+
+		XYChart.Series set1 = new XYChart.Series<>();
+
+		set1.getData().add(new XYChart.Data<>(timeNow.minusDays(6).getDayOfWeek().toString(),
+				this.useCasePool.getTodoListManager().getCompletedTasksByDate(timeNow.minusDays(6)).size()));
+
+		set1.getData().add(new XYChart.Data<>(timeNow.minusDays(5).getDayOfWeek().toString(),
+				this.useCasePool.getTodoListManager().getCompletedTasksByDate(timeNow.minusDays(5)).size()));
+
+		set1.getData().add(new XYChart.Data<>(timeNow.minusDays(4).getDayOfWeek().toString(),
+				this.useCasePool.getTodoListManager().getCompletedTasksByDate(timeNow.minusDays(4)).size()));
+
+		set1.getData().add(new XYChart.Data<>(timeNow.minusDays(3).getDayOfWeek().toString(),
+				this.useCasePool.getTodoListManager().getCompletedTasksByDate(timeNow.minusDays(3)).size()));
+
+		set1.getData().add(new XYChart.Data<>(timeNow.minusDays(2).getDayOfWeek().toString(),
+				this.useCasePool.getTodoListManager().getCompletedTasksByDate(timeNow.minusDays(2)).size()));
+
+		set1.getData().add(new XYChart.Data<>(timeNow.minusDays(1).getDayOfWeek().toString(),
+				this.useCasePool.getTodoListManager().getCompletedTasksByDate(timeNow.minusDays(1)).size()));
+
+		set1.getData().add(
+				new XYChart.Data<>(timeNow.getDayOfWeek().toString(), Integer.valueOf(tasksCompletedLbl.getText())));
+
+		barChart.getData().setAll(set1);
 	}
 
 	private void renderTodoListByName() {

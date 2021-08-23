@@ -1,5 +1,8 @@
 package application.usecases;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+
 import application.entities.Task;
 import application.entities.TaskStatus;
 import application.entities.TodoList;
@@ -8,8 +11,10 @@ import application.gateways.TODOListGateway;
 public class TodoListManager {
 	private final TODOListGateway todoListGateway;
 	private TodoList todoList;
-	
-	public TodoListManager () {todoListGateway = null;}
+
+	public TodoListManager() {
+		todoListGateway = null;
+	}
 
 	/**
 	 * Constructor for the TODO List manager
@@ -61,6 +66,17 @@ public class TodoListManager {
 
 	public void setTodoList(TodoList todoList) {
 		this.todoList = todoList;
+	}
+
+	public ArrayList<Task> getCompletedTasksByDate(LocalDate date) {
+		ArrayList<Task> completedTasks = new ArrayList<>();
+		for (Task task : this.todoList.getCompletedTasks()) {
+			LocalDate tmpDate = LocalDate.parse(task.getEndTime());
+			if (tmpDate.isBefore(date) || tmpDate.isEqual(date)) {
+				completedTasks.add(task);
+			}
+		}
+		return completedTasks;
 	}
 
 }

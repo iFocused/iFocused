@@ -60,5 +60,4 @@ public class TodoList {
 	public void setCompletedTasks(ArrayList<Task> completedTasks) {
 		this.completedTasks = completedTasks;
 	}
-
 }

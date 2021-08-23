@@ -78,6 +78,7 @@ public class UserManager {
 	 */
 	public void incrementPomodoroCounter() {
 		this.user.setPomodoroSessionsCount(this.user.getPomodoroSessionsCount() + 1);
+		this.user.setPoints(this.user.getPoints() + 1);
 	}
 	
 	/**
@@ -85,5 +86,6 @@ public class UserManager {
 	 */
 	public void incrementTasksCompleted() {
 		this.user.setTasksCompleted(this.user.getTasksCompleted() + 1);
+		this.user.setPoints(this.user.getPoints() + 1);
 	}
 }

@@ -27,7 +27,7 @@
             </ImageView>
             <BorderPane layoutX="65.0" layoutY="-1.0" prefHeight="71.0" prefWidth="64.0">
                <left>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="52.3251953125" BorderPane.alignment="CENTER">
+                  <Text fx:id="ptsLbl" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="52.3251953125" BorderPane.alignment="CENTER">
                      <font>
                         <Font name="Calibri" size="20.0" />
                      </font>
@@ -124,7 +124,7 @@
             </BorderPane>
          </children>
       </Pane>
-      <Text layoutX="58.0" layoutY="275.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tasks Completed (Today)">
+      <Text layoutX="58.0" layoutY="275.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tasks Completed (Week)">
          <font>
             <Font name="Calibri" size="18.0" />
          </font>
@@ -137,7 +137,7 @@
                </tickLabelFont></CategoryAxis>
          </xAxis>
          <yAxis>
-            <NumberAxis side="LEFT" upperBound="24.0">
+            <NumberAxis side="LEFT" upperBound="90.0">
                <tickLabelFont>
                   <Font name="Calibri" size="8.0" />
                </tickLabelFont></NumberAxis>
