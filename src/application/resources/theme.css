@@ -368,44 +368,44 @@
 }
 
 /* List view */
-.list-cell:filled:selected:focused, .list-cell:filled:selected {
+.specialized-list-view .list-cell:filled:selected:focused, .list-cell:filled:selected {
 	-fx-font-family: 'calibri';
     /*-fx-background-color: #4A3CAB;*/
     -fx-text-fill: white;
 	-fx-background-radius: 20px;
 }
 
-.list-view {
+.specialized-list-view {
 	-fx-font-family: 'calibri';
 	-fx-background-color: #4A3CAB;
 }
 
-.list-view .list-cell:selected:odd {
+.specialized-list-view .list-cell:selected:odd {
 	-fx-text-fill: white;
     /*-fx-background-color: #0096C9;*/
 	-fx-background-radius: 20px;
 }
 
-.list-view:focused .list-cell:filled:selected {
+.specialized-list-view:focused .list-cell:filled:selected {
     -fx-background-color: orange;
  	
 }
 
 /* Selected when control is not focused */
-.list-cell:filled:selected:odd {
+.specialized-list-view .list-cell:filled:selected:odd {
 	/*-fx-background-color: white;*/
     -fx-text-fill: white;
 } 
 
 
-.list-cell:filled:selected:even {
+.specialized-list-view .list-cell:filled:selected:even {
 	/*-fx-background-color: #4A3CAB;*/
     -fx-text-fill: black;
 }
 
 
 
-.list-cell:odd {
+.specialized-list-view .list-cell:odd {
     -fx-background-color: #4A3CAB;
 	-fx-text-fill: white;
 	-fx-background-radius: 20px;
@@ -413,7 +413,7 @@
 
 
 /*
-.list-cell:even {
+.specialized-list-view .list-cell:even {
     /*-fx-cell-hover-color: #0093ff;*/
     -fx-background-color: white;
 	-fx-text-fill: black;
@@ -421,7 +421,7 @@
 */
 
 
-.list-cell:filled:hover {
+.specialized-list-view .list-cell:filled:hover {
 	-fx-font-family: 'calibri';
     /*-fx-cell-hover-color: #0093ff;*/
   /*  -fx-text-fill: white;*/

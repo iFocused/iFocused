@@ -102,6 +102,7 @@ public class DashboardController implements Initializable {
 			todoListView.getItems().remove(selTask);
 			this.useCasePool.getTodoListManager().completeTask(selTask);
 			this.useCasePool.getTodoListManager().saveTodoListContents();
+			populateChart();
 			userManager.SetIsUserManagerChangedProperty(true);
 		}
 	}
